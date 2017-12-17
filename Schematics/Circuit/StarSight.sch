@@ -31,13 +31,14 @@ LIBS:contrib
 LIBS:valves
 LIBS:shield_arduino
 LIBS:StarSight-cache
+LIBS:raspberrypi-gpio-cache
 EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title ""
-Date "14 dec 2017"
+Date "17 dec 2017"
 Rev ""
 Comp ""
 Comment1 ""
@@ -47,13 +48,143 @@ Comment4 ""
 $EndDescr
 $Comp
 L ARDUINO_MEGA SH?
-U 1 1 5A3242BC
-P 3200 4000
-F 0 "SH?" H 3200 4525 60  0000 C CNN
-F 1 "ARDUINO_MEGA" H 3200 4725 60  0000 C CNN
-F 2 "" H 2250 4300 60  0000 C CNN
-F 3 "" H 2250 4300 60  0000 C CNN
-	1    3200 4000
+U 1 1 5A367445
+P 8450 3450
+F 0 "SH?" H 8450 3975 60  0000 C CNN
+F 1 "ARDUINO_MEGA" H 8450 4175 60  0000 C CNN
+F 2 "" H 7500 3750 60  0000 C CNN
+F 3 "" H 7500 3750 60  0000 C CNN
+	1    8450 3450
 	1    0    0    -1  
 $EndComp
+$Comp
+L CONN_13X2 P?
+U 1 1 5A367446
+P 2400 1800
+F 0 "P?" H 2400 2500 60  0000 C CNN
+F 1 "CONN_13X2" V 2400 1800 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x13" H 2400 1100 30  0000 C CNN
+F 3 "" H 2400 1800 60  0001 C CNN
+	1    2400 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L +3.3V #PWR?
+U 1 1 5A367447
+P 1900 1050
+F 0 "#PWR?" H 1900 900 50  0001 C CNN
+F 1 "+3.3V" H 1900 1190 50  0000 C CNN
+F 2 "" H 1900 1050 50  0000 C CNN
+F 3 "" H 1900 1050 50  0000 C CNN
+	1    1900 1050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1900 1050 1900 1200
+Wire Wire Line
+	1900 1200 2000 1200
+$Comp
+L +5V #PWR?
+U 1 1 5A367448
+P 2900 1050
+F 0 "#PWR?" H 2900 900 50  0001 C CNN
+F 1 "+5V" H 2900 1190 50  0000 C CNN
+F 2 "" H 2900 1050 50  0000 C CNN
+F 3 "" H 2900 1050 50  0000 C CNN
+	1    2900 1050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2900 1050 2900 1200
+Wire Wire Line
+	2900 1200 2800 1200
+NoConn ~ 2800 1300
+Wire Wire Line
+	2000 1300 1250 1300
+Wire Wire Line
+	2000 1400 1250 1400
+Text Label 1250 1300 0    60   ~ 0
+GPIO0(SDA)
+Text Label 1250 1400 0    60   ~ 0
+GPIO1(SCL)
+Wire Wire Line
+	2000 1500 1250 1500
+Text Label 1250 1500 0    60   ~ 0
+GPIO4
+NoConn ~ 2000 1600
+Wire Wire Line
+	2000 1700 1250 1700
+Wire Wire Line
+	2000 1800 1250 1800
+Wire Wire Line
+	2000 1900 1250 1900
+Text Label 1250 1700 0    60   ~ 0
+GPIO17
+Text Label 1250 1800 0    60   ~ 0
+GPIO21
+Text Label 1250 1900 0    60   ~ 0
+GPIO22
+NoConn ~ 2000 2000
+Wire Wire Line
+	2000 2100 1250 2100
+Wire Wire Line
+	2000 2200 1250 2200
+Wire Wire Line
+	2000 2300 1250 2300
+Text Label 1250 2100 0    60   ~ 0
+GPIO10(MOSI)
+Text Label 1250 2200 0    60   ~ 0
+GPIO9(MISO)
+Text Label 1250 2300 0    60   ~ 0
+GPIO11(SCLK)
+NoConn ~ 2000 2400
+$Comp
+L GND #PWR?
+U 1 1 5A367449
+P 2900 2500
+F 0 "#PWR?" H 2900 2250 50  0001 C CNN
+F 1 "GND" H 2900 2350 50  0000 C CNN
+F 2 "" H 2900 2500 50  0000 C CNN
+F 3 "" H 2900 2500 50  0000 C CNN
+	1    2900 2500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2900 2500 2900 1400
+Wire Wire Line
+	2900 1400 2800 1400
+Wire Wire Line
+	2800 1500 3500 1500
+Wire Wire Line
+	2800 1600 3500 1600
+Text Label 3500 1500 2    60   ~ 0
+TXD
+Text Label 3500 1600 2    60   ~ 0
+RXD
+Wire Wire Line
+	2800 1700 3500 1700
+Text Label 3500 1700 2    60   ~ 0
+GPIO18
+NoConn ~ 2800 1800
+Wire Wire Line
+	2800 1900 3500 1900
+Wire Wire Line
+	2800 2000 3500 2000
+Text Label 3500 1900 2    60   ~ 0
+GPIO23
+Text Label 3500 2000 2    60   ~ 0
+GPIO24
+NoConn ~ 2800 2100
+Wire Wire Line
+	2800 2200 3500 2200
+Text Label 3500 2200 2    60   ~ 0
+GPIO25
+Wire Wire Line
+	2800 2300 3500 2300
+Wire Wire Line
+	2800 2400 3500 2400
+Text Label 3500 2300 2    60   ~ 0
+GPIO8(CE0)
+Text Label 3500 2400 2    60   ~ 0
+GPIO7(CE1)
 $EndSCHEMATC

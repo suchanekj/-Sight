@@ -29,6 +29,8 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:shield_arduino
+LIBS:StarSight-cache
 EELAYER 27 0
 EELAYER END
 $Descr A4 11693 8268
@@ -43,4 +45,15 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
+$Comp
+L ARDUINO_MEGA SH?
+U 1 1 5A3242BC
+P 3200 4000
+F 0 "SH?" H 3200 4525 60  0000 C CNN
+F 1 "ARDUINO_MEGA" H 3200 4725 60  0000 C CNN
+F 2 "" H 2250 4300 60  0000 C CNN
+F 3 "" H 2250 4300 60  0000 C CNN
+	1    3200 4000
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
