@@ -1,1 +1,1 @@
-# -Sight
+# StarSight
