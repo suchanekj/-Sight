@@ -1,11 +1,6 @@
-update=Thu 14 Dec 2017 10:21:24 AM CET
+update=Sat 23 Dec 2017 07:56:57 PM CET
 version=1
 last_client=eeschema
-[cvpcb]
-version=1
-NetIExt=net
-[cvpcb/libraries]
-EquName1=devcms
 [pcbnew]
 version=1
 LastNetListRead=
@@ -26,7 +21,6 @@ DrawSegmentWidth=0.200000000000
 BoardOutlineThickness=0.100000000000
 ModuleOutlineThickness=0.150000000000
 [pcbnew/libraries]
-LibDir=
 LibName1=sockets
 LibName2=connect
 LibName3=discret
@@ -43,8 +37,15 @@ LibName13=led
 LibName14=dip_sockets
 LibName15=pga_sockets
 LibName16=valves
+LibName17=Libraries/arduino_shields
+LibDir=
 [general]
 version=1
+[cvpcb]
+version=1
+NetIExt=net
+[cvpcb/libraries]
+EquName1=devcms
 [eeschema]
 version=1
 LibDir=Libraries
@@ -85,3 +86,4 @@ LibName28=atmel
 LibName29=contrib
 LibName30=valves
 LibName31=shield_arduino
+LibName32=arduino_shieldsNCL

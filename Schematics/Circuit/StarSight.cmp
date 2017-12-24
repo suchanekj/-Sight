@@ -1,0 +1,150 @@
+Cmp-Mod V01 Created by CvPcb (22-Jun-2014 BZR 4027)-stable date = Sat 23 Dec 2017 08:15:22 PM CET
+
+BeginCmp
+TimeStamp = /5A3EADB2;
+Reference = C1;
+ValeurCmp = 10 uF;
+IdModule  = C1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3EAD99;
+Reference = C2;
+ValeurCmp = 10 uF;
+IdModule  = C1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3EADCA;
+Reference = C3;
+ValeurCmp = 100 nF;
+IdModule  = C1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3E652C;
+Reference = J2;
+ValeurCmp = Line1;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3E64D9;
+Reference = J3;
+ValeurCmp = Line2;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3E647F;
+Reference = J4;
+ValeurCmp = Line3;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3E6418;
+Reference = J5;
+ValeurCmp = Line4;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3DA585;
+Reference = J6;
+ValeurCmp = Line5;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3E73C2;
+Reference = J7;
+ValeurCmp = IR1;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3E75B6;
+Reference = J8;
+ValeurCmp = IR1;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3DA82C;
+Reference = J9;
+ValeurCmp = IR1;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3E7A51;
+Reference = J10;
+ValeurCmp = IR1;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3E7ACA;
+Reference = J11;
+ValeurCmp = IR1;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3D8FAE;
+Reference = J12;
+ValeurCmp = ultSound1;
+IdModule  = PIN_ARRAY_4x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3D9045;
+Reference = J13;
+ValeurCmp = ultSound1;
+IdModule  = PIN_ARRAY_4x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3E8D84;
+Reference = J14;
+ValeurCmp = ultSound1;
+IdModule  = PIN_ARRAY_4x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3E8D8B;
+Reference = J15;
+ValeurCmp = ultSound1;
+IdModule  = PIN_ARRAY_4x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A367446;
+Reference = P1;
+ValeurCmp = CONN_13X2;
+IdModule  = pin_array_13x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3EAAD9;
+Reference = P2;
+ValeurCmp = Power;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3EA7AE;
+Reference = SHIELD1;
+ValeurCmp = ARDUINO_MEGA_SHIELD;
+IdModule  = ARDUINO_MEGA_SHIELD;
+EndCmp
+
+BeginCmp
+TimeStamp = /5A3EAB6D;
+Reference = U1;
+ValeurCmp = LM1084IT-5.0/NOPB;
+IdModule  = PIN_ARRAY_3X1;
+EndCmp
+
+EndListe
