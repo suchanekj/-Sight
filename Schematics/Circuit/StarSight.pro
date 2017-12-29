@@ -1,4 +1,4 @@
-update=29.12.2017 21:31:14
+update=29.12.2017 23:10:12
 version=1
 last_client=kicad
 [pcbnew]
@@ -83,3 +83,4 @@ LibName30=contrib
 LibName31=valves
 LibName32=shield_arduino
 LibName33=arduino_shieldsNCL
+LibName34=Libraries/Relay
