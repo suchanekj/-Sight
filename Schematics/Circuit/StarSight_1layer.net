@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source C:/Users/sucha/programming/StarSight/Schematics/Circuit/StarSight_1layer.sch)
-    (date "21/01/2018 11:10:31")
+    (date "12/02/2018 18:23:52")
     (tool "Eeschema 4.0.7")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -143,7 +143,7 @@
       (tstamp 5A644C84))
     (comp (ref L1)
       (value "33 uH")
-      (footprint Diodes_THT:D_5W_P5.08mm_Vertical_KathodeUp)
+      (footprint Inductors_THT:L_Toroid_Vertical_L16.0mm_W8.0mm_P7.62mm)
       (libsource (lib device) (part L))
       (sheetpath (names /) (tstamps /))
       (tstamp 5A644C85))
@@ -564,12 +564,12 @@
         (pin (num 13) (name ~) (type passive))
         (pin (num 16) (name ~) (type passive)))))
   (libraries
-    (library (logical StarSight_1layer-cache)
-      (uri C:\Users\sucha\programming\StarSight\Schematics\Circuit\StarSight_1layer-cache.lib))
     (library (logical device)
       (uri "C:\\Program Files\\KiCad\\share\\kicad\\library\\device.lib"))
     (library (logical conn)
-      (uri "C:\\Program Files\\KiCad\\share\\kicad\\library\\conn.lib")))
+      (uri "C:\\Program Files\\KiCad\\share\\kicad\\library\\conn.lib"))
+    (library (logical StarSight_1layer-cache)
+      (uri C:\Users\sucha\programming\StarSight\Schematics\Circuit\StarSight_1layer-cache.lib)))
   (nets
     (net (code 1) (name /GPIO25)
       (node (ref P1) (pin 22)))
