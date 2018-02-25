@@ -1,4 +1,4 @@
-update=25.2.2018 15:30:42
+update=25/02/2018 22:36:00
 version=1
 last_client=kicad
 [pcbnew]
@@ -39,8 +39,6 @@ LibName15=pga_sockets
 LibName16=valves
 LibName17=Libraries/arduino_shields
 LibDir=
-[general]
-version=1
 [cvpcb]
 version=1
 NetIExt=net
@@ -94,3 +92,5 @@ NetFmtName=Pcbnew
 SpiceForceRefPrefix=0
 SpiceUseNetNumbers=0
 LabSize=60
+[general]
+version=1
