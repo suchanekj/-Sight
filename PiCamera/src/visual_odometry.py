@@ -15,7 +15,7 @@ lk_params = dict(winSize=(21, 21),
 def featureTracking(image_ref, image_cur, px_ref):
     kp2, st, err = cv2.calcOpticalFlowPyrLK(image_ref, image_cur, px_ref, None,
                                             **lk_params)  # shape: [k,2] [k,1] [k,1]
-    print(st.shape)
+    # print(st.shape)
     # print(st)
     st = st.reshape(st.shape[0])
     kp1 = px_ref[st == 1]
@@ -50,7 +50,7 @@ class VisualOdometry:
         self.focal = cam.fx
         self.pp = (cam.cx, cam.cy)
         self.trueX, self.trueY, self.trueZ = 0, 0, 0
-        self.detector = cv2.FastFeatureDetector_create(threshold=5000,
+        self.detector = cv2.FastFeatureDetector_create(threshold=10,
                                                        nonmaxSuppression=True)
         # with open(annotations) as f:
         #     self.annotations = f.readlines()
@@ -94,9 +94,11 @@ class VisualOdometry:
     def processFrame(self, frame_id):
         self.px_ref, self.px_cur = featureTracking(self.last_frame,
                                                    self.new_frame, self.px_ref)
-
+        if frame_id % 50 == 0:
+            print(self.px_cur.shape)
         if len(self.px_cur) < 1000:
-            self.frame_stage = STAGE_FIRST_FRAME
+            print('Short on features: ', self.px_cur.shape)
+            # self.frame_stage = STAGE_FIRST_FRAME
 
         E, mask = cv2.findEssentialMat(self.px_cur, self.px_ref,
                                        focal=self.focal, pp=self.pp,
@@ -104,7 +106,8 @@ class VisualOdometry:
                                        threshold=1.0)
         _, R, t, mask = cv2.recoverPose(E, self.px_cur, self.px_ref,
                                         focal=self.focal, pp=self.pp)
-        # TODO: write proper absoluteScare
+
+        # TODO: write proper absoluteScale
         # absolute_scale = self.getAbsoluteScale(frame_id)
         absolute_scale = 10
         if absolute_scale > 0.1:
@@ -123,9 +126,8 @@ class VisualOdometry:
         # cv2.imshow('Nice', img)
         # cv2.waitKey()
 
-        assert (img.ndim == 2 and img.shape[0] == self.cam.height and
-                img.shape[
-                    1] == self.cam.width), "Frame: provided image has not the same size as the camera model or image is not grayscale"
+        # assert (img.ndim == 2 and img.shape[0] == self.cam.height and
+        #         img.shape[1] == self.cam.width), "Frame: provided image has not the same size as the camera model or image is not grayscale"
         self.new_frame = img
         if self.frame_stage == STAGE_DEFAULT_FRAME:
             self.processFrame(frame_id)
