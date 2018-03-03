@@ -1,4 +1,4 @@
-update=29.12.2017 23:10:12
+update=25/02/2018 22:36:00
 version=1
 last_client=kicad
 [pcbnew]
@@ -39,8 +39,6 @@ LibName15=pga_sockets
 LibName16=valves
 LibName17=Libraries/arduino_shields
 LibDir=
-[general]
-version=1
 [cvpcb]
 version=1
 NetIExt=net
@@ -84,3 +82,15 @@ LibName31=valves
 LibName32=shield_arduino
 LibName33=arduino_shieldsNCL
 LibName34=Libraries/Relay
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=Pcbnew
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
+[general]
+version=1
