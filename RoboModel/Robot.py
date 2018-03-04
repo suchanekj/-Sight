@@ -68,7 +68,6 @@ class Robot:
                     ultra_sen[i] = int(us.split(',')[i])
 
 
-
 R = Robot()
 print('ROBOTO: ', R.t)
 
