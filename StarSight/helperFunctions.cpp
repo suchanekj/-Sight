@@ -1,7 +1,3 @@
-//
-// Created by ronald on 18.2.17.
-//
-
 #include "helperFunctions.h"
 
 struct coords {

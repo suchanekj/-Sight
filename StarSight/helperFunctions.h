@@ -1,7 +1,3 @@
-//
-// Created by ronald on 18.2.17.
-//
-
 #ifndef MAIN_HELPERFUNCTIONS_H
 #define MAIN_HELPERFUNCTIONS_H
 

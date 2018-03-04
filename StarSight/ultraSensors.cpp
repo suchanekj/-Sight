@@ -1,7 +1,3 @@
-//
-// Created by ronald on 17.2.17.
-//
-
 #include "ultraSensors.h"
 
 int US[8];

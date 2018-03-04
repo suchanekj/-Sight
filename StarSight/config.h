@@ -1,9 +1,5 @@
-//
-// Created by ronald on 17.2.17.
-//
-
-#ifndef OCTOSIGHT_CONFIG_H
-#define OCTOSIGHT_CONFIG_H
+#ifndef STARSIGHT_CONFIG_H
+#define STARSIGHT_CONFIG_H
 
 //#include "Arduino.h"
 
@@ -25,6 +21,7 @@ const float timeMod = 8000;
 const int speedMod = 255;
 
 const int flameLimit[5] = {700, 500, 800, 650, 650}; //0(FIRE)-1024(DARKNESSS)
+#define flameMedian 5 //number of last values to make median of
 
 #define wallLimit 50
 
@@ -58,54 +55,44 @@ const int blackWhiteDiff = 150; //the higher, the darker
 
 //output
 
-//steppers
-#define leftDirPin 52
-#define leftStepPin 53
-#define rightDirPin 50
-#define rightStepPin 51
-
 //normal motors
-#define leftPower 10
+#define leftPower 7
 #define rightPower 11
-#define leftDir 9
+#define leftDir 6
 #define rightDir 13
 
 //fan
-#define fanPin 8
+#define fanPin 34
 
 //input analog
 
 //IR candle from right to left
-#define IR0Pin A4
-#define IR1Pin A2
-#define IR2Pin A3
-#define IR3Pin A6
-#define IR4Pin A0
+#define IR0Pin A10
+#define IR1Pin A11
+#define IR2Pin A12
+#define IR3Pin A13
+#define IR4Pin A14
 
 //input digital
 
 //ultra sound from right to left
-#define US0inPin 19
-#define US0outPin 14
+#define US0inPin 21
+#define US0outPin 22
 #define US1inPin 20
-#define US1outPin 15
-#define US2inPin 18
-#define US2outPin 16
-#define US3inPin 3
-#define US3outPin 17
+#define US1outPin 24
+#define US2inPin 19
+#define US2outPin 26
+#define US3inPin 18
+#define US3outPin 28
 
 //IR line from right to left
-#define line0Pin A14
-#define line1Pin A15
-#define line2Pin A13
-#define line3Pin A8
-#define line4Pin A11
-
-//bumper from right to left
-#define bmp0Pin 41
-#define bmp1Pin 40
+#define line0Pin A1
+#define line1Pin A2
+#define line2Pin A3
+#define line3Pin A4
+#define line4Pin A5
 
 //switch
 #define powerPin 1
 
-#endif //OCTOSIGHT_CONFIG_H
+#endif //STARSIGHT_CONFIG_H

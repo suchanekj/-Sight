@@ -1,9 +1,5 @@
-//
-// Created by ronald on 17.2.17.
-//
-
-#ifndef OCTOSIGHT_UTRASENSORS_H
-#define OCTOSIGHT_UTRASENSORS_H
+#ifndef STARSIGHT_UTRASENSORS_H
+#define STARSIGHT_UTRASENSORS_H
 
 #include "Arduino.h"
 
@@ -21,4 +17,4 @@ void US1();
 void US2();
 void US3();
 
-#endif //OCTOSIGHT_UTRASENSORS_H
+#endif //STARSIGHT_UTRASENSORS_H

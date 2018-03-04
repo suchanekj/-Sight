@@ -1,9 +1,5 @@
-//
-// Created by ronald on 17.2.17.
-//
-
-#ifndef OCTOSIGHT_OTHERSENSORS_H
-#define OCTOSIGHT_OTHERSENSORS_H
+#ifndef STARSIGHT_OTHERSENSORS_H
+#define STARSIGHT_OTHERSENSORS_H
 
 #include "Arduino.h"
 
@@ -24,4 +20,4 @@ void runSensors();
 
 void printSensors();
 
-#endif //OCTOSIGHT_OTHERSENSORS_H
+#endif //STARSIGHT_OTHERSENSORS_H
