@@ -34,6 +34,7 @@ class Robot:
         self.wall = Array('f', [0] * 5)
         self.port = 4200
         self.t = 0
+        self.mot = serial.Serial('/dev/ttyUSB0')
 
         # Constants
         self.VALID_US = 100
@@ -140,41 +141,39 @@ class Robot:
 
     def go_test(self, l, r):
         print('Going')
-        with serial.Serial('/dev/ttyUSB0', self.port) as mot:
-            mot.write(b'L50A')
-            mot.write(b'R50A')
-            sleep(5)
-            mot.write(b'L0A')
-            mot.write(b'R0A')
+
+        self.mot.write(b'L50A')
+        self.mot.write(b'R50A')
+        sleep(5)
+        self.mot.write(b'L0A')
+        self.mot.write(b'R0A')
 
     def go(self, ln, rot=0, end=(lambda: 1)):
         t_left = 1  # TODO: well calculated time
         step = 0.05
 
-        with serial.Serial('/dev/ttyUSB0', self.port) as mot:
-            mot.write(b'L512A')
-            mot.write(b'R256A')
-            while end() and t_left > 0:
-                t_left -= step
-                sleep(step)
-                self.get_state()
-            mot.write(b'L0A')
-            mot.write(b'R0A')
+        self.mot.write(b'L512A')
+        self.mot.write(b'R256A')
+        while end() and t_left > 0:
+            t_left -= step
+            sleep(step)
+            self.get_state()
+        self.mot.write(b'L0A')
+        self.mot.write(b'R0A')
 
     def go_while(self, ln, rot=0, end=(lambda: 0)):
         # TODO: rot == 1 left, rot == -1 right
         t_left = 15
         step = 0.05
 
-        with serial.Serial('/dev/ttyUSB0') as mot:
-            mot.write('L512A')
-            mot.write('R256A')
-            while end() and t_left > 0:
-                t_left -= step
-                sleep(step)
-                self.get_state()
-            mot.write('L0A')
-            mot.write('R0A')
+        self.mot.write('L512A')
+        self.mot.write('R256A')
+        while end() and t_left > 0:
+            t_left -= step
+            sleep(step)
+            self.get_state()
+        self.mot.write('L0A')
+        self.mot.write('R0A')
 
     def blow_fans(self):
         # TODO: write code
