@@ -92,15 +92,20 @@ class Robot:
 
     def main_cycle(self):
         while 1:
+            sleep(0.01)
             if self.ultra_sen[1] < 10:
                 self.ard.write(b'1')
                 sleep(5)
                 self.ard.write(b'0')
                 sleep(5)
+                continue
+            else:
+                continue
             if self.state == S.normal:
                 self.go(10, 0)
                 self.get_state()
                 continue
+
             if self.state == S.solve_candle:
                 self.solve_candle()
             if self.state == S.after_candle:
