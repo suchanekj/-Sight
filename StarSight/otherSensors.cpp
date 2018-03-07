@@ -3,12 +3,16 @@
 int line[5];
 int lineRaw[5];
 int lineMed[5][lineMedian];
-int lineLastMed = 0;
+int lineLastMed[5] = {0};
 
 int flame[5];
 int flameRaw[5];
 int flameMed[5][flameMedian];
-int flameLastMed = 0;
+int flameLastMed[5] = {0};
+
+int on;
+
+int batt[2];
 
 void initSensors() {
     for(int i = 0; i < 5; i++) line[i] = 0;
@@ -29,8 +33,8 @@ void runSensors() {
     flameRaw[4] = analogRead(IR4Pin);
     int i;
     for (i = 0; i < 5; i++) {
-        flameMed[i][flameLastMed] = flameRaw[i];
-        flameLastMed = (flameLastMed + 1) % flameMedian;
+        flameMed[i][flameLastMed[i]] = flameRaw[i];
+        flameLastMed[i] = (flameLastMed[i] + 1) % flameMedian;
         if (median(flameMed[i], flameMedian) > flameLimit[i]) {
           flame[i] = 1;
         }
@@ -40,8 +44,8 @@ void runSensors() {
     }
 
     for (i = 0; i < 5; i++) {
-        lineMed[i][lineLastMed] = lineRaw[i];
-        lineLastMed = (lineLastMed + 1) % lineMedian;
+        lineMed[i][lineLastMed[i]] = lineRaw[i];
+        lineLastMed[i] = (lineLastMed[i] + 1) % lineMedian;
         if (median(lineMed[i], lineMedian) < whiteThreshold) {
           line[i] = 1;
         }
@@ -50,8 +54,12 @@ void runSensors() {
         }
     }
 
+    on = digitalRead(powerPin);
+
+    batt[0] = analogRead(battPin1) * 15;
+    batt[1] = analogRead(battPin2) * 15;
+
     runUltra();
-    //printSensors();
 }
 
 void printSensors() {
@@ -90,8 +98,14 @@ void printSensors() {
     Serial.print(USdis[1]);
     Serial.print(";");
     Serial.print(USdis[2]);
-    Serial.print("|");
+    Serial.print(";");
     Serial.print(USdis[3]);
+    Serial.print("|");
+    Serial.print(on);
+    Serial.print("|");
+    Serial.print(batt[0]);
+    Serial.print(";");
+    Serial.print(batt[1]);
     Serial.println();
 }
 

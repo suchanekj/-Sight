@@ -20,7 +20,7 @@ const float leftSpeedMod = 1;
 const float timeMod = 8000;
 const int speedMod = 255;
 
-const int flameLimit[5] = {700, 500, 800, 650, 650}; //0(FIRE)-1024(DARKNESSS)
+const int flameLimit[5] = {900, 0, 800, 800, 800}; //0(FIRE)-1024(DARKNESSS)
 #define flameMedian 5 //number of last values to make median of
 
 #define wallLimit 50
@@ -93,6 +93,10 @@ const int blackWhiteDiff = 150; //the higher, the darker
 #define line4Pin A5
 
 //switch
-#define powerPin 1
+#define powerPin 32
+
+//battery
+#define battPin1 A6
+#define battPin2 A7
 
 #endif //STARSIGHT_CONFIG_H

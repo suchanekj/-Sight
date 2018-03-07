@@ -47,7 +47,11 @@ void setup() {
     pinMode(line4Pin, INPUT);
 
     //switch
-//    pinMode(powerPin, INPUT);
+    pinMode(powerPin, INPUT_PULLUP);
+  
+    //battery
+    pinMode(battPin1, INPUT);
+    pinMode(battPin2, INPUT);
 
     initUSB();
 

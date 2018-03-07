@@ -18,7 +18,7 @@ float angleToLine(int a, int b) {
 }
 
 int median(int *field, int len) {
-    int tmpField[USmedian];
+    int tmpField[USmedian + flameMedian + lineMedian];
     for (int i = 0; i < len; i++) {
         tmpField[i] = field[i];
     }

@@ -13,6 +13,7 @@
 extern int line[5];
 extern int flame[5];
 extern bool bmp[2];
+extern int on;
 
 void initSensors();
 
