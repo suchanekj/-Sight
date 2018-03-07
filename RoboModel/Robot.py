@@ -141,11 +141,11 @@ class Robot:
     def go_test(self, l, r):
         print('Going')
         with serial.Serial('/dev/ttyUSB0', self.port) as mot:
-            mot.write('L512A')
-            mot.write('R256A')
+            mot.write(b'L512A')
+            mot.write(b'R256A')
             sleep(5)
-            mot.write('L0A')
-            mot.write('R0A')
+            mot.write(b'L0A')
+            mot.write(b'R0A')
 
     def go(self, ln, rot=0, end=(lambda: 1)):
         t_left = 1  # TODO: well calculated time
