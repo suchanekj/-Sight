@@ -71,6 +71,7 @@ class Robot:
                 fs, ls, us, _, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
+                continue
 
             fs = fs.replace(' ', '').split(';')
             ls = ls.replace(' ', '').split(';')
