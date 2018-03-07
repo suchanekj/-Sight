@@ -44,8 +44,8 @@ class Robot:
         print('Init complete!')
 
         self.start_listening()
-        self.go_test(0, 2)
-        # self.main_cycle()
+        # self.go_test(0, 2)
+        self.main_cycle()
 
 
     def start_listening(self):
@@ -93,7 +93,7 @@ class Robot:
 
     def main_cycle(self):
         while 1:
-            sleep(1)
+            sleep(0.01)
             print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
             if self.ultra_sen[1] < 10:
                 self.ard.write(b'1')
