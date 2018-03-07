@@ -41,11 +41,12 @@ class Robot:
 
         self.state = S.normal
 
+        print('Init complete!')
+
         self.start_listening()
         self.go_test(0, 2)
         # self.main_cycle()
 
-        print('Init complete!')
 
     def start_listening(self):
         listening = Process(target=self.listen_on_port,
