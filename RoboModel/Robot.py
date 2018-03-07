@@ -15,16 +15,6 @@ class S(Enum):
     after_candle = 4
 
 
-def loop_b(fire_sen):
-    while 1:
-        sleep(2)
-        fire_sen[0] += 1
-        print("b")
-
-
-processes = []
-
-
 class Robot:
 
     def __init__(self):
@@ -67,7 +57,7 @@ class Robot:
             # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                print('DEBUG: ', str(read_serial, 'ascii'))
+                # print('DEBUG: ', str(read_serial, 'ascii'))
                 fs, ls, us, _, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -103,9 +93,10 @@ class Robot:
             print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
             if self.ultra_sen[1] < 15:
                 print('It should be FUN!')
-                self.ard.write(b'1')
+                self.ard.write(b'1\r\n')
                 sleep(5)
-                self.ard.write(b'0')
+                print('End of FUN!')
+                self.ard.write(b'0\r\n')
                 sleep(5)
                 continue
             else:
