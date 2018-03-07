@@ -115,16 +115,16 @@ class Robot:
             return
         angle = sum / sees
         self.go(0, angle)
-        # self.go(10)
+        self.go(10)
 
     def go(self, l, r):
         print('Going')
         with serial.Serial('/dev/ttyUSB0', self.port) as mot:
-            mot.write('L512')
-            mot.write('R256')
+            mot.write('L512A')
+            mot.write('R256A')
             sleep(5)
-            mot.write('L0')
-            mot.write('R0')
+            mot.write('L0A')
+            mot.write('R0A')
 
     def get_state(self):
         if max(self.fire_sen[:]):
