@@ -86,26 +86,39 @@ class Robot:
             for i in range(len(ultra_sen)):
                 ultra_sen[i] = int(us[i])
 
+            # print('DEBUG: ', end='')
+            # for
+
 
     def main_cycle(self):
         while 1:
-            sleep(0.1)
-            print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
-            if self.ultra_sen[1] < 15:
-                print('It should be FUN!')
-                self.ard.write(b'1\r\n')
-                sleep(5)
-                print('End of FUN!')
-                self.ard.write(b'0\r\n')
-                sleep(5)
-                continue
-            else:
-                continue
+            # sleep(0.1)
+            # print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
+            # if self.ultra_sen[1] < 15:
+            #     print('It should be FUN!')
+            #     self.ard.write(b'1\r\n')
+            #     sleep(5)
+            #     print('End of FUN!')
+            #     self.ard.write(b'0\r\n')
+            #     sleep(5)
+            #     continue
+            # else:
+            #     continue
             if self.state == S.normal:
-                self.go(10, 0)
+                self.go(10, 0,
+                        lambda: self.ultra_sen[1] > 20
+                                and self.ultra_sen[2] > 20)
                 self.get_state()
                 continue
-
+            if self.state == S.solve_line:
+                self.go(10, 0,
+                        lambda: self.ultra_sen[1] > 20
+                                and self.ultra_sen[2] > 20)
+                self.get_state()
+                continue
+            else:
+                sleep(10)
+                continue
             if self.state == S.solve_candle:
                 self.solve_candle()
             if self.state == S.after_candle:
@@ -160,7 +173,7 @@ class Robot:
         self.mot.write(b'R0A')
 
     def go(self, ln, rot=0, end=(lambda: 1)):
-        t_left = 1  # TODO: well calculated time
+        t_left = ln  # TODO: well calculated time
         step = 0.05
 
         self.mot.write(b'L50A')
