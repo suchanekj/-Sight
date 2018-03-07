@@ -64,7 +64,7 @@ class Robot:
             # TODO: complete B, V
 
             print('DEBUG: ', str(read_serial, 'ascii'))
-            print('DEBUG: ', str(read_serial, 'ascii').split('|'))
+            # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
             fs, ls, us, _, _ = str(read_serial, 'ascii').split('|')
 
             fs = fs.replace(' ', '').split(';')
@@ -93,7 +93,8 @@ class Robot:
 
     def main_cycle(self):
         while 1:
-            sleep(0.01)
+            sleep(1)
+            print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
             if self.ultra_sen[1] < 10:
                 self.ard.write(b'1')
                 sleep(5)
