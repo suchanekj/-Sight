@@ -58,6 +58,7 @@ class Robot:
     def listen_on_port(self, fire_sen, line_sen, ultra_sen):
         print('Listening attemt')
         while 1:
+            sleep(0.01)
             read_serial = self.ard.readline()
             read_serial = self.ard.readline()
             # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
@@ -93,9 +94,10 @@ class Robot:
 
     def main_cycle(self):
         while 1:
-            sleep(0.01)
+            sleep(0.1)
             print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
-            if self.ultra_sen[1] < 10:
+            if self.ultra_sen[1] < 15:
+                print('It should be FUN!')
                 self.ard.write(b'1')
                 sleep(5)
                 self.ard.write(b'0')
