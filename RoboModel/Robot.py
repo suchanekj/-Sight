@@ -32,9 +32,9 @@ class Robot:
         self.line_sen = Array('b', [0] * 5)
         self.ultra_sen = Array('i', [0] * 4)
         self.wall = Array('f', [0] * 5)
-        self.port = 4200
         self.t = 0
         self.mot = serial.Serial('/dev/ttyUSB0')
+        self.ard = serial.Serial('/dev/ttyACM0')
 
         # Constants
         self.VALID_US = 100
@@ -56,41 +56,44 @@ class Robot:
 
     def listen_on_port(self, fire_sen, line_sen, ultra_sen):
         print('Listening attemt')
-        # with serial.Serial('/dev/ttyACM0', self.port) as ser:
-        if 1:
-            print('Listening successful')
-            while 1:
-                sleep(1)
-                # read_serial = ser.readline()
-                read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
-                fs, ls, us = str(read_serial, 'ascii').split('|')
+        while 1:
+            sleep(1)
+            read_serial = self.ard.readline()
+            # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
+            # TODO: complete B, V
+            fs, ls, us, _, _ = str(read_serial, 'ascii').split('|')
 
-                fs = fs.replace(' ', '').split(',')
-                ls = ls.replace(' ', '').split(',')
-                us = us.replace(' ', '').split(',')
+            fs = fs.replace(' ', '').split(',')
+            ls = ls.replace(' ', '').split(',')
+            us = us.replace(' ', '').split(',')
 
-                invalid = 0
-                for x in fs + ls:
-                    if x not in ['0', '1']:
-                        print('Invalid', x)
-                        invalid = 1
-                for x in us:
-                    if not x.isdigit():
-                        print('Invalid', x)
-                        invalid = 1
-                if invalid:
-                    print('Invalid input: ', str(read_serial, 'ascii'))
-                    continue
+            invalid = 0
+            for x in fs + ls:
+                if x not in ['0', '1']:
+                    print('Invalid', x)
+                    invalid = 1
+            for x in us:
+                if not x.isdigit():
+                    print('Invalid', x)
+                    invalid = 1
+            if invalid:
+                print('Invalid input: ', str(read_serial, 'ascii'))
+                continue
 
-                for i in range(len(fire_sen)):
-                    fire_sen[i] = (fs[i] == '1')
-                    line_sen[i] = (ls[i] == '1')
-                for i in range(len(ultra_sen)):
-                    ultra_sen[i] = int(us[i])
+            for i in range(len(fire_sen)):
+                fire_sen[i] = (fs[i] == '1')
+                line_sen[i] = (ls[i] == '1')
+            for i in range(len(ultra_sen)):
+                ultra_sen[i] = int(us[i])
+
 
     def main_cycle(self):
         while 1:
-
+            if self.ultra_sen[1] < 10:
+                self.ard.write(b'1')
+                sleep(5)
+                self.ard.write(b'0')
+                sleep(5)
             if self.state == S.normal:
                 self.go(10, 0)
                 self.get_state()
