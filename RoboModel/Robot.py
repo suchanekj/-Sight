@@ -166,7 +166,7 @@ class Robot:
         t_left = 15
         step = 0.05
 
-        with serial.Serial('/dev/ttyUSB0', self.port) as mot:
+        with serial.Serial('/dev/ttyUSB0') as mot:
             mot.write('L512A')
             mot.write('R256A')
             while end() and t_left > 0:
