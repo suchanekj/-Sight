@@ -12,6 +12,7 @@ class S(Enum):
     solve_candle = 1
     solve_wall = 2
     solve_line = 3
+    after_candle = 4
 
 
 def loop_b(fire_sen):
@@ -40,7 +41,7 @@ class Robot:
         self.state = S.normal
 
         self.start_listening()
-        self.go(0, 2)
+        self.go_test(0, 2)
         # self.main_cycle()
 
         print('Init complete!')
@@ -48,7 +49,7 @@ class Robot:
     def start_listening(self):
         listening = Process(target=self.listen_on_port,
                             args=(
-                            self.fire_sen, self.line_sen, self.ultra_sen))
+                                self.fire_sen, self.line_sen, self.ultra_sen))
         listening.start()
         print('YayX')
 
@@ -88,14 +89,18 @@ class Robot:
 
     def main_cycle(self):
         while 1:
+
             if self.state == S.normal:
                 self.go(10, 0)
                 self.get_state()
                 continue
             if self.state == S.solve_candle:
                 self.solve_candle()
+            if self.state == S.after_candle:
+                self.after_candle()
 
     def solve_candle(self):
+        # TODO: set actual angles
         ang2candle = {
             0: 60,
             1: 45,
@@ -104,20 +109,36 @@ class Robot:
             4: -60,
         }
 
-        sees = 0
-        sum = 0
-        for x in range(self.fire_sen[:]):
-            if self.fire_sen[x]:
-                sees += 1
-                sum += ang2candle[x]
-        if sees == 0:
-            print('No candle in solve_candle')
-            return
-        angle = sum / sees
-        self.go(0, angle)
-        self.go(10)
+        while not max(self.line_sen[:]):
+            sees = 0
+            sm = 0
+            for x in range(self.fire_sen[:]):
+                if self.fire_sen[x]:
+                    sees += 1
+                    sm += ang2candle[x]
+            if sees == 0:
+                print('No candle in solve_candle')
+                return
+            angle = sm / sees
+            self.go(0, angle)
+            self.go(10, 0,
+                    lambda: self.fire_sen[2] is 1
+                            and self.fire_sen[3] is 0
+                            and self.fire_sen[1] is 0)
 
-    def go(self, l, r):
+        # has to be on the line of the candle
+        self.blow_fans()
+        self.state = S.after_candle
+
+    def after_candle(self):
+        self.go(-40)
+        self.go(0, 80)
+
+        self.go_while(0, -1, lambda: self.ultra_sen[1] < 60
+                                     and self.ultra_sen[2] < 60)
+
+
+    def go_test(self, l, r):
         print('Going')
         with serial.Serial('/dev/ttyUSB0', self.port) as mot:
             mot.write('L512A')
@@ -125,6 +146,39 @@ class Robot:
             sleep(5)
             mot.write('L0A')
             mot.write('R0A')
+
+    def go(self, ln, rot=0, end=(lambda: 1)):
+        t_left = 1  # TODO: well calculated time
+        step = 0.05
+
+        with serial.Serial('/dev/ttyUSB0', self.port) as mot:
+            mot.write(b'L512A')
+            mot.write(b'R256A')
+            while end() and t_left > 0:
+                t_left -= step
+                sleep(step)
+                self.get_state()
+            mot.write(b'L0A')
+            mot.write(b'R0A')
+
+    def go_while(self, ln, rot=0, end=(lambda: 0)):
+        # TODO: rot == 1 left, rot == -1 right
+        t_left = 15
+        step = 0.05
+
+        with serial.Serial('/dev/ttyUSB0', self.port) as mot:
+            mot.write('L512A')
+            mot.write('R256A')
+            while end() and t_left > 0:
+                t_left -= step
+                sleep(step)
+                self.get_state()
+            mot.write('L0A')
+            mot.write('R0A')
+
+    def blow_fans(self):
+        # TODO: write code
+        pass
 
     def get_state(self):
         if max(self.fire_sen[:]):
