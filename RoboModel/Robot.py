@@ -34,8 +34,8 @@ class Robot:
         print('Init complete!')
 
         self.start_listening()
-        # self.go_test(0, 2)
-        self.main_cycle()
+        self.go_test(0, 2)
+        # self.main_cycle()
 
 
     def start_listening(self):
