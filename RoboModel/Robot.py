@@ -92,8 +92,9 @@ class Robot:
 
     def main_cycle(self):
         while 1:
-            # sleep(0.1)
-            # print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
+            sleep(0.1)
+            print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
+            print('DEBUG: State: ', self.state.name)
             # if self.ultra_sen[1] < 15:
             #     print('It should be FUN!')
             #     self.ard.write(b'1\r\n')
@@ -117,7 +118,8 @@ class Robot:
                 self.get_state()
                 continue
             else:
-                sleep(10)
+                sleep(5)
+                self.state = S.normal
                 continue
             if self.state == S.solve_candle:
                 self.solve_candle()
