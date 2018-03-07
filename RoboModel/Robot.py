@@ -57,7 +57,7 @@ class Robot:
     def listen_on_port(self, fire_sen, line_sen, ultra_sen):
         print('Listening attemt')
         while 1:
-            sleep(1)
+            read_serial = self.ard.readline()
             read_serial = self.ard.readline()
             # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
             # TODO: complete B, V
@@ -66,9 +66,9 @@ class Robot:
             print('DEBUG: ', str(read_serial, 'ascii').split('|'))
             fs, ls, us, _, _ = str(read_serial, 'ascii').split('|')
 
-            fs = fs.replace(' ', '').split(',')
-            ls = ls.replace(' ', '').split(',')
-            us = us.replace(' ', '').split(',')
+            fs = fs.replace(' ', '').split(';')
+            ls = ls.replace(' ', '').split(';')
+            us = us.replace(' ', '').split(';')
 
             invalid = 0
             for x in fs + ls:
@@ -158,8 +158,8 @@ class Robot:
         t_left = 1  # TODO: well calculated time
         step = 0.05
 
-        self.mot.write(b'L512A')
-        self.mot.write(b'R256A')
+        self.mot.write(b'L50A')
+        self.mot.write(b'R50A')
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
@@ -172,8 +172,8 @@ class Robot:
         t_left = 15
         step = 0.05
 
-        self.mot.write('L512A')
-        self.mot.write('R256A')
+        self.mot.write('L50A')
+        self.mot.write('R50A')
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
