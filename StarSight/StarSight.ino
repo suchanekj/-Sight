@@ -53,6 +53,9 @@ void setup() {
     pinMode(battPin1, INPUT);
     pinMode(battPin2, INPUT);
 
+    //led
+    pinMode(ledPin, OUTPUT);
+
     initUSB();
 
     initSensors();
@@ -64,6 +67,8 @@ void setup() {
 //    for(int i = 0; i < 5; i++) line[i] = 0;
 //    printSensors();
     digitalWrite(fanPin, LOW);
+
+    digitalWrite(ledPin, HIGH);
 }
 
 int go(float l, float angle) {
@@ -178,7 +183,10 @@ void loop() {
     runSensors();
     printSensors();
     executeOrder();
-
+    if(batt[0] < 10800 && batt[0] > 8500 || batt[0] < 7100) digitalWrite(ledPin, HIGH);
+    else if(batt[1] < 10800 && batt[1] > 8500 || batt[1] < 7100) digitalWrite(ledPin, HIGH); 
+    else digitalWrite(ledPin, LOW);
+    
 ////    go((1 + 2)/180.0*5, (-1 + 2) / (2*M_PI)*1);
 //    analogWrite(leftPower, 255);
 //    analogWrite(rightPower, 255);

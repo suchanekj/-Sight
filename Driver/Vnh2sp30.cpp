@@ -33,7 +33,7 @@
  *  2. Duals motors http://www.aliexpress.com/item/Free-Shipping-Monster-Moto-Shield-VNH2SP30-stepper-motor-driver-module-high-current-30A-for-arduino/1992619346.html
  */
  
-#include <Vnh2sp30.h>
+#include "Vnh2sp30.h"
 
 #define MAXDIGPIN 53
 #define MINANAPIN A0

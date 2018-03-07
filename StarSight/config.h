@@ -99,4 +99,7 @@ const int blackWhiteDiff = 150; //the higher, the darker
 #define battPin1 A6
 #define battPin2 A7
 
+//led
+#define ledPin 13
+
 #endif //STARSIGHT_CONFIG_H
