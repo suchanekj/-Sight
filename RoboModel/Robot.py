@@ -61,6 +61,9 @@ class Robot:
             read_serial = self.ard.readline()
             # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
             # TODO: complete B, V
+
+            print('DEBUG: ', str(read_serial, 'ascii'))
+            print('DEBUG: ', str(read_serial, 'ascii').split('|'))
             fs, ls, us, _, _ = str(read_serial, 'ascii').split('|')
 
             fs = fs.replace(' ', '').split(',')
