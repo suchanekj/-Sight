@@ -141,8 +141,8 @@ class Robot:
     def go_test(self, l, r):
         print('Going')
         with serial.Serial('/dev/ttyUSB0', self.port) as mot:
-            mot.write(b'L512A')
-            mot.write(b'R256A')
+            mot.write(b'L50A')
+            mot.write(b'R50A')
             sleep(5)
             mot.write(b'L0A')
             mot.write(b'R0A')
