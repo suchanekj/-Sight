@@ -1,4 +1,3 @@
-
 /**
  * Created by Olavi Kamppari on 3/19/2016.
  */
@@ -47,11 +46,13 @@ void loop() {
         if(mot == 0) {
           left = val * neg;
           if(left) mtrL.run(left);
+          else if(left) mtrL.coast();
           else mtrL.stop();
         }
         else {
           right = val * neg;
-          if(right) mtrR.run(right);
+          if(right >= 10) mtrR.run(right);
+          else if(right) mtrR.coast();
           else mtrR.stop();
         }
         state = 0;
