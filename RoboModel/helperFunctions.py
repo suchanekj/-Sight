@@ -18,6 +18,7 @@ LINE_POS = [  # from right to left
 
 
 def angleToLine(a, b):
+    print('DEBUG: AngleToLine: ', a, b)
     k = (LINE_POS[a].y - LINE_POS[b].y) / (LINE_POS[a].x - LINE_POS[b].x)
 
     return math.asin(k / math.sqrt(
