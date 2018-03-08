@@ -90,7 +90,7 @@ class Robot:
                 print('ERROR')
                 continue
 
-            self.but[0] = but
+            self.but[0] = int(but)
             fs = fs.replace(' ', '').split(';')
             ls = ls.replace(' ', '').split(';')
             us = us.replace(' ', '').split(';')
