@@ -36,7 +36,7 @@ class Robot:
         self.MOTORS_ENABLED = 1
         self.ROTATION_SPEED = 42
         self.ROT_MOD = 50 # TODO: make great consts
-        self.LEN_MOD = 50
+        self.LEN_MOD = 1
         self.L_R_RATIO = 6.9 / 5
         self.ACCELERATION = 5
 
@@ -64,7 +64,7 @@ class Robot:
         # print('AHOJ')
         ########################
 
-        self.go(0, 10,)
+        self.go(10, 0,)
         print('DEBUG: GO IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
@@ -295,8 +295,8 @@ class Robot:
             print('ERROR LN and ROT'*100)
             return
 
-        t_left = time
 
+        t_left = time
         print('DEBUG: speedl, speedr: ', speedl, speedr)
         self.go_basic(speedl, speedr)
         print('DEBUG: GOING: time: ', time)
