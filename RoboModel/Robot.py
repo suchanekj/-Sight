@@ -32,6 +32,8 @@ class Robot:
         # Constants
         self.VALID_US = 100
         self.MOTORS_ENABLED = 1
+        self.ROT_MOD = 1
+        self.LEN_MOD = 1
 
         self.state = S.normal
 
@@ -197,7 +199,13 @@ class Robot:
 
     def go_basic(self, l, r):
         if not self.MOTORS_ENABLED:
+            self.mot.write(b'L0A')
+            self.mot.write(b'R0A')
             return
+        if l == 0:
+            self.left = 0
+        if r == 0:
+            self.right = 0
         l = ((l / 50) ** 2,32) * 70 / 5
         while l != self.left or r != self.right:
             if self.left < l: self.left += 10
@@ -213,12 +221,29 @@ class Robot:
     def go(self, ln, rot=0, speed=10, end=(lambda: 1)):
         if not self.MOTORS_ENABLED:
             return
-        t_left = ln  # TODO: well calculated time
         step = 0.05
 
         if not end():
             return
-        self.go_basic(speed  - rot, speed + rot)
+        speedl = 0
+        speedr = 0
+        time = 0
+        if ln == 0:
+            if rot > 0:
+                speedl = -speed
+                speedr = speed
+            else:
+                speedl = -speed
+                speedr = speed
+            time = abs(rot / speed * ROT_MOD)
+        else if rot == 0:
+            speedl = speed
+            speedr = speed
+            time = abs(ln / speed * LEN_MOD)
+        
+        t_left = time
+        
+        self.go_basic(speed - rot, speed + rot)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)

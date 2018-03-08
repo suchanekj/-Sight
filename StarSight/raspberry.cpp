@@ -13,8 +13,9 @@ void executeOrder() {
     char inChar = (char)Serial.read();
     if(inChar == '0') digitalWrite(fanPin, LOW);
     if(inChar == '1') digitalWrite(fanPin, HIGH);
-    if(inChar == 'Y') digitalWrite(fanPin, LOW);
-    if(inChar == 'N') digitalWrite(fanPin, HIGH);
+    if(inChar == 'Y') digitalWrite(fanPin, HIGH);
+    if(inChar == 'N') digitalWrite(fanPin, LOW);
+    Serial.print(inChar);
     // add it to the inputString:
 //    inputString += inChar;
     // if the incoming character is a newline, set a flag so the main loop can

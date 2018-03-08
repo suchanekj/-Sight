@@ -181,7 +181,10 @@ void loop() {
 
     //findCandle();
     runSensors();
+    runSensors();
     printSensors();
+    runSensors();
+    runSensors();
     executeOrder();
     if(batt[0] < 10800 && batt[0] > 8500 || batt[0] < 7100) digitalWrite(ledPin, HIGH);
     else if(batt[1] < 10800 && batt[1] > 8500 || batt[1] < 7100) digitalWrite(ledPin, HIGH); 

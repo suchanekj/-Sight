@@ -45,14 +45,14 @@ void loop() {
       if(inChar < 48 || inChar > 57) {
         if(mot == 0) {
           left = val * neg;
-          if(left) mtrL.run(left);
-          else if(left) mtrL.coast();
+          if(left > 1 || left < -1) mtrL.run(left);
+          else if(left != 0) mtrL.coast();
           else mtrL.stop();
         }
         else {
           right = val * neg;
-          if(right >= 10) mtrR.run(right);
-          else if(right) mtrR.coast();
+          if(right > 1 || right < -1) mtrR.run(right);
+          else if(right != 0) mtrR.coast();
           else mtrR.stop();
         }
         state = 0;
