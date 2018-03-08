@@ -14,7 +14,6 @@ class S(Enum):
     solve_line = 3
     after_candle = 4
 
-
 class Robot:
 
     def __init__(self):
@@ -174,11 +173,15 @@ class Robot:
     def go_test(self, l, r):
         print('Going')
 
-        self.mot.write(b'L50A')
-        self.mot.write(b'R50A')
-        sleep(2)
+        self.mot.write(b'L200A')
+        self.mot.write(b'R200A')
+        sleep(0.1)
+        self.mot.write(b'L200A')
+        self.mot.write(b'R200A')
+        sleep(0.5)
         self.mot.write(b'L0A')
         self.mot.write(b'R0A')
+        sleep(6)
 
     def go(self, ln, rot=0, end=(lambda: 1)):
         t_left = ln  # TODO: well calculated time
