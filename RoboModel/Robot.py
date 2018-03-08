@@ -244,7 +244,7 @@ class Robot:
             self.right = 0
         print('DEBUG:', l)
         # l = int(((l / 50) ** 2.32) * 70 / 5)
-        l = l * 8 / 5
+        l = l * 7.5 / 5
         print('DEBUG:', l)
         while l != self.left or r != self.right:
             if self.left < l: self.left += 10
