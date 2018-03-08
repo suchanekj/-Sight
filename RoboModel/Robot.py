@@ -244,7 +244,7 @@ class Robot:
             self.right = 0
         print('DEBUG:', l)
         # l = int(((l / 50) ** 2.32) * 70 / 5)
-        l = l * 7.3 / 5
+        l = l * 7.0 / 5
         print('DEBUG:', l)
         while l != self.left or r != self.right:
             if self.left < l: self.left += 10
@@ -284,7 +284,8 @@ class Robot:
 
         self.go_basic(-speedl, speedr)
         # print('GOIGN!!!!'*100)
-        while end() and t_left > 0:
+        # while end() and t_left > 0:
+        while max(self.fire_sen[:]) == 0 and t_left > 0:
             print('DEBUG: ', self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
