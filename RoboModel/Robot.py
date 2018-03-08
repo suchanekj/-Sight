@@ -34,7 +34,7 @@ class Robot:
         self.VALID_US = 100
         self.MOTORS_ENABLED = 1
         self.ROTATION_SPEED = 42
-        self.ROT_MOD = 100
+        self.ROT_MOD = 1000
         self.LEN_MOD = 1
 
         self.state = S.normal
@@ -175,22 +175,22 @@ class Robot:
             4: -90,
         }
 
-        # while max(self.line_sen[:]) != 1 and max(self.fire_sen[:]) == 1:
-        #     sees = 0
-        #     sm = 0
-        #     for x in range(len(self.fire_sen[:])):
-        #         if self.fire_sen[x]:
-        #             sees += 1
-        #             sm += ang2candle[x]
-        #     if sees == 0:
-        #         print('No candle in solve_candle')
-        #         return
-        #     angle = sm / sees
-        #     self.go(0, angle)
-        #     self.go(10, 0, 100,
-        #             lambda: self.fire_sen[2] is 1
-        #                     and self.fire_sen[3] is 0
-        #                     and self.fire_sen[1] is 0)
+        while max(self.line_sen[:]) != 1 and max(self.fire_sen[:]) == 1:
+            sees = 0
+            sm = 0
+            for x in range(len(self.fire_sen[:])):
+                if self.fire_sen[x]:
+                    sees += 1
+                    sm += ang2candle[x]
+            if sees == 0:
+                print('No candle in solve_candle')
+                return
+            angle = sm / sees
+            self.go(0, angle)
+            self.go(10, 0, 100,
+                    lambda: self.fire_sen[2] is 1
+                            and self.fire_sen[3] is 0
+                            and self.fire_sen[1] is 0)
 
         # has to be on the line of the candle
         self.blow_fans()
