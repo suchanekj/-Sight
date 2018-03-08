@@ -47,7 +47,6 @@ class Robot:
         self.MOTORS_MIN_SPEED = 16
         self.ACC_DELAY = 0.005
 
-
         # Other
         self.MIN_LEN_TO_WALL = 50
 
@@ -89,7 +88,7 @@ class Robot:
         # self.start_doing()
 
         # self.go(ln=10)
-        # self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
+        self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
 
         print('DEBUG: debug IS DONE')
         # self.go_test()
@@ -268,7 +267,7 @@ class Robot:
 
     def go_basic(self, l, r):
         self.tabs += 1
-        print('\t' * self.tabs, 'INFO: Entering \tgo_basic: ', l, r)
+        print('\t' * self.tabs, 'INFO: Entering | go_basic: ', l, r)
 
         if not self.MOTORS_ENABLED:
             self.mot.write(b'L0A')
@@ -301,13 +300,13 @@ class Robot:
         self.mot.write(('L' + str(int(self.left)) + 'A').encode('ascii'))
         self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
 
-        print('\t' * self.tabs, 'INFO: Leaving \tgo_basic')
+        print('\t' * self.tabs, 'INFO: Leaving | go_basic')
         self.tabs -= 1
 
     def go(self, ln=0, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
         self.tabs += 1
-        print('\n', '\t' * self.tabs, 'INFO:INFO: Entering \tgo')
+        print('\n', '\t' * self.tabs, 'INFO:INFO: Entering go')
 
         if not self.MOTORS_ENABLED:
             return
@@ -354,13 +353,14 @@ class Robot:
         print('DEBUG: STOP: end(): ', end())
         self.go_basic(0, 0)
         print('DEBUG: STOPPED')
-        
+
+        print('\t' * self.tabs, 'INFO: End of | go')
         self.tabs -= 1
 
     def go_slow(self, ln, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
         self.tabs += 1
-        print('\n', '\t' * self.tabs, 'INFO:INFO: Entering \tgo_slow')
+        print('\n', '\t' * self.tabs, 'INFO:INFO: Entering | go_slow')
 
         if not self.MOTORS_ENABLED:
             return
@@ -408,6 +408,7 @@ class Robot:
         self.go_basic(0, 0)
         print('DEBUG: STOPPED')
 
+        print('\t' * self.tabs, 'INFO: End of | go_slow')
         self.tabs -= 1
 
     def blow_fans(self):
