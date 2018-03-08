@@ -232,7 +232,7 @@ class Robot:
         if sum(self.line_sen[:]) >= 2:
             for a in range(len(self.line_sen[:])):
                 if self.line_sen[a] == 1:
-                    for b in range(a, len(self.line_sen[:])):
+                    for b in range(a+1, len(self.line_sen[:])):
                         if self.line_sen[b] == 1:
                             angle += hlp.angleToLine(a, b)
                             it += 1
