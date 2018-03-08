@@ -218,14 +218,14 @@ class Robot:
         t_left = 15
         step = 0.05
 
-        self.mot.write('L50A')
-        self.mot.write('R50A')
+        self.mot.write(b'L50A')
+        self.mot.write(b'R50A')
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
             self.get_state()
-        self.mot.write('L0A')
-        self.mot.write('R0A')
+        self.mot.write(b'L0A')
+        self.mot.write(b'R0A')
 
     def blow_fans(self):
         # TODO: write code
