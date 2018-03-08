@@ -121,7 +121,7 @@ class Robot:
             #     return
 
             if self.state == S.normal:
-                self.go(10, 0,
+                self.go(1, 0,
                         # end=lambda: self.ultra_sen[1] > 20
                         #             and self.ultra_sen[2] > 20
                         end=lambda: max(self.line_sen[:]) == 0
@@ -210,7 +210,7 @@ class Robot:
             self.mot.write(('R' + self.right + 'A').encode('ascii'))
             sleep(0.005)
 
-    def go(self, ln, rot=0, speed=100, end=(lambda: 1)):
+    def go(self, ln, rot=0, speed=10, end=(lambda: 1)):
         if not self.MOTORS_ENABLED:
             return
         t_left = ln  # TODO: well calculated time
@@ -218,26 +218,26 @@ class Robot:
 
         if not end():
             return
-        self.go_basic(self, speed  - rot, speed + rot)
+        self.go_basic(speed  - rot, speed + rot)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
             self.get_state()
-        self.go_basic(self, 0, 0)
+        self.go_basic(0, 0)
 
-    def go_while(self, ln, rot=0, end=(lambda: 0)):
+    def go_while(self, ln, rot=0, speed = 10, end=(lambda: 0)):
         if not self.MOTORS_ENABLED:
             return
             # TODO: rot == 1 left, rot == -1 right
         t_left = 15
         step = 0.05
 
-        go_basic(self, speed  - rot, speed + rot)
+        self.go_basic(speed  - rot, speed + rot)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
             self.get_state()
-        go_basic(self, 0, 0)
+        self.go_basic(0, 0)
 
     def blow_fans(self):
         # TODO: write code
