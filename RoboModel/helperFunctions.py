@@ -33,6 +33,8 @@ def angleToLine(a, b):
     angle = angle * 180 / math.pi
     print('DEBUG: angle celsius: ', angle)
 
+    return angle
+
     # print('DEBUG: pow1, pow2:', pow(k, 2), pow(LINE_POS[a].x - LINE_POS[b].x, 2))
     # print('DEBUG: sqrt:', math.sqrt(pow(k, 2) - pow(LINE_POS[a].x - LINE_POS[b].x, 2)))
     # print('DEBUG: asin: ', math.asin(k / math.sqrt(pow(k, 2) - pow(LINE_POS[a].x - LINE_POS[b].x, 2))))
