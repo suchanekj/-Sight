@@ -175,31 +175,31 @@ class Robot:
             4: -90,
         }
 
-        while max(self.line_sen[:]) != 1:
-            sees = 0
-            sm = 0
-            for x in range(len(self.fire_sen[:])):
-                if self.fire_sen[x]:
-                    sees += 1
-                    sm += ang2candle[x]
-            if sees == 0:
-                print('No candle in solve_candle')
-                return
-            angle = sm / sees
-            self.go(0, angle)
-            self.go(10, 0, 100,
-                    lambda: self.fire_sen[2] is 1
-                            and self.fire_sen[3] is 0
-                            and self.fire_sen[1] is 0)
+        # while max(self.line_sen[:]) != 1 and max(self.fire_sen[:]) == 1:
+        #     sees = 0
+        #     sm = 0
+        #     for x in range(len(self.fire_sen[:])):
+        #         if self.fire_sen[x]:
+        #             sees += 1
+        #             sm += ang2candle[x]
+        #     if sees == 0:
+        #         print('No candle in solve_candle')
+        #         return
+        #     angle = sm / sees
+        #     self.go(0, angle)
+        #     self.go(10, 0, 100,
+        #             lambda: self.fire_sen[2] is 1
+        #                     and self.fire_sen[3] is 0
+        #                     and self.fire_sen[1] is 0)
 
         # has to be on the line of the candle
         self.blow_fans()
-        self.go(0, 10,
-                end=lambda: self.fire_sen[4] == 0)
+        self.go(0, 10,)
+                # end=lambda: self.fire_sen[4] == 0)
         self.blow_fans()
 
-        self.go(0, -20,
-                end=lambda: self.fire_sen[0] == 0)
+        self.go(0, -20,)
+                # end=lambda: self.fire_sen[0] == 0)
         self.blow_fans()
 
         self.state = S.after_candle
@@ -286,7 +286,7 @@ class Robot:
         # print('GOIGN!!!!'*100)
         # while end() and t_left > 0:
         while max(self.fire_sen[:]) == 0 and t_left > 0:
-            print('DEBUG: ', self.line_sen[:], self.fire_sen[:], ' | ', end())
+            print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
             self.get_state()
@@ -330,6 +330,7 @@ class Robot:
         #     time_left -= step
 
         # self.ard.write(b'nn')
+        self.ard.write(disable.encode('ascii'))
         self.ard.write(disable.encode('ascii'))
 
     def solve_line(self):
