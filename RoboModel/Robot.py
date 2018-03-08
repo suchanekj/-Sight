@@ -57,6 +57,7 @@ class Robot:
     def listen_on_port(self, fire_sen, line_sen, ultra_sen):
         print('Listening attemt')
         while 1:
+            return
             # sleep(0.1)
             read_serial = self.ard.readline()
             read_serial = self.ard.readline()
