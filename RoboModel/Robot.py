@@ -28,7 +28,7 @@ class Robot:
         self.wall = Array('f', [0] * 5)
         self.t = 0
         self.mot = serial.Serial('/dev/ttyUSB0')
-        # self.ard = serial.Serial('/dev/ttyACM0')
+        self.ard = serial.Serial('/dev/ttyACM0')
 
         # Constants
         self.VALID_US = 100
@@ -256,14 +256,14 @@ class Robot:
     def blow_fans(self):
         # TODO: write code
         time_left = 3
-        with serial.Serial('/dev/ttyACM0') as ser:
-            enbl = b'yy'
-            ser.write(enbl)
-            print(enbl)
-            sleep(3)
-
-            ser.write(b'nn')
-        return
+        # with serial.Serial('/dev/ttyACM0') as ser:
+        #     enbl = b'yy'
+        #     ser.write(enbl)
+        #     print(enbl)
+        #     sleep(3)
+        #
+        #     ser.write(b'nn')
+        # return
         step = 0.001
         enable = 'yy'
         disable = 'nn'
