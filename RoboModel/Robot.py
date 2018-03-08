@@ -293,7 +293,7 @@ class Robot:
 
     def go(self, ln=0, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
-        print('\nINFO: Entering go')
+        print('\nINFO: Entering \tgo')
 
         if not self.MOTORS_ENABLED:
             return
@@ -343,7 +343,7 @@ class Robot:
 
     def go_slow(self, ln, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
-        print('\nINFO: Entering go')
+        print('\nINFO: Entering \tgo_slow')
 
         if not self.MOTORS_ENABLED:
             return
@@ -429,7 +429,7 @@ class Robot:
         angle = 0
         self.go()
         sleep(1)
-        self.go(ln=60, speed=self.MOTORS_MIN_SPEED,
+        self.go_slow(ln=60, speed=self.MOTORS_MIN_SPEED,
                 end=lambda: sum(self.line_sen[:]) >= 2)
         sleep(10)
         if sum(self.line_sen[:]) < 2:
