@@ -257,6 +257,7 @@ class Robot:
         time_left = 3
         step = 0.001
         while time_left > 0:
+            print('Fenuji')
             self.ard.write(b'yy')
             sleep(step)
             time_left -= step
