@@ -54,7 +54,7 @@ class Robot:
     def listen_on_port(self, fire_sen, line_sen, ultra_sen):
         print('Listening attemt')
         while 1:
-            sleep(0.1)
+            # sleep(0.1)
             read_serial = self.ard.readline()
             read_serial = self.ard.readline()
             # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
@@ -63,7 +63,7 @@ class Robot:
             # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                print('DEBUG: ', str(read_serial, 'ascii'))
+                # print('DEBUG: ', str(read_serial, 'ascii'))
                 ls, fs, us, _, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -92,7 +92,7 @@ class Robot:
             for i in range(len(ultra_sen)):
                 ultra_sen[i] = int(us[i])
 
-            print('DEBUG: line_sen: ', self.line_sen[:])
+            # print('DEBUG: line_sen: ', self.line_sen[:])
 
             # print('DEBUG: ', end='')
             # for
@@ -216,12 +216,12 @@ class Robot:
 
         if not end():
             return
-        go_basic(self, speed  - rot, speed + rot)
+        self.go_basic(self, speed  - rot, speed + rot)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
             self.get_state()
-        go_basic(self, 0, 0)
+        self.go_basic(self, 0, 0)
 
     def go_while(self, ln, rot=0, end=(lambda: 0)):
         if not self.MOTORS_ENABLED:
