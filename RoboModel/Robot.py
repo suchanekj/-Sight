@@ -59,7 +59,7 @@ class Robot:
 
         self.start_listening()
 
-        # self.blow_fans()
+        self.blow_fans()
         self.go()
         sleep(1)
 
