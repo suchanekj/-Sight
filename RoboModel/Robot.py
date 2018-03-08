@@ -35,8 +35,10 @@ class Robot:
         self.VALID_US = 100
         self.MOTORS_ENABLED = 1
         self.ROTATION_SPEED = 42
-        self.ROT_MOD = 1000
-        self.LEN_MOD = 1
+        self.ROT_MOD = 50 # TODO: make great consts
+        self.LEN_MOD = 50
+        self.L_R_RATIO = 6.9 / 5
+        self.ACCELERATION = 5
 
         self.state = S.normal
         self.left = 0
@@ -48,16 +50,21 @@ class Robot:
 
         self.blow_fans()
 
-        while self.but[0] == 0:
-            print(self.but[0])
-            sleep(0.1)
-        self.go_test()
-        print('DOJETO')
-        self.go(-50,10)
-        self.go(0, 50)
-        print('ZKUSIM')
-        self.go(0, 50)
-        print('AHOJ')
+        # while self.but[0] == 0:
+        #     print(self.but[0])
+        #     sleep(0.1)
+
+        ########################
+        # self.go_test()
+        # print('DOJETO')
+        # self.go(-50,10)
+        # self.go(0, 50)
+        # print('ZKUSIM')
+        # self.go(0, 50)
+        # print('AHOJ')
+        ########################
+
+        self.go(10, 0,)
         # self.go_test()
         # self.go_test(0, 2)
 
@@ -84,7 +91,7 @@ class Robot:
             # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                print('DEBUG: ', str(read_serial, 'ascii'), ' | ', self.state.name)
+                # print('DEBUG: ', str(read_serial, 'ascii'), ' | ', self.state.name)
                 ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -114,10 +121,6 @@ class Robot:
             for i in range(len(ultra_sen)):
                 ultra_sen[i] = int(us[i])
 
-            # print('DEBUG: line_sen: ', self.line_sen[:])
-
-            # print('DEBUG: ', end='')
-            # for
 
     def main_cycle(self):
         while 1:
@@ -235,21 +238,26 @@ class Robot:
             self.mot.write(b'L0A')
             self.mot.write(b'R0A')
             return
+
         if l == 0:
             self.left = 0
         if r == 0:
             self.right = 0
-        print('DEBUG:', l)
+
         # l = int(((l / 50) ** 2.32) * 70 / 5)
-        l = l * 6.8 / 5
-        print('DEBUG:', l)
+        l = l * self.L_R_RATIO
+
         while l != self.left or r != self.right:
-            if self.left < l: self.left += 10
-            if self.right < r: self.right += 10
-            if self.left > l: self.left -= 10
-            if self.right > r: self.right -= 10
-            if self.left > l - 10 and self.left < l + 10: self.left = l
-            if self.right > r - 10 and self.right < r + 10: self.right = r
+            if self.left < l: self.left += self.ACCELERATION
+            if self.right < r: self.right += self.ACCELERATION
+            if self.left > l: self.left -= self.ACCELERATION
+            if self.right > r: self.right -= self.ACCELERATION
+
+            if self.left > l - self.ACCELERATION and self.left < l + self.ACCELERATION:
+                self.left = l
+            if self.right > r - self.ACCELERATION and self.right < r + self.ACCELERATION:
+                self.right = r
+
             self.mot.write(('L' + str(int(self.left)) + 'A').encode('ascii'))
             self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
             sleep(0.005)
@@ -280,18 +288,24 @@ class Robot:
             speedl = speed
             speedr = speed
             time = abs(ln / speed * self.LEN_MOD)
+        else:
+            print('ERROR LN and ROT'*100)
+            return
 
         t_left = time
 
-        self.go_basic(-speedl, speedr)
-        # print('GOIGN!!!!'*100)
+        print('DEBUG: speedl, speedr: ', speedl, speedr)
+        self.go_basic(speedl, speedr)
+        print('DEBUG: GOING: time: ', time)
         # while end() and t_left > 0:
         while end() and t_left > 0:
-            print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
+            # print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
             self.get_state()
+        print('DEBUG: STOP: end(): ', end())
         self.go_basic(0, 0)
+        print('DEBUG: STOPPED')
 
     def go_while(self, ln, rot=0, speed=50, end=(lambda: 0)):
         if not self.MOTORS_ENABLED:
