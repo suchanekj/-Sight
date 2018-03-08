@@ -21,27 +21,17 @@ LINE_POS = [  # from right to left
 def randSide():
     return (randint(0, 1) * 2 - 1)
 
-
+# SOLVED
 def angleToLine(a, b):
     # print('DEBUG: AngleToLine: ', a, b)
 
     if LINE_POS[a].x == LINE_POS[b].x:
+        print('ERROR: dividing by zero: ', a, b)
         return 0
 
-    k = (LINE_POS[a].y - LINE_POS[b].y) / (LINE_POS[a].x - LINE_POS[b].x)
-
-    # print('DEBUG: k:', k)
-    # print('DEBUG: x1, x2:', LINE_POS[a].x, LINE_POS[b].x)
-    # math.atan()
     angle = math.atan2((LINE_POS[a].y - LINE_POS[b].y), (LINE_POS[a].x - LINE_POS[b].x))
     print('DEBUG: angle radian: ', angle)
     angle = angle * 180 / math.pi
     print('DEBUG: angle celsius: ', angle)
 
     return angle
-
-    # print('DEBUG: pow1, pow2:', pow(k, 2), pow(LINE_POS[a].x - LINE_POS[b].x, 2))
-    # print('DEBUG: sqrt:', math.sqrt(pow(k, 2) - pow(LINE_POS[a].x - LINE_POS[b].x, 2)))
-    # print('DEBUG: asin: ', math.asin(k / math.sqrt(pow(k, 2) - pow(LINE_POS[a].x - LINE_POS[b].x, 2))))
-    # return math.asin(k / math.sqrt(
-    #     pow(k, 2) - pow(LINE_POS[a].x - LINE_POS[b].x, 2))) * 180 / math.pi

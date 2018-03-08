@@ -32,9 +32,11 @@ class Robot:
         self.ard = serial.Serial('/dev/ttyACM0')
 
         # Constants
+        ############################
         self.VALID_US = 100
         self.MOTORS_ENABLED = 1
 
+        # Motors
         self.ROTATION_SPEED = 42
         self.ROT_MOD = 0.14 # TODO: make great consts
         self.LEN_MOD = 0.33
@@ -42,6 +44,11 @@ class Robot:
         self.L_R_RATIO = 1.3076923076923077
         self.ACCELERATION = 5
         self.MOTORS_MIN_SPEED = 34
+
+        # Other
+        self.MIN_LEN_TO_WALL = 50
+
+
 
         self.state = S.normal
         self.left = 0
@@ -67,21 +74,21 @@ class Robot:
         # print('AHOJ')
         ########################
 
-        for _ in range(1):
-            self.go(0, 40, speed=self.MOTORS_MIN_SPEED)
-            sleep(1)
+        # for _ in range(1):
+        #     self.go(0, 40, speed=self.MOTORS_MIN_SPEED)
+        #     sleep(1)
         # self.go(0, 60, speed=self.MOTORS_MIN_SPEED)
         # sleep(5)
         # self.go(0, 270, speed=self.MOTORS_MIN_SPEED)
 
 
+        self.solve_line()
 
-
-        print('DEBUG: GO IS DONE')
+        print('DEBUG: debug IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
 
-        sleep(10)
+        # sleep(10)
         # TODO: uncomment
         # self.main_cycle()
 
@@ -145,16 +152,17 @@ class Robot:
             if self.state == S.normal:
                 # TODO: fix go_while
                 self.go(1000, 0,
-                              end=lambda: max(self.line_sen[:]) == 0
-                                          and self.ultra_sen[1] > 30
-                                          and self.ultra_sen[2] > 30
-                                          and max(self.fire_sen[:]) == 0
+                              end=lambda: max(self.line_sen[:]) == 1
+                                          or self.ultra_sen[1] <= self.MIN_LEN_TO_WALL
+                                          or self.ultra_sen[2] <= self.MIN_LEN_TO_WALL
+                                          or max(self.fire_sen[:]) == 1
                               )
                 self.get_state()
                 continue
 
             if self.state == S.solve_line:
                 self.solve_line()
+                self.go(ln=10)
                 self.get_state()
                 continue
 
@@ -166,8 +174,9 @@ class Robot:
                 self.after_candle()
                 continue
 
+    # MESSED
     def solve_candle(self):
-        # TODO: set actual angles
+        # TODO: set actual angles DONE?
         ang2candle = {
             0: -90,
             1: -45,
@@ -190,29 +199,28 @@ class Robot:
             print('DEBUG: Angle: ', angle, sm, sees)
             self.go(0, angle)
             self.go(10, 0,
-                    end=lambda: self.fire_sen[2] is 1
-                            and self.fire_sen[3] is 0
-                            and self.fire_sen[4] is 0
-                            and self.fire_sen[0] is 0
-                            and self.fire_sen[1] is 0)
+                    end=lambda: self.fire_sen[2] is 0
+                                or self.fire_sen[3] is 1
+                                or self.fire_sen[4] is 1
+                                or self.fire_sen[0] is 1
+                                or self.fire_sen[1] is 1)
 
         # has to be on the line of the candle
         self.blow_fans()
         self.go(0, 10,)
-                # end=lambda: self.fire_sen[4] == 0)
         self.blow_fans()
-
         self.go(0, -20,)
-                # end=lambda: self.fire_sen[0] == 0)
         self.blow_fans()
 
         self.state = S.after_candle
 
+    # MESSED
     def after_candle(self):
         self.go(-40)
         self.go(0, 80)
 
-        self.go_while(0, hlp.randSide() * self.ROTATION_SPEED,
+        # TODO: change lambdas
+        self.go(0, hlp.randSide() * self.ROTATION_SPEED,
                       end=lambda: self.ultra_sen[1] < 60
                                   and self.ultra_sen[2] < 60)
 
@@ -272,12 +280,13 @@ class Robot:
         self.mot.write(('L' + str(int(self.left)) + 'A').encode('ascii'))
         self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
 
-    def go(self, ln=0, rot=0, speed=50, end=(lambda: 1)):
+    def go(self, ln=0, rot=0, speed=50, end=(lambda: 0)):
+        # end 1 == END, 0 == CONTINUE
         if not self.MOTORS_ENABLED:
             return
         step = 0.0001
 
-        if not end():
+        if end():
             return
         speedl = 0
         speedr = 0
@@ -307,7 +316,7 @@ class Robot:
         self.go_basic(speedl, speedr)
         print('DEBUG: GOING: time: ', time)
         # while end() and t_left > 0:
-        while end() and t_left > 0:
+        while not end() and t_left > 0:
             # print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
@@ -357,13 +366,25 @@ class Robot:
         self.ard.write(disable.encode('ascii'))
         self.ard.write(disable.encode('ascii'))
 
+    # MESSED UP ???
     def solve_line(self):
         it = 0
         angle = 0
-        self.go(10, 0, 50, lambda: sum(self.line_sen[:]) >= 2)
+        self.go()
+        sleep(0.1)
+        self.go(ln=20, speed=self.MOTORS_MIN_SPEED,
+                end=lambda: sum(self.line_sen[:]) >= 2)
         if sum(self.line_sen[:]) < 2:
-            self.go(-20, 0, 50, lambda: sum(self.line_sen[:]) >= 2)
+            self.go(ln=-40, speed=self.MOTORS_MIN_SPEED,
+                    end=lambda: sum(self.line_sen[:]) >= 2)
+        self.go()
+        if sum(self.line_sen[:]) < 2:
+            print('ERROR: couldnt find normal line: ', self.line_sen[:])
+            self.go()
+            self.get_state()
+            return
 
+        # has to have at least 2 line_sens on
         if sum(self.line_sen[:]) >= 2:
             for a in range(len(self.line_sen[:])):
                 if self.line_sen[a] == 1:
@@ -373,15 +394,20 @@ class Robot:
                             it += 1
 
         if it == 0:
-            print('DEBUG: Sees only: ', sum(self.line_sen[:]))
-            self.go(0, 180)
+            print('ERROR: Sees only: ', sum(self.line_sen[:]))
+            self.go(rot=180)
+            self.go(ln=10)
             self.state = S.normal
             return
 
         angle = angle / it
 
+        print('DEBUG: Final Angle: ', angle)
+
         self.go(0, angle + (angle / abs(angle)) * randint(20, 160),
-                end=lambda: max(self.fire_sen[:]) == 0)
+                end=lambda: max(self.fire_sen[:]) == 1
+
+        print('INFO: End of solve_line')
 
     # SOLVED
     def get_state(self):
