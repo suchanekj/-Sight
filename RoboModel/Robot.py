@@ -54,12 +54,13 @@ class Robot:
         self.state = S.normal
         self.left = 0
         self.right = 0
+        self.tabs = 0
 
         print('Init complete!')
 
         self.start_listening()
 
-        # self.blow_fans()
+        self.blow_fans()
 
         # while self.but[0] == 0:
         #     print(self.but[0])
@@ -296,6 +297,8 @@ class Robot:
 
         self.mot.write(('L' + str(int(self.left)) + 'A').encode('ascii'))
         self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
+
+        print('INFO: Leaving \tgo_basic')
 
     def go(self, ln=0, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
