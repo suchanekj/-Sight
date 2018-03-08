@@ -257,6 +257,9 @@ class Robot:
             self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
             sleep(0.005)
 
+        self.mot.write(('L' + str(int(self.left)) + 'A').encode('ascii'))
+        self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
+
     def go(self, ln, rot=0, speed=50, end=(lambda: 1)):
         if not self.MOTORS_ENABLED:
             return
