@@ -97,7 +97,7 @@ class Robot:
         # TODO: uncomment
         # self.main_cycle()
 
-        print('INFO: end of Robots life')
+        print('\t' * self.tabs, 'INFO: end of Robots life')
 
     def start_listening(self):
         listening = Process(target=self.listen_on_port,
@@ -265,7 +265,8 @@ class Robot:
         sleep(6)
 
     def go_basic(self, l, r):
-        print('INFO: Entering \tgo_basic: ', l, r)
+        self.tabs += 1
+        print('\t' * self.tabs, 'INFO: Entering \tgo_basic: ', l, r)
 
         if not self.MOTORS_ENABLED:
             self.mot.write(b'L0A')
@@ -298,11 +299,13 @@ class Robot:
         self.mot.write(('L' + str(int(self.left)) + 'A').encode('ascii'))
         self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
 
-        print('INFO: Leaving \tgo_basic')
+        print('\t' * self.tabs, 'INFO: Leaving \tgo_basic')
+        self.tabs -= 1
 
     def go(self, ln=0, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
-        print('\nINFO: Entering \tgo')
+        self.tabs += 1
+        print('\n', '\t' * self.tabs, 'INFO:INFO: Entering \tgo')
 
         if not self.MOTORS_ENABLED:
             return
@@ -349,10 +352,13 @@ class Robot:
         print('DEBUG: STOP: end(): ', end())
         self.go_basic(0, 0)
         print('DEBUG: STOPPED')
+        
+        self.tabs -= 1
 
     def go_slow(self, ln, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
-        print('\nINFO: Entering \tgo_slow')
+        self.tabs += 1
+        print('\n', '\t' * self.tabs, 'INFO:INFO: Entering \tgo_slow')
 
         if not self.MOTORS_ENABLED:
             return
@@ -400,9 +406,12 @@ class Robot:
         self.go_basic(0, 0)
         print('DEBUG: STOPPED')
 
+        self.tabs -= 1
+
     def blow_fans(self):
         # TODO: write code
-        print('\nINFO: Entering blow_fans')
+        self.tabs += 1
+        print('\n', '\t' * self.tabs, 'INFO:INFO: Entering blow_fans')
         time_left = 3
         # with serial.Serial('/dev/ttyACM0') as ser:
         #     enbl = b'yy'
@@ -427,10 +436,13 @@ class Robot:
         # self.ard.write(b'nn')
         self.ard.write(disable.encode('ascii'))
         self.ard.write(disable.encode('ascii'))
+        
+        self.tabs -= 1
 
     # MESSED UP ???
     def solve_line(self):
-        print('\nINFO: Entered solve_line')
+        self.tabs += 1
+        print('\n', '\t' * self.tabs, 'INFO:INFO: Entered solve_line')
 
         it = 0
         angle = 0
@@ -472,7 +484,8 @@ class Robot:
         self.go(0, angle + (angle / abs(angle)) * randint(20, 160),
                 end=lambda: max(self.fire_sen[:]) == 1)
 
-        print('INFO: End of solve_line')
+        print('\t' * self.tabs, 'INFO: End of solve_line')
+        self.tabs -= 1
 
     # SOLVED
     def get_state(self):
