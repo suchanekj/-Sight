@@ -124,7 +124,7 @@ class Robot:
             # if max_time <= 0:
             #     self.go_test(0, 0)
             #     return
-
+            print('DEBUG: State: ', self.state.name)
             if self.state == S.normal:
                 self.go_while(10, 0,
                               # end=lambda: self.ultra_sen[1] > 20
@@ -315,16 +315,18 @@ class Robot:
                 end=lambda: max(self.fire_sen[:]) == 0)
 
     def get_state(self):
-        if max(self.fire_sen[:]):
+        print()
+        if max(self.fire_sen[:]) == 1:
             self.state = S.solve_candle
             return
-        if max(self.line_sen[:]):
+        if max(self.line_sen[:]) == 1:
             self.state = S.solve_line
             return
         if min(self.ultra_sen[:]) < self.VALID_US:
             self.state = S.solve_wall
             return
 
+        print('Else')
         self.state = S.normal
 
 
