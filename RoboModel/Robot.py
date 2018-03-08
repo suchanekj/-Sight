@@ -27,8 +27,8 @@ class Robot:
         self.ultra_sen = Array('i', [0] * 4)
         self.wall = Array('f', [0] * 5)
         self.t = 0
-        self.mot = serial.Serial('/dev/ttyUSB0')
         self.ard = serial.Serial('/dev/ttyACM0')
+        self.mot = serial.Serial('/dev/ttyUSB0')
 
         # Constants
         self.VALID_US = 100
