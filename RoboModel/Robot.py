@@ -34,7 +34,7 @@ class Robot:
         self.VALID_US = 100
         self.MOTORS_ENABLED = 1
         self.ROTATION_SPEED = 42
-        self.ROT_MOD = 1
+        self.ROT_MOD = 100
         self.LEN_MOD = 1
 
         self.state = S.normal
