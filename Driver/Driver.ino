@@ -28,6 +28,29 @@ char inChar;
 
 int right = 0, left = 0, val = 0, neg = 1, mot = 0, state = 0;
 
+void breakingR(){
+    mtrR.stop();
+
+	tmtrR.readCurrent();
+    uint16_ right = tmtrR.read();
+
+    if (right != 0){
+      tmtrR.run(-right);
+    }
+}
+
+void breakingL(){
+    mtrL.stop();
+
+	tmtrL.readCurrent();
+
+    uint16_ left = tmtrL.read();
+
+	if (left != 0){
+      tmtrL.run(-left);
+	}
+}
+
 void loop() {
   while (Serial.available()) {
     // get the new byte:
@@ -47,13 +70,15 @@ void loop() {
           left = val * neg;
           if(left > 1 || left < -1) mtrL.run(left);
           else if(left != 0) mtrL.coast();
-          else mtrL.stop();
+          else breakingL();
+//          else mtrL.stop();
         }
         else {
           right = val * neg;
           if(right > 1 || right < -1) mtrR.run(right);
           else if(right != 0) mtrR.coast();
-          else mtrR.stop();
+          else breakingR();
+//          else mtrR.stop();
         }
         state = 0;
         continue;
