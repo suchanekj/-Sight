@@ -85,7 +85,8 @@ class Robot:
         # self.solve_line()
         # self.start_doing()
 
-        self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
+        self.go(ln=10)
+        # self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
 
         print('DEBUG: debug IS DONE')
         # self.go_test()
