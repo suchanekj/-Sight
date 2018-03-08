@@ -82,7 +82,8 @@ class Robot:
         # self.go(0, 270, speed=self.MOTORS_MIN_SPEED)
 
 
-        self.solve_line()
+        # self.solve_line()
+        self.start_doing()
 
         print('DEBUG: debug IS DONE')
         # self.go_test()
@@ -100,6 +101,13 @@ class Robot:
                                 self.fire_sen, self.line_sen, self.ultra_sen))
         listening.start()
         print('YayX')
+
+    def start_doing(self):
+        listening = Process(target=self.solve_line(),
+                            args=())
+        listening.start()
+        print('YayX')
+
 
     def listen_on_port(self, fire_sen, line_sen, ultra_sen):
         print('Listening attemt')
