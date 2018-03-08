@@ -48,7 +48,8 @@ class Robot:
 
         self.blow_fans()
 
-        while self.but == 0:
+        while self.but[0] == 0:
+            print(self.but[0])
             sleep(0.1)
         self.go_test()
         print('DOJETO')
@@ -89,7 +90,7 @@ class Robot:
                 print('ERROR')
                 continue
 
-            self.but = but
+            self.but[0] = but
             fs = fs.replace(' ', '').split(';')
             ls = ls.replace(' ', '').split(';')
             us = us.replace(' ', '').split(';')
