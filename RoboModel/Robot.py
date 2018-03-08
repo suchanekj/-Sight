@@ -381,7 +381,7 @@ class Robot:
         self.go()
         sleep(1)
         self.go(ln=60, speed=self.MOTORS_MIN_SPEED,
-                end=lambda: sum(self.line_sen[:]) >= 2)
+                end=lambda: sum(self.line_sen[:]) >= 1)
         sleep(100)
         if sum(self.line_sen[:]) < 2:
             self.go(ln=-40, speed=self.MOTORS_MIN_SPEED,
