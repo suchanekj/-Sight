@@ -284,6 +284,8 @@ class Robot:
 
     def go(self, ln=0, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
+        print('\nINFO: Entering go')
+
         if not self.MOTORS_ENABLED:
             return
         step = 0.0001
@@ -373,13 +375,14 @@ class Robot:
 
     # MESSED UP ???
     def solve_line(self):
-        print('INFO: Entered solve_line')
+        print('\nINFO: Entered solve_line')
         it = 0
         angle = 0
         self.go()
         sleep()
         self.go(ln=20, speed=self.MOTORS_MIN_SPEED,
                 end=lambda: sum(self.line_sen[:]) >= 2)
+        sleep(100)
         if sum(self.line_sen[:]) < 2:
             self.go(ln=-40, speed=self.MOTORS_MIN_SPEED,
                     end=lambda: sum(self.line_sen[:]) >= 2)
