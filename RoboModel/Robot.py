@@ -48,6 +48,8 @@ class Robot:
         #     self.blow_fans()
         #     sleep(3)
         self.blow_fans()
+        self.go_test()
+        print('DOJETO')
         self.go(0, 50)
         print('ZKUSIM')
         self.go(0, 50)
@@ -77,7 +79,7 @@ class Robot:
             # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                print('DEBUG: ', str(read_serial, 'ascii'), ' | ', self.state.name)
+                # print('DEBUG: ', str(read_serial, 'ascii'), ' | ', self.state.name)
                 ls, fs, us, _, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -235,9 +237,12 @@ class Robot:
         sleep(0.1)
         self.mot.write(b'L50A')
         self.mot.write(b'R50A')
-        sleep(3)
+        while max(self.line_sen[:]) == 0:
+            sleep(0.0001)
+
         self.mot.write(b'L0A')
         self.mot.write(b'R0A')
+        self.blow_fans()
         sleep(6)
 
     def go_basic(self, l, r):
