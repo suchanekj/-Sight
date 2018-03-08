@@ -36,7 +36,7 @@ class Robot:
         self.MOTORS_ENABLED = 1
         self.ROTATION_SPEED = 42
         self.ROT_MOD = 50 # TODO: make great consts
-        self.LEN_MOD = 1
+        self.LEN_MOD = 0.33
         self.L_R_RATIO = 6.9 / 5
         self.ACCELERATION = 5
 
@@ -65,7 +65,7 @@ class Robot:
         ########################
 
         self.go(10, 0,)
-        
+
         print('DEBUG: GO IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
