@@ -280,7 +280,7 @@ class Robot:
         
         t_left = time
         
-        self.go_basic(speedl, speedr)
+        self.go_basic(-speedl, speedr)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
