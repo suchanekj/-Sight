@@ -66,7 +66,7 @@ class Robot:
             # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                # print('DEBUG: ', str(read_serial, 'ascii'))
+                print('DEBUG: ', str(read_serial, 'ascii'))
                 ls, fs, us, _, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
