@@ -260,7 +260,7 @@ class Robot:
         self.mot.write(('L' + str(int(self.left)) + 'A').encode('ascii'))
         self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
 
-    def go(self, ln, rot=0, speed=50, end=(lambda: 1)):
+    def go(self, ln=0, rot=0, speed=50, end=(lambda: 1)):
         if not self.MOTORS_ENABLED:
             return
         step = 0.0001
@@ -288,7 +288,7 @@ class Robot:
         self.go_basic(-speedl, speedr)
         # print('GOIGN!!!!'*100)
         # while end() and t_left > 0:
-        while max(self.fire_sen[:]) == 0 and t_left > 0:
+        while end() and t_left > 0:
             print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
