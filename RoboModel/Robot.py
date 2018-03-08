@@ -65,10 +65,13 @@ class Robot:
         ########################
 
         self.go(10, 0,)
+        print('DEBUG: GO IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
 
-        self.main_cycle()
+        sleep(10)
+        # TODO: uncomment
+        # self.main_cycle()
 
         print('INFO: end of Robots life')
 
