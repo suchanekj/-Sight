@@ -42,6 +42,8 @@ class Robot:
         self.go_test(0, 2)
         self.main_cycle()
 
+        print('INFO: end of Robots life')
+
     def start_listening(self):
         listening = Process(target=self.listen_on_port,
                             args=(
@@ -90,13 +92,16 @@ class Robot:
             for i in range(len(ultra_sen)):
                 ultra_sen[i] = int(us[i])
 
+            print('DEBUG: line_sen: ', self.line_sen[:])
+
             # print('DEBUG: ', end='')
             # for
 
     def main_cycle(self):
         max_time = 4  # maximum interupts before shutdown
         while 1:
-            sleep(0.5)
+            print('INFO: entered main_cycle')
+            sleep(0.1)
             # print('DEBUG: waiting in main loop, ultra_sen == ',
             #       self.ultra_sen[1])
             # print('DEBUG: State: ', self.state.name)
@@ -111,7 +116,6 @@ class Robot:
             # else:
             #     continue
 
-            print('INFO: line_sen: ', self.line_sen[:])
             if max_time <= 0:
                 self.go_test(0, 0)
                 return
@@ -135,6 +139,7 @@ class Robot:
                 self.solve_candle()
             if self.state == S.after_candle:
                 self.after_candle()
+
 
     def solve_candle(self):
         # TODO: set actual angles
@@ -224,9 +229,9 @@ class Robot:
 
     def blow_fans(self):
         # TODO: write code
-        self.ard.write(b'1')
+        self.ard.write(b'yy')
         sleep(3)
-        self.ard.write(b'0')
+        self.ard.write(b'nn')
         pass
 
     def solve_line(self):
@@ -235,6 +240,7 @@ class Robot:
         self.go(10, 0, 50, lambda: sum(self.line_sen[:]) >= 2)
         if sum(self.line_sen[:]) < 2:
             self.go(-20, 0, 50, lambda: sum(self.line_sen[:]) >= 2)
+
         if sum(self.line_sen[:]) >= 2:
             for a in range(len(self.line_sen[:])):
                 if self.line_sen[a] == 1:
@@ -265,7 +271,7 @@ class Robot:
 
 
 R = Robot()
-print('ROBOTO: ', R.t)
+# print('ROBOTO: ', R.t)
 
 print('Ratatata: ', R.fire_sen[:], R.ultra_sen[:], R.line_sen[:])
 
@@ -277,4 +283,4 @@ sleep(4)
 
 print('Ratatata: ', R.fire_sen[:], R.ultra_sen[:], R.line_sen[:])
 
-print('Nice')
+print('END '*100)
