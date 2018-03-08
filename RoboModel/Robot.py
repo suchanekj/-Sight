@@ -44,9 +44,7 @@ class Robot:
         print('Init complete!')
 
         self.start_listening()
-        # while 1:
-        #     self.blow_fans()
-        #     sleep(3)
+
         self.blow_fans()
         self.go_test()
         print('DOJETO')
@@ -57,6 +55,7 @@ class Robot:
         print('AHOJ')
         # self.go_test()
         # self.go_test(0, 2)
+
         self.main_cycle()
 
         print('INFO: end of Robots life')
@@ -80,11 +79,12 @@ class Robot:
             # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                # print('DEBUG: ', str(read_serial, 'ascii'), ' | ', self.state.name)
-                ls, fs, us, _, _ = str(read_serial, 'ascii').split('|')
+                print('DEBUG: ', str(read_serial, 'ascii'), ' | ', self.state.name)
+                ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
                 continue
+            # b
 
             fs = fs.replace(' ', '').split(';')
             ls = ls.replace(' ', '').split(';')
@@ -115,31 +115,12 @@ class Robot:
             # for
 
     def main_cycle(self):
-        max_time = 4  # maximum interupts before shutdown
         while 1:
-            # print('INFO: entered main_cycle', self.line_sen[:])
             sleep(0.001)
-            # print('DEBUG: waiting in main loop, ultra_sen == ',
-            #       self.ultra_sen[1])
-            # print('DEBUG: State: ', self.state.name)
-            # if self.ultra_sen[1] < 15:
-            #     print('It should be FUN!')
-            #     self.ard.write(b'1\r\n')
-            #     sleep(5)
-            #     print('End of FUN!')
-            #     self.ard.write(b'0\r\n')
-            #     sleep(5)
-            #     continue
-            # else:
-            #     continue
-
-            # if max_time <= 0:
-            #     self.go_test(0, 0)
-            #     return
-
 
             print('DEBUG: State: ', self.state.name, ' MAX:', max(self.fire_sen[:]))
             if self.state == S.normal:
+                # TODO: fix go_while
                 # self.go_while(10, 0,
                 #               # end=lambda: self.ultra_sen[1] > 20
                 #               #             and self.ultra_sen[2] > 20
@@ -149,8 +130,6 @@ class Robot:
                 #                           and max(self.fire_sen[:]) == 0
                 #               )
                 self.go(10, 0,
-                              # end=lambda: self.ultra_sen[1] > 20
-                              #             and self.ultra_sen[2] > 20
                               end=lambda: max(self.line_sen[:]) == 0
                                           and self.ultra_sen[1] > 30
                                           and self.ultra_sen[2] > 30
