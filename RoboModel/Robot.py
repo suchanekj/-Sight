@@ -163,7 +163,7 @@ class Robot:
         while max(self.line_sen[:]) != 1:
             sees = 0
             sm = 0
-            for x in range(self.fire_sen[:]):
+            for x in range(len(self.fire_sen[:])):
                 if self.fire_sen[x]:
                     sees += 1
                     sm += ang2candle[x]
