@@ -256,13 +256,17 @@ class Robot:
         # TODO: write code
         time_left = 3
         step = 0.001
+        enable = 'yy'
+        disable = 'nn'
         while time_left > 0:
             print('Fenuji')
-            self.ard.write(b'yy')
+            # self.ard.write('yy')
+            self.ard.write(enable.encode('ascii'))
             sleep(step)
             time_left -= step
 
-        self.ard.write(b'nn')
+        # self.ard.write(b'nn')
+        self.ard.write(disable.encode('ascii'))
 
     def solve_line(self):
         it = 0
