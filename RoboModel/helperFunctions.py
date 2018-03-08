@@ -1,4 +1,5 @@
 import math
+from random import randint
 
 
 class Point:
@@ -17,16 +18,20 @@ LINE_POS = [  # from right to left
 ]
 
 
+def randSide():
+    return (randint(0, 1) * 2 - 1)
+
+
 def angleToLine(a, b):
-    print('DEBUG: AngleToLine: ', a, b)
+    # print('DEBUG: AngleToLine: ', a, b)
 
     if LINE_POS[a].x == LINE_POS[b].x:
         return 0
 
     k = (LINE_POS[a].y - LINE_POS[b].y) / (LINE_POS[a].x - LINE_POS[b].x)
 
-    print('DEBUG: k:', k)
-    print('DEBUG: x1, x2:', LINE_POS[a].x, LINE_POS[b].x)
+    # print('DEBUG: k:', k)
+    # print('DEBUG: x1, x2:', LINE_POS[a].x, LINE_POS[b].x)
     # math.atan()
     angle = math.atan2((LINE_POS[a].y - LINE_POS[b].y), (LINE_POS[a].x - LINE_POS[b].x))
     print('DEBUG: angle radian: ', angle)
