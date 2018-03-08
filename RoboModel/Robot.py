@@ -131,7 +131,15 @@ class Robot:
             #     return
             print('DEBUG: State: ', self.state.name)
             if self.state == S.normal:
-                self.go_while(10, 0,
+                # self.go_while(10, 0,
+                #               # end=lambda: self.ultra_sen[1] > 20
+                #               #             and self.ultra_sen[2] > 20
+                #               end=lambda: max(self.line_sen[:]) == 0
+                #                           and self.ultra_sen[1] > 30
+                #                           and self.ultra_sen[2] > 30
+                #                           and max(self.fire_sen[:]) == 0
+                #               )
+                self.go(10, 0,
                               # end=lambda: self.ultra_sen[1] > 20
                               #             and self.ultra_sen[2] > 20
                               end=lambda: max(self.line_sen[:]) == 0
@@ -283,7 +291,7 @@ class Robot:
         t_left = 15
         step = 0.0001
 
-        self.go_basic(speed - rot, speed + rot)
+        # self.go(100,)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
