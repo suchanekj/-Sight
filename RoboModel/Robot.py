@@ -110,7 +110,7 @@ class Robot:
             # else:
             #     continue
 
-            print('INFO: line_sen: ', self.line_sen)
+            print('INFO: line_sen: ', self.line_sen[:])
             if max_time <= 0:
                 self.go_test(0, 0)
                 return
