@@ -35,7 +35,7 @@ class Robot:
 
         self.start_listening()
         self.go_test(0, 2)
-        # self.main_cycle()
+        self.main_cycle()
 
 
     def start_listening(self):
@@ -91,6 +91,7 @@ class Robot:
 
 
     def main_cycle(self):
+        max_time = 4 # maximum interupts before shutdown
         while 1:
             sleep(0.1)
             print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
@@ -105,6 +106,10 @@ class Robot:
             #     continue
             # else:
             #     continue
+            if max_time <= 0:
+                self.go_test(0,0)
+                return
+
             if self.state == S.normal:
                 self.go(10, 0,
                         lambda: self.ultra_sen[1] > 20
@@ -118,6 +123,7 @@ class Robot:
                 self.get_state()
                 continue
             else:
+                max_time -= 1
                 sleep(5)
                 self.state = S.normal
                 continue
@@ -170,7 +176,7 @@ class Robot:
 
         self.mot.write(b'L50A')
         self.mot.write(b'R50A')
-        sleep(5)
+        sleep(2)
         self.mot.write(b'L0A')
         self.mot.write(b'R0A')
 
@@ -178,6 +184,8 @@ class Robot:
         t_left = ln  # TODO: well calculated time
         step = 0.05
 
+        if not end():
+            return
         self.mot.write(b'L50A')
         self.mot.write(b'R50A')
         while end() and t_left > 0:
