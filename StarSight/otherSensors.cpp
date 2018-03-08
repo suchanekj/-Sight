@@ -36,17 +36,17 @@ void runSensors() {
         flameMed[i][flameLastMed[i]] = flameRaw[i];
         flameLastMed[i] = (flameLastMed[i] + 1) % flameMedian;
         if (median(flameMed[i], flameMedian) > flameLimit[i]) {
-          flame[i] = 1;
+          flame[i] = 0;
         }
         else {
-          flame[i] = 0;
+          flame[i] = 1;
         }
     }
 
     for (i = 0; i < 5; i++) {
         lineMed[i][lineLastMed[i]] = lineRaw[i];
         lineLastMed[i] = (lineLastMed[i] + 1) % lineMedian;
-        if (median(lineMed[i], lineMedian) < whiteThreshold) {
+        if (median(lineMed[i], lineMedian) < whiteThreshold[i]) {
           line[i] = 1;
         }
         else if (median(lineMed[i], lineMedian) > blackThreshold[i]) {
