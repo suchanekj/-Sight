@@ -65,6 +65,7 @@ class Robot:
         ########################
 
         self.go(10, 0,)
+        
         print('DEBUG: GO IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
