@@ -335,7 +335,7 @@ class Robot:
             # print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
-            self.get_state()
+            # self.get_state()
         print('DEBUG: STOP: end(): ', end())
         self.go_basic(0, 0)
         print('DEBUG: STOPPED')
