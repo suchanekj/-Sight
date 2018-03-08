@@ -388,7 +388,7 @@ class Robot:
         #     self.state = S.solve_wall
         #     return
 
-        print('Else')
+        # print('Else')
         self.state = S.normal
 
 
