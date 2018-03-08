@@ -40,7 +40,7 @@ class Robot:
         self.ROT_MOD = 0.14  # TODO: make great consts
         self.LEN_MOD = 0.33
         self.SLOW_ROT_MOD = 0.14
-        self.SLOW_LEN_MOD = 0.17
+        self.SLOW_LEN_MOD = 0.20
         # self.L_R_RATIO = 6.9 / 5
         self.L_R_RATIO = 1.3076923076923077
         self.ACCELERATION = 10
@@ -89,7 +89,7 @@ class Robot:
         # self.start_doing()
 
         # self.go(ln=10)
-        self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
+        self.go_slow(ln=-30, speed=self.MOTORS_MIN_SPEED)
 
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
