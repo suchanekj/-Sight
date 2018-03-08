@@ -168,11 +168,11 @@ class Robot:
     def solve_candle(self):
         # TODO: set actual angles
         ang2candle = {
-            0: 90,
-            1: 45,
+            0: -90,
+            1: -45,
             2: 0,
-            3: -45,
-            4: -90,
+            3: 45,
+            4: 90,
         }
 
         while max(self.line_sen[:]) != 1 and max(self.fire_sen[:]) == 1:
