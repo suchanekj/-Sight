@@ -289,6 +289,8 @@ class Robot:
                 speedr = -speed
             time = abs(rot / speed * self.ROT_MOD)
         elif rot == 0:
+            if ln < 0:
+                speed = -speed
             speedl = speed
             speedr = speed
             time = abs(ln / speed * self.LEN_MOD)
