@@ -44,7 +44,7 @@ class Robot:
         # self.L_R_RATIO = 6.9 / 5
         self.L_R_RATIO = 1.3076923076923077
         self.ACCELERATION = 10
-        self.MOTORS_MIN_SPEED = 16
+        self.MOTORS_MIN_SPEED = 17
         self.ACC_DELAY = 0.005
 
         # Other
