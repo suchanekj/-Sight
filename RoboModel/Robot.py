@@ -25,6 +25,7 @@ class Robot:
         self.fire_sen = Array('b', [0] * 5)
         self.line_sen = Array('b', [0] * 5)
         self.ultra_sen = Array('i', [0] * 4)
+        self.but = Array('b', [0])
         self.wall = Array('f', [0] * 5)
         self.t = 0
         self.mot = serial.Serial('/dev/ttyUSB0')
@@ -46,6 +47,9 @@ class Robot:
         self.start_listening()
 
         self.blow_fans()
+
+        while self.but == 0:
+            sleep(0.1)
         self.go_test()
         print('DOJETO')
         self.go(-50,10)
@@ -84,8 +88,8 @@ class Robot:
             except ValueError:
                 print('ERROR')
                 continue
-            # b
 
+            self.but = but
             fs = fs.replace(' ', '').split(';')
             ls = ls.replace(' ', '').split(';')
             us = us.replace(' ', '').split(';')
