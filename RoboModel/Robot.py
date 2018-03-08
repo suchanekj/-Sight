@@ -64,7 +64,7 @@ class Robot:
         # print('AHOJ')
         ########################
 
-        self.go(10, 0,)
+        self.go(0, 10,)
         print('DEBUG: GO IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
@@ -284,8 +284,8 @@ class Robot:
                 speedl = -speed
                 speedr = speed
             else:
-                speedl = -speed
-                speedr = speed
+                speedl = speed
+                speedr = -speed
             time = abs(rot / speed * self.ROT_MOD)
         elif rot == 0:
             speedl = speed
