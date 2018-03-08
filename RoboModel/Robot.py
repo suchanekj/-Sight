@@ -268,15 +268,17 @@ class Robot:
         #
         #     ser.write(b'nn')
         # return
+        #     print('Fenuji')
         step = 0.001
         enable = 'YY'
         disable = 'NN'
-        while time_left > 0:
-            print('Fenuji')
-            # self.ard.write('yy')
-            self.ard.write(enable.encode('ascii'))
-            sleep(step)
-            time_left -= step
+        self.ard.write(enable.encode('ascii'))
+        sleep(3)
+        # while time_left > 0:
+        #     # self.ard.write('yy')
+        #     self.ard.write(enable.encode('ascii'))
+        #     sleep(step)
+        #     time_left -= step
 
         # self.ard.write(b'nn')
         self.ard.write(disable.encode('ascii'))
