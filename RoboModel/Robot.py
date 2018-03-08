@@ -242,7 +242,7 @@ class Robot:
             self.right = 0
         print('DEBUG:', l)
         # l = int(((l / 50) ** 2.32) * 70 / 5)
-        l = l * 8 / 5
+        l = l * 7 / 5
         print('DEBUG:', l)
         while l != self.left or r != self.right:
             if self.left < l: self.left += 10
@@ -255,7 +255,7 @@ class Robot:
             self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
             sleep(0.005)
 
-    def go(self, ln, rot=0, speed=42, end=(lambda: 1)):
+    def go(self, ln, rot=0, speed=50, end=(lambda: 1)):
         if not self.MOTORS_ENABLED:
             return
         step = 0.0001
@@ -281,7 +281,9 @@ class Robot:
         t_left = time
         
         self.go_basic(-speedl, speedr)
+        print('GOIGN!!!!'*100)
         while end() and t_left > 0:
+            print('DEBUG: ', self.line_sen[:], self.fire_sen[:])
             t_left -= step
             sleep(step)
             self.get_state()
