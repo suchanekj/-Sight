@@ -48,7 +48,7 @@ class Robot:
         #     self.blow_fans()
         #     sleep(3)
         self.blow_fans()
-        self.go_test()
+        # self.go_test()
         # self.go_test(0, 2)
         self.main_cycle()
 
