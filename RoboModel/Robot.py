@@ -59,7 +59,8 @@ class Robot:
 
         self.start_listening()
 
-        self.blow_fans()
+        # self.blow_fans()
+        sleep(1)
         self.go()
         sleep(1)
 
@@ -90,7 +91,7 @@ class Robot:
         # self.go(ln=10)
         self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
 
-        print('DEBUG: debug IS DONE')
+        print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
 
@@ -122,10 +123,10 @@ class Robot:
             # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
             # TODO: complete B, V
 
-            # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
+            # print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                # print('DEBUG: ', str(read_serial, 'ascii'), ' | ',
+                # print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
                 #       self.state.name)
                 ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
@@ -161,7 +162,7 @@ class Robot:
         while 1:
             sleep(0.001)
 
-            print('DEBUG: State: ', self.state.name)
+            print('\t' * (self.tabs + 1), 'DEBUG: State: ', self.state.name)
             print('Sensors: ', self.line_sen[:], ' | ', self.fire_sen[:],
                   ' | ', self.ultra_sen[:])
             if self.state == S.normal:
@@ -213,7 +214,7 @@ class Robot:
                 print('No candle in solve_candle')
                 return
             angle = sm / sees
-            print('DEBUG: Angle: ', angle, sm, sees)
+            print('\t' * (self.tabs + 1), 'DEBUG: Angle: ', angle, sm, sees)
             self.go(0, angle)
             self.go(10, 0,
                     end=lambda: self.fire_sen[2] is 0
@@ -341,18 +342,18 @@ class Robot:
             speedl = 0
         t_left = time
 
-        print('DEBUG: speedl, speedr: ', speedl, speedr)
+        print('\t' * (self.tabs + 1), 'DEBUG: speedl, speedr: ', speedl, speedr)
         self.go_basic(speedl, speedr)
-        print('DEBUG: GOING: time: ', time)
+        print('\t' * (self.tabs + 1), 'DEBUG: GOING: time: ', time)
         # while end() and t_left > 0:
         while not end() and t_left > 0:
-            # print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
+            # print('\t' * (self.tabs + 1), 'DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
             # self.get_state()
-        print('DEBUG: STOP: end(): ', end())
+        print('\t' * (self.tabs + 1), 'DEBUG: STOP: end(): ', end())
         self.go_basic(0, 0)
-        print('DEBUG: STOPPED')
+        print('\t' * (self.tabs + 1), 'DEBUG: STOPPED')
 
         print('\t' * self.tabs, 'INFO: End of | go')
         self.tabs -= 1
@@ -394,19 +395,19 @@ class Robot:
         t_left = time
 
         self.go_basic((speedl / abs(speedl)) * 42, (speedr / abs(speedr)) * 42)
-        print('DEBUG: speedl, speedr: ', speedl, speedr)
+        print('\t' * (self.tabs + 1), 'DEBUG: speedl, speedr: ', speedl, speedr)
         # sleep()
         self.go_basic(speedl, speedr)
-        print('DEBUG: GOING: time: ', time)
+        print('\t' * (self.tabs + 1), 'DEBUG: GOING: time: ', time)
         # while end() and t_left > 0:
         while not end() and t_left > 0:
-            # print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
+            # print('\t' * (self.tabs + 1), 'DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
             # self.get_state()
-        print('DEBUG: STOP: end(): ', end())
+        print('\t' * (self.tabs + 1), 'DEBUG: STOP: end(): ', end())
         self.go_basic(0, 0)
-        print('DEBUG: STOPPED')
+        print('\t' * (self.tabs + 1), 'DEBUG: STOPPED')
 
         print('\t' * self.tabs, 'INFO: End of | go_slow')
         self.tabs -= 1
@@ -482,7 +483,7 @@ class Robot:
 
         angle = angle / it
 
-        print('DEBUG: Final Angle: ', angle)
+        print('\t' * (self.tabs + 1), 'DEBUG: Final Angle: ', angle)
 
         self.go(0, angle + (angle / abs(angle)) * randint(20, 160),
                 end=lambda: max(self.fire_sen[:]) == 1)
