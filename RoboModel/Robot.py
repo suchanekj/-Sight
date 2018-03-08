@@ -208,7 +208,7 @@ class Robot:
 
         self.get_state()
 
-    def go_test(self, l, r):
+    def go_test(self):
         if not self.MOTORS_ENABLED:
             return
         print('Going')
