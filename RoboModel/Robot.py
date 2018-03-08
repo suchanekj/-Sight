@@ -89,7 +89,7 @@ class Robot:
         # self.start_doing()
 
         # self.go(ln=10)
-        self.go_slow(ln=-30, speed=self.MOTORS_MIN_SPEED)
+        self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
