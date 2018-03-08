@@ -68,7 +68,7 @@ class Robot:
         ########################
 
         for _ in range(18):
-            self.go(0, 10, speed=self.MOTORS_MIN_SPEED)
+            self.go(0, 40, speed=self.MOTORS_MIN_SPEED)
             sleep(1)
         # self.go(0, 60, speed=self.MOTORS_MIN_SPEED)
         # sleep(5)
