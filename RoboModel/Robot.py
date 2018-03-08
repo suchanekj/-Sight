@@ -42,8 +42,9 @@ class Robot:
         self.LEN_MOD = 0.33
         # self.L_R_RATIO = 6.9 / 5
         self.L_R_RATIO = 1.3076923076923077
-        self.ACCELERATION = 5
+        self.ACCELERATION = 9
         self.MOTORS_MIN_SPEED = 30
+        self.ACC_DELAY = 0.01
 
         # Other
         self.MIN_LEN_TO_WALL = 50
@@ -285,7 +286,7 @@ class Robot:
 
             self.mot.write(('L' + str(int(self.left)) + 'A').encode('ascii'))
             self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
-            sleep(0.005)
+            sleep(self.ACC_DELAY)
 
         self.mot.write(('L' + str(int(self.left)) + 'A').encode('ascii'))
         self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
