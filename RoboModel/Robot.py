@@ -40,8 +40,9 @@ class Robot:
         print('Init complete!')
 
         self.start_listening()
-        self.blow_fans()
-        sleep(3)
+        while 1:
+            self.blow_fans()
+            sleep(3)
         self.blow_fans()
         # self.go_test(0, 2)
         self.main_cycle()
