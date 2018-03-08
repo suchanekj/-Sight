@@ -38,6 +38,7 @@ class Robot:
         print('Init complete!')
 
         self.start_listening()
+        self.blow_fans()
         self.go_test(0, 2)
         self.main_cycle()
 
@@ -223,6 +224,9 @@ class Robot:
 
     def blow_fans(self):
         # TODO: write code
+        self.ard.write(b'1')
+        sleep(3)
+        self.ard.write(b'0')
         pass
 
     def solve_line(self):

@@ -25,7 +25,10 @@ def angleToLine(a, b):
 
     k = (LINE_POS[a].y - LINE_POS[b].y) / (LINE_POS[a].x - LINE_POS[b].x)
 
-    print('DEBUG: k: ', k)
+    print('DEBUG: k:', k)
     print('DEBUG: x1, x2:', LINE_POS[a].x, LINE_POS[b].x)
+    print('DEBUG: pow1, pow2:', pow(k, 2), pow(LINE_POS[a].x - LINE_POS[b].x, 2))
+    print('DEBUG: sqrt:', math.sqrt(pow(k, 2) - pow(LINE_POS[a].x - LINE_POS[b].x, 2)))
+    print('DEBUG: asin: ', math.asin(k / math.sqrt(pow(k, 2) - pow(LINE_POS[a].x - LINE_POS[b].x, 2))))
     return math.asin(k / math.sqrt(
         pow(k, 2) - pow(LINE_POS[a].x - LINE_POS[b].x, 2))) * 180 / math.pi
