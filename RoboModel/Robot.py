@@ -263,6 +263,8 @@ class Robot:
         sleep(6)
 
     def go_basic(self, l, r):
+        print('INFO: Entering \tgo_basic: ', l, r)
+
         if not self.MOTORS_ENABLED:
             self.mot.write(b'L0A')
             self.mot.write(b'R0A')
