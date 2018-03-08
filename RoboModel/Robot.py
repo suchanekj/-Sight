@@ -280,7 +280,7 @@ class Robot:
         
         t_left = time
         
-        self.go_basic(-speedl, speedr)
+        self.go_basic(speedl, speedr)
         print('GOIGN!!!!'*100)
         while end() and t_left > 0:
             print('DEBUG: ', self.line_sen[:], self.fire_sen[:])
