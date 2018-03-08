@@ -140,7 +140,6 @@ class Robot:
             if self.state == S.after_candle:
                 self.after_candle()
 
-
     def solve_candle(self):
         # TODO: set actual angles
         ang2candle = {
@@ -194,6 +193,21 @@ class Robot:
         self.mot.write(b'R0A')
         sleep(6)
 
+    def go_basic(self, l, r):
+        if not self.MOTORS_ENABLED:
+            return
+        l = ((l / 50) ** 2,32) * 70 / 5
+        while l != self.left or r != self.right:
+            if self.left < l: self.left += 10
+            if self.right < r: self.right += 10
+            if self.left > l: self.left -= 10
+            if self.right > r: self.right -= 10
+            if self.left > l - 10 and self.left < l + 10: self.left = l
+            if self.right > r - 10 and self.right < r + 10: self.right = r
+            self.mot.write(('L' + self.left + 'A').encode('ascii'))
+            self.mot.write(('R' + self.right + 'A').encode('ascii'))
+            sleep(0.005)
+
     def go(self, ln, rot=0, speed=100, end=(lambda: 1)):
         if not self.MOTORS_ENABLED:
             return
@@ -202,14 +216,12 @@ class Robot:
 
         if not end():
             return
-        self.mot.write(b'L50A')
-        self.mot.write(b'R50A')
+        go_basic(self, speed  - rot, speed + rot)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
             self.get_state()
-        self.mot.write(b'L0A')
-        self.mot.write(b'R0A')
+        go_basic(self, 0, 0)
 
     def go_while(self, ln, rot=0, end=(lambda: 0)):
         if not self.MOTORS_ENABLED:
@@ -218,14 +230,12 @@ class Robot:
         t_left = 15
         step = 0.05
 
-        self.mot.write(b'L50A')
-        self.mot.write(b'R50A')
+        go_basic(self, speed  - rot, speed + rot)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
             self.get_state()
-        self.mot.write(b'L0A')
-        self.mot.write(b'R0A')
+        go_basic(self, 0, 0)
 
     def blow_fans(self):
         # TODO: write code
