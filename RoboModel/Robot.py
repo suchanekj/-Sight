@@ -5,6 +5,9 @@ import random
 import serial
 from enum import Enum
 
+# Our imports
+import helperFunctions as hlp
+
 
 class S(Enum):
     """State of the Robot"""
@@ -13,6 +16,7 @@ class S(Enum):
     solve_wall = 2
     solve_line = 3
     after_candle = 4
+
 
 class Robot:
 
@@ -27,6 +31,7 @@ class Robot:
 
         # Constants
         self.VALID_US = 100
+        self.MOTORS_ENABLED = 0
 
         self.state = S.normal
 
@@ -35,7 +40,6 @@ class Robot:
         self.start_listening()
         self.go_test(0, 2)
         self.main_cycle()
-
 
     def start_listening(self):
         listening = Process(target=self.listen_on_port,
@@ -88,13 +92,13 @@ class Robot:
             # print('DEBUG: ', end='')
             # for
 
-
     def main_cycle(self):
-        max_time = 4 # maximum interupts before shutdown
+        max_time = 4  # maximum interupts before shutdown
         while 1:
-            sleep(0.1)
-            print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
-            print('DEBUG: State: ', self.state.name)
+            sleep(0.01)
+            # print('DEBUG: waiting in main loop, ultra_sen == ',
+            #       self.ultra_sen[1])
+            # print('DEBUG: State: ', self.state.name)
             # if self.ultra_sen[1] < 15:
             #     print('It should be FUN!')
             #     self.ard.write(b'1\r\n')
@@ -106,19 +110,17 @@ class Robot:
             # else:
             #     continue
             if max_time <= 0:
-                self.go_test(0,0)
+                self.go_test(0, 0)
                 return
 
             if self.state == S.normal:
                 self.go(10, 0,
-                        lambda: self.ultra_sen[1] > 20
-                                and self.ultra_sen[2] > 20)
+                        end=lambda: self.ultra_sen[1] > 20
+                                    and self.ultra_sen[2] > 20)
                 self.get_state()
                 continue
             if self.state == S.solve_line:
-                self.go(10, 0,
-                        lambda: self.ultra_sen[1] > 20
-                                and self.ultra_sen[2] > 20)
+                self.solve_line()
                 self.get_state()
                 continue
             else:
@@ -153,7 +155,7 @@ class Robot:
                 return
             angle = sm / sees
             self.go(0, angle)
-            self.go(10, 0,
+            self.go(10, 0, 100,
                     lambda: self.fire_sen[2] is 1
                             and self.fire_sen[3] is 0
                             and self.fire_sen[1] is 0)
@@ -169,8 +171,9 @@ class Robot:
         self.go_while(0, -1, lambda: self.ultra_sen[1] < 60
                                      and self.ultra_sen[2] < 60)
 
-
     def go_test(self, l, r):
+        if not self.MOTORS_ENABLED:
+            return
         print('Going')
 
         self.mot.write(b'L200A')
@@ -183,7 +186,9 @@ class Robot:
         self.mot.write(b'R0A')
         sleep(6)
 
-    def go(self, ln, rot=0, end=(lambda: 1)):
+    def go(self, ln, rot=0, speed=100, end=(lambda: 1)):
+        if not self.MOTORS_ENABLED:
+            return
         t_left = ln  # TODO: well calculated time
         step = 0.05
 
@@ -199,7 +204,9 @@ class Robot:
         self.mot.write(b'R0A')
 
     def go_while(self, ln, rot=0, end=(lambda: 0)):
-        # TODO: rot == 1 left, rot == -1 right
+        if not self.MOTORS_ENABLED:
+            return
+            # TODO: rot == 1 left, rot == -1 right
         t_left = 15
         step = 0.05
 
@@ -215,6 +222,29 @@ class Robot:
     def blow_fans(self):
         # TODO: write code
         pass
+
+    def solve_line(self):
+        it = 0
+        angle = 0
+        self.go(10, 0, 50, lambda: sum(self.line_sen[:]) >= 2)
+        if sum(self.line_sen[:]) < 2:
+            self.go(-20, 0, 50, lambda: sum(self.line_sen[:]) >= 2)
+        if sum(self.line_sen[:]) >= 2:
+            for a in range(len(self.line_sen[:])):
+                if self.line_sen[a] == 1:
+                    for b in range(a, len(self.line_sen[:])):
+                        if self.line_sen[b] == 1:
+                            angle += hlp.angleToLine(a, b)
+                            it += 1
+
+        if it == 0:
+            print('DEBUG: Sees only: ', it)
+            self.go(0, 180)
+            self.state = S.normal
+            return
+
+        angle = angle / it
+        print('DEBUG: Angle: ', angle)
 
     def get_state(self):
         if max(self.fire_sen[:]):
