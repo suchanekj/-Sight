@@ -67,7 +67,7 @@ class Robot:
         # print('AHOJ')
         ########################
 
-        for _ in range(18):
+        for _ in range(1):
             self.go(0, 40, speed=self.MOTORS_MIN_SPEED)
             sleep(1)
         # self.go(0, 60, speed=self.MOTORS_MIN_SPEED)
@@ -136,7 +136,7 @@ class Robot:
             for i in range(len(ultra_sen)):
                 ultra_sen[i] = int(us[i])
 
-
+    # Messed up
     def main_cycle(self):
         while 1:
             sleep(0.001)
@@ -144,15 +144,7 @@ class Robot:
             print('DEBUG: State: ', self.state.name, ' MAX:', max(self.fire_sen[:]))
             if self.state == S.normal:
                 # TODO: fix go_while
-                # self.go_while(10, 0,
-                #               # end=lambda: self.ultra_sen[1] > 20
-                #               #             and self.ultra_sen[2] > 20
-                #               end=lambda: max(self.line_sen[:]) == 0
-                #                           and self.ultra_sen[1] > 30
-                #                           and self.ultra_sen[2] > 30
-                #                           and max(self.fire_sen[:]) == 0
-                #               )
-                self.go(10, 0,
+                self.go(1000, 0,
                               end=lambda: max(self.line_sen[:]) == 0
                                           and self.ultra_sen[1] > 30
                                           and self.ultra_sen[2] > 30
@@ -391,6 +383,7 @@ class Robot:
         self.go(0, angle + (angle / abs(angle)) * randint(20, 160),
                 end=lambda: max(self.fire_sen[:]) == 0)
 
+    # SOLVED
     def get_state(self):
         if max(self.fire_sen[:]) == 1:
             self.state = S.solve_candle
@@ -398,9 +391,9 @@ class Robot:
         if max(self.line_sen[:]) == 1:
             self.state = S.solve_line
             return
-        # if min(self.ultra_sen[:]) < self.VALID_US:
-        #     self.state = S.solve_wall
-        #     return
+        if min(self.ultra_sen[:]) < self.VALID_US:
+            self.state = S.solve_wall
+            return
 
         # print('Else')
         self.state = S.normal
