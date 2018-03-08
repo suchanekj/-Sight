@@ -59,7 +59,7 @@ class Robot:
         while 1:
             # sleep(0.1)
             read_serial = self.ard.readline()
-            # read_serial = self.ard.readline()
+            read_serial = self.ard.readline()
             # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
             # TODO: complete B, V
 
@@ -71,7 +71,6 @@ class Robot:
             except ValueError:
                 print('ERROR')
                 continue
-            return #TODO: remove
 
             fs = fs.replace(' ', '').split(';')
             ls = ls.replace(' ', '').split(';')
@@ -178,6 +177,11 @@ class Robot:
 
         # has to be on the line of the candle
         self.blow_fans()
+        self.go(0, 10,
+                end=lambda: self.fire_sen[4] == 0)
+        self.blow_fans()
+        self.go(0, -10,
+                end=lambda: self.fire_sen[0] == 0)
         self.state = S.after_candle
 
     def after_candle(self):

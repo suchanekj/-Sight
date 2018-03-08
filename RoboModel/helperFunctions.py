@@ -10,11 +10,11 @@ class Point:
 
 
 LINE_POS = [  # from right to left
-    Point(6, 0),
-    Point(3, 3),
-    Point(0, 6),
-    Point(-3, 3),
-    Point(-6, 0),
+    Point(0.7, 0.7),
+    Point(0.38, 0.92),
+    Point(0, 1),
+    Point(-0.38, 0.92),
+    Point(-0.7, -0.7),
 ]
 
 
