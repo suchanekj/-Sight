@@ -31,7 +31,7 @@ class Robot:
 
         # Constants
         self.VALID_US = 100
-        self.MOTORS_ENABLED = 0
+        self.MOTORS_ENABLED = 1
 
         self.state = S.normal
 
@@ -122,8 +122,10 @@ class Robot:
 
             if self.state == S.normal:
                 self.go(10, 0,
-                        end=lambda: self.ultra_sen[1] > 20
-                                    and self.ultra_sen[2] > 20)
+                        # end=lambda: self.ultra_sen[1] > 20
+                        #             and self.ultra_sen[2] > 20
+                        end=lambda: max(self.line_sen[:]) == 0
+                        )
                 self.get_state()
                 continue
             if self.state == S.solve_line:
