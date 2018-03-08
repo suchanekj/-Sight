@@ -312,8 +312,11 @@ class Robot:
             print('ERROR LN and ROT'*100)
             return
 
-
+        if time == 0:
+            speedr = 0
+            speedl = 0
         t_left = time
+
         print('DEBUG: speedl, speedr: ', speedl, speedr)
         self.go_basic(speedl, speedr)
         print('DEBUG: GOING: time: ', time)
@@ -370,10 +373,11 @@ class Robot:
 
     # MESSED UP ???
     def solve_line(self):
+        print('INFO: Entered solve_line')
         it = 0
         angle = 0
         self.go()
-        sleep(0.1)
+        sleep()
         self.go(ln=20, speed=self.MOTORS_MIN_SPEED,
                 end=lambda: sum(self.line_sen[:]) >= 2)
         if sum(self.line_sen[:]) < 2:
