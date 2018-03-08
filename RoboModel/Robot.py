@@ -275,7 +275,7 @@ class Robot:
             self.get_state()
         self.go_basic(0, 0)
 
-    def go_while(self, ln, rot=0, speed=10, end=(lambda: 0)):
+    def go_while(self, ln, rot=0, speed=50, end=(lambda: 0)):
         if not self.MOTORS_ENABLED:
             return
             # TODO: rot == 1 left, rot == -1 right
