@@ -324,7 +324,7 @@ class Robot:
         print('DEBUG: GOING: time: ', time)
         # while end() and t_left > 0:
         while not end() and t_left > 0:
-            # print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
+            print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
             self.get_state()
