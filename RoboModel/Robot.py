@@ -58,7 +58,7 @@ class Robot:
 
         self.start_listening()
 
-        self.blow_fans()
+        # self.blow_fans()
 
         # while self.but[0] == 0:
         #     print(self.but[0])
@@ -103,9 +103,9 @@ class Robot:
         print('YayX')
 
     def start_doing(self):
-        listening = Process(target=self.solve_line(),
+        doing = Process(target=self.solve_line(),
                             args=())
-        listening.start()
+        doing.start()
         print('YayX')
 
 
@@ -332,7 +332,7 @@ class Robot:
         print('DEBUG: GOING: time: ', time)
         # while end() and t_left > 0:
         while not end() and t_left > 0:
-            print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
+            # print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
             self.get_state()
