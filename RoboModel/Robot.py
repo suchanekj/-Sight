@@ -259,7 +259,7 @@ class Robot:
                 speedl = -speed
                 speedr = speed
             time = abs(rot / speed * ROT_MOD)
-        else if rot == 0:
+        elif rot == 0:
             speedl = speed
             speedr = speed
             time = abs(ln / speed * LEN_MOD)
