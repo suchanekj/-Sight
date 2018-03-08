@@ -380,7 +380,7 @@ class Robot:
         angle = 0
         self.go()
         sleep()
-        self.go(ln=20, speed=self.MOTORS_MIN_SPEED,
+        self.go(ln=60, speed=self.MOTORS_MIN_SPEED,
                 end=lambda: sum(self.line_sen[:]) >= 2)
         sleep(100)
         if sum(self.line_sen[:]) < 2:
