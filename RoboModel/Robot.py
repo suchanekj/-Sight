@@ -121,7 +121,7 @@ class Robot:
             #     return
 
             if self.state == S.normal:
-                self.go(50, 0,
+                self.go(10, 0,
                         # end=lambda: self.ultra_sen[1] > 20
                         #             and self.ultra_sen[2] > 20
                         end=lambda: max(self.line_sen[:]) == 0
