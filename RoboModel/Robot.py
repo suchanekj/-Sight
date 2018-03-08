@@ -49,7 +49,9 @@ class Robot:
         #     sleep(3)
         self.blow_fans()
         self.go(0, 50)
+        print('ZKUSIM')
         self.go(0, 50)
+        print('AHOJ')
         # self.go_test()
         # self.go_test(0, 2)
         self.main_cycle()
@@ -277,6 +279,7 @@ class Robot:
         time = 0
         if ln == 0:
             if rot > 0:
+                print('Jsem v ROT')
                 speedl = -speed
                 speedr = speed
             else:
