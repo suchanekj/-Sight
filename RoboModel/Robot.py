@@ -34,11 +34,14 @@ class Robot:
         # Constants
         self.VALID_US = 100
         self.MOTORS_ENABLED = 1
+
         self.ROTATION_SPEED = 42
         self.ROT_MOD = 0.069 # TODO: make great consts
         self.LEN_MOD = 0.33
         self.L_R_RATIO = 6.9 / 5
+        self.L_R_ROT_RATIO = 1.3076923076923077
         self.ACCELERATION = 5
+        self.MOTORS_MIN_SPEED = 26
 
         self.state = S.normal
         self.left = 0
@@ -64,7 +67,12 @@ class Robot:
         # print('AHOJ')
         ########################
 
-        self.go(0, 30 + 360,)
+        self.go(0, 30, speed=self.MOTORS_MIN_SPEED)
+        sleep(5)
+        self.go(0, 60, speed=self.MOTORS_MIN_SPEED)
+        sleep(5)
+        self.go(0, 270, speed=self.MOTORS_MIN_SPEED)
+
 
 
 
