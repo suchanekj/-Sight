@@ -5,6 +5,9 @@ import random
 import serial
 from enum import Enum
 
+# Our imports
+import helperFunctions as hlp
+
 
 class S(Enum):
     """State of the Robot"""
@@ -13,16 +16,6 @@ class S(Enum):
     solve_wall = 2
     solve_line = 3
     after_candle = 4
-
-
-def loop_b(fire_sen):
-    while 1:
-        sleep(2)
-        fire_sen[0] += 1
-        print("b")
-
-
-processes = []
 
 
 class Robot:
@@ -38,15 +31,18 @@ class Robot:
 
         # Constants
         self.VALID_US = 100
+        self.MOTORS_ENABLED = 1
 
         self.state = S.normal
 
         print('Init complete!')
 
         self.start_listening()
-        # self.go_test(0, 2)
+        self.blow_fans()
+        self.go_test(0, 2)
         self.main_cycle()
 
+        print('INFO: end of Robots life')
 
     def start_listening(self):
         listening = Process(target=self.listen_on_port,
@@ -58,15 +54,20 @@ class Robot:
     def listen_on_port(self, fire_sen, line_sen, ultra_sen):
         print('Listening attemt')
         while 1:
-            sleep(0.01)
+            # sleep(0.1)
             read_serial = self.ard.readline()
             read_serial = self.ard.readline()
             # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
             # TODO: complete B, V
 
-            print('DEBUG: ', str(read_serial, 'ascii'))
             # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
-            fs, ls, us, _, _ = str(read_serial, 'ascii').split('|')
+
+            try:
+                # print('DEBUG: ', str(read_serial, 'ascii'))
+                ls, fs, us, _, _ = str(read_serial, 'ascii').split('|')
+            except ValueError:
+                print('ERROR')
+                continue
 
             fs = fs.replace(' ', '').split(';')
             ls = ls.replace(' ', '').split(';')
@@ -91,25 +92,51 @@ class Robot:
             for i in range(len(ultra_sen)):
                 ultra_sen[i] = int(us[i])
 
+            # print('DEBUG: line_sen: ', self.line_sen[:])
+
+            # print('DEBUG: ', end='')
+            # for
 
     def main_cycle(self):
+        max_time = 4  # maximum interupts before shutdown
         while 1:
+            print('INFO: entered main_cycle', self.line_sen[:])
             sleep(0.1)
-            print('DEBUG: waiting in main loop, ultra_sen == ', self.ultra_sen[1])
-            if self.ultra_sen[1] < 15:
-                print('It should be FUN!')
-                self.ard.write(b'1')
-                sleep(5)
-                self.ard.write(b'0')
-                sleep(5)
-                continue
-            else:
-                continue
+            # print('DEBUG: waiting in main loop, ultra_sen == ',
+            #       self.ultra_sen[1])
+            # print('DEBUG: State: ', self.state.name)
+            # if self.ultra_sen[1] < 15:
+            #     print('It should be FUN!')
+            #     self.ard.write(b'1\r\n')
+            #     sleep(5)
+            #     print('End of FUN!')
+            #     self.ard.write(b'0\r\n')
+            #     sleep(5)
+            #     continue
+            # else:
+            #     continue
+
+            # if max_time <= 0:
+            #     self.go_test(0, 0)
+            #     return
+
             if self.state == S.normal:
-                self.go(10, 0)
+                self.go(1, 0,
+                        # end=lambda: self.ultra_sen[1] > 20
+                        #             and self.ultra_sen[2] > 20
+                        end=lambda: max(self.line_sen[:]) == 0
+                        )
                 self.get_state()
                 continue
-
+            if self.state == S.solve_line:
+                self.solve_line()
+                self.get_state()
+                continue
+            else:
+                max_time -= 1
+                sleep(5)
+                self.state = S.normal
+                continue
             if self.state == S.solve_candle:
                 self.solve_candle()
             if self.state == S.after_candle:
@@ -137,7 +164,7 @@ class Robot:
                 return
             angle = sm / sees
             self.go(0, angle)
-            self.go(10, 0,
+            self.go(10, 0, 100,
                     lambda: self.fire_sen[2] is 1
                             and self.fire_sen[3] is 0
                             and self.fire_sen[1] is 0)
@@ -153,46 +180,95 @@ class Robot:
         self.go_while(0, -1, lambda: self.ultra_sen[1] < 60
                                      and self.ultra_sen[2] < 60)
 
-
     def go_test(self, l, r):
+        if not self.MOTORS_ENABLED:
+            return
         print('Going')
 
-        self.mot.write(b'L50A')
-        self.mot.write(b'R50A')
-        sleep(5)
+        self.mot.write(b'L200A')
+        self.mot.write(b'R200A')
+        sleep(0.1)
+        self.mot.write(b'L200A')
+        self.mot.write(b'R200A')
+        sleep(0.5)
         self.mot.write(b'L0A')
         self.mot.write(b'R0A')
+        sleep(6)
 
-    def go(self, ln, rot=0, end=(lambda: 1)):
-        t_left = 1  # TODO: well calculated time
+    def go_basic(self, l, r):
+        if not self.MOTORS_ENABLED:
+            return
+        l = ((l / 50) ** 2,32) * 70 / 5
+        while l != self.left or r != self.right:
+            if self.left < l: self.left += 10
+            if self.right < r: self.right += 10
+            if self.left > l: self.left -= 10
+            if self.right > r: self.right -= 10
+            if self.left > l - 10 and self.left < l + 10: self.left = l
+            if self.right > r - 10 and self.right < r + 10: self.right = r
+            self.mot.write(('L' + self.left + 'A').encode('ascii'))
+            self.mot.write(('R' + self.right + 'A').encode('ascii'))
+            sleep(0.005)
+
+    def go(self, ln, rot=0, speed=10, end=(lambda: 1)):
+        if not self.MOTORS_ENABLED:
+            return
+        t_left = ln  # TODO: well calculated time
         step = 0.05
 
-        self.mot.write(b'L50A')
-        self.mot.write(b'R50A')
+        if not end():
+            return
+        self.go_basic(speed  - rot, speed + rot)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
             self.get_state()
-        self.mot.write(b'L0A')
-        self.mot.write(b'R0A')
+        self.go_basic(0, 0)
 
-    def go_while(self, ln, rot=0, end=(lambda: 0)):
-        # TODO: rot == 1 left, rot == -1 right
+    def go_while(self, ln, rot=0, speed = 10, end=(lambda: 0)):
+        if not self.MOTORS_ENABLED:
+            return
+            # TODO: rot == 1 left, rot == -1 right
         t_left = 15
         step = 0.05
 
-        self.mot.write('L50A')
-        self.mot.write('R50A')
+        self.go_basic(speed  - rot, speed + rot)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
             self.get_state()
-        self.mot.write('L0A')
-        self.mot.write('R0A')
+        self.go_basic(0, 0)
 
     def blow_fans(self):
         # TODO: write code
+        self.ard.write(b'yy')
+        sleep(3)
+        self.ard.write(b'nn')
         pass
+
+    def solve_line(self):
+        it = 0
+        angle = 0
+        self.go(10, 0, 50, lambda: sum(self.line_sen[:]) >= 2)
+        if sum(self.line_sen[:]) < 2:
+            self.go(-20, 0, 50, lambda: sum(self.line_sen[:]) >= 2)
+
+        if sum(self.line_sen[:]) >= 2:
+            for a in range(len(self.line_sen[:])):
+                if self.line_sen[a] == 1:
+                    for b in range(a+1, len(self.line_sen[:])):
+                        if self.line_sen[b] == 1:
+                            angle += hlp.angleToLine(a, b)
+                            it += 1
+
+        if it == 0:
+            print('DEBUG: Sees only: ', it)
+            self.go(0, 180)
+            self.state = S.normal
+            return
+
+        angle = angle / it
+        print('DEBUG: Angle: ', angle)
 
     def get_state(self):
         if max(self.fire_sen[:]):
@@ -207,7 +283,7 @@ class Robot:
 
 
 R = Robot()
-print('ROBOTO: ', R.t)
+# print('ROBOTO: ', R.t)
 
 print('Ratatata: ', R.fire_sen[:], R.ultra_sen[:], R.line_sen[:])
 
@@ -219,4 +295,4 @@ sleep(4)
 
 print('Ratatata: ', R.fire_sen[:], R.ultra_sen[:], R.line_sen[:])
 
-print('Nice')
+print('END '*100)
