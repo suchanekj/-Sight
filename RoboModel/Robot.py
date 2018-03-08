@@ -121,7 +121,7 @@ class Robot:
             # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                # print('DEBUG: ', str(read_serial, 'ascii'), ' | ', self.state.name)
+                print('DEBUG: ', str(read_serial, 'ascii'), ' | ', self.state.name)
                 ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -356,6 +356,7 @@ class Robot:
 
     def blow_fans(self):
         # TODO: write code
+        print('\nINFO: Entering blow_fans')
         time_left = 3
         # with serial.Serial('/dev/ttyACM0') as ser:
         #     enbl = b'yy'
