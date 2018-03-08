@@ -68,7 +68,7 @@ class Robot:
             # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                print('DEBUG: ', str(read_serial, 'ascii'))
+                print('DEBUG: ', str(read_serial, 'ascii'), ' | ', self.state.name)
                 ls, fs, us, _, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -105,8 +105,8 @@ class Robot:
     def main_cycle(self):
         max_time = 4  # maximum interupts before shutdown
         while 1:
-            print('INFO: entered main_cycle', self.line_sen[:])
-            sleep(0.1)
+            # print('INFO: entered main_cycle', self.line_sen[:])
+            sleep(0.01)
             # print('DEBUG: waiting in main loop, ultra_sen == ',
             #       self.ultra_sen[1])
             # print('DEBUG: State: ', self.state.name)
@@ -153,14 +153,14 @@ class Robot:
     def solve_candle(self):
         # TODO: set actual angles
         ang2candle = {
-            0: 60,
+            0: 90,
             1: 45,
             2: 0,
             3: -45,
-            4: -60,
+            4: -90,
         }
 
-        while not max(self.line_sen[:]):
+        while max(self.line_sen[:]) != 1:
             sees = 0
             sm = 0
             for x in range(self.fire_sen[:]):
