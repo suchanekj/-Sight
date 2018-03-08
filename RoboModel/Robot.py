@@ -42,9 +42,9 @@ class Robot:
         self.LEN_MOD = 0.33
         # self.L_R_RATIO = 6.9 / 5
         self.L_R_RATIO = 1.3076923076923077
-        self.ACCELERATION = 9
+        self.ACCELERATION = 10
         self.MOTORS_MIN_SPEED = 28
-        self.ACC_DELAY = 0.01
+        self.ACC_DELAY = 0.005
 
         # Other
         self.MIN_LEN_TO_WALL = 50
@@ -341,19 +341,57 @@ class Robot:
         self.go_basic(0, 0)
         print('DEBUG: STOPPED')
 
-    def go_while(self, ln, rot=0, speed=50, end=(lambda: 0)):
+    def go_slow(self, ln, rot=0, speed=50, end=(lambda: 0)):
+        # end 1 == END, 0 == CONTINUE
+        print('\nINFO: Entering go')
+
         if not self.MOTORS_ENABLED:
             return
-            # TODO: rot == 1 left, rot == -1 right
-        t_left = 15
-        step = 0.0001
+        step = 0.00001
 
-        # self.go(100,)
-        while end() and t_left > 0:
+        if end():
+            return
+        speedl = 0
+        speedr = 0
+        time = 0
+        if ln == 0:
+            if rot > 0:
+                print('Jsem v ROT')
+                speedl = -speed
+                speedr = speed
+            else:
+                speedl = speed
+                speedr = -speed
+            time = abs(rot / speed * self.ROT_MOD)
+        elif rot == 0:
+            if ln < 0:
+                speed = -speed
+            speedl = speed
+            speedr = speed
+            time = abs(ln / speed * self.LEN_MOD)
+        else:
+            print('ERROR LN and ROT'*100)
+            return
+
+        if time == 0:
+            speedr = 0
+            speedl = 0
+        t_left = time
+
+        self.go_basic(42, 42)
+        print('DEBUG: speedl, speedr: ', speedl, speedr)
+        # sleep()
+        self.go_basic(speedl, speedr)
+        print('DEBUG: GOING: time: ', time)
+        # while end() and t_left > 0:
+        while not end() and t_left > 0:
+            # print('DEBUG: ', self.state.name, self.line_sen[:], self.fire_sen[:], ' | ', end())
             t_left -= step
             sleep(step)
-            self.get_state()
+            # self.get_state()
+        print('DEBUG: STOP: end(): ', end())
         self.go_basic(0, 0)
+        print('DEBUG: STOPPED')
 
     def blow_fans(self):
         # TODO: write code
