@@ -176,7 +176,7 @@ class Robot:
             4: 90,
         }
 
-        while max(self.line_sen[:]) != 1 and max(self.fire_sen[:]) == 1:
+        while max(self.line_sen[:]) == 0 and max(self.fire_sen[:]) == 1:
             sees = 0
             sm = 0
             for x in range(len(self.fire_sen[:])):
@@ -187,10 +187,13 @@ class Robot:
                 print('No candle in solve_candle')
                 return
             angle = sm / sees
+            print('DEBUG: Angle: ', angle, sm, sees)
             self.go(0, angle)
-            self.go(10, 0, 100,
-                    lambda: self.fire_sen[2] is 1
+            self.go(10, 0,
+                    end=lambda: self.fire_sen[2] is 1
                             and self.fire_sen[3] is 0
+                            and self.fire_sen[4] is 0
+                            and self.fire_sen[0] is 0
                             and self.fire_sen[1] is 0)
 
         # has to be on the line of the candle
