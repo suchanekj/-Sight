@@ -354,7 +354,6 @@ class Robot:
                 end=lambda: max(self.fire_sen[:]) == 0)
 
     def get_state(self):
-        print()
         if max(self.fire_sen[:]) == 1:
             self.state = S.solve_candle
             return
