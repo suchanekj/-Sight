@@ -41,7 +41,7 @@ class Robot:
         # self.L_R_RATIO = 6.9 / 5
         self.L_R_RATIO = 1.3076923076923077
         self.ACCELERATION = 5
-        self.MOTORS_MIN_SPEED = 30
+        self.MOTORS_MIN_SPEED = 34
 
         self.state = S.normal
         self.left = 0
