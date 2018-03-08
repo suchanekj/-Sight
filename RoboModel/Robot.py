@@ -78,19 +78,9 @@ class Robot:
         # print('AHOJ')
         ########################
 
-        # for _ in range(1):
-        #     self.go(0, 40, speed=self.MOTORS_MIN_SPEED)
-        #     sleep(1)
-        # self.go(0, 60, speed=self.MOTORS_MIN_SPEED)
-        # sleep(5)
-        # self.go(0, 270, speed=self.MOTORS_MIN_SPEED)
+        # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        # self.solve_line()
-        # self.start_doing()
-
-        # self.go(ln=10)
-        self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
-
+        self.solve_line()
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
@@ -268,7 +258,7 @@ class Robot:
 
     def go_basic(self, l, r):
         self.tabs += 1
-        print('\t' * self.tabs, 'INFO: Entering | go_basic: ', l, r)
+        print('\n', '\t' * self.tabs, 'INFO: Entering | go_basic: ', l, r)
 
         if not self.MOTORS_ENABLED:
             self.mot.write(b'L0A')
