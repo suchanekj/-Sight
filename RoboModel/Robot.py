@@ -112,7 +112,7 @@ class Robot:
     def listen_on_port(self, fire_sen, line_sen, ultra_sen):
         print('Listening attemt')
         while 1:
-            # sleep(0.1)
+            sleep(0.01)
             read_serial = self.ard.readline()
             read_serial = self.ard.readline()
             # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
