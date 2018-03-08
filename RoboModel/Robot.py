@@ -43,7 +43,7 @@ class Robot:
         # self.L_R_RATIO = 6.9 / 5
         self.L_R_RATIO = 1.3076923076923077
         self.ACCELERATION = 5
-        self.MOTORS_MIN_SPEED = 34
+        self.MOTORS_MIN_SPEED = 30
 
         # Other
         self.MIN_LEN_TO_WALL = 50
@@ -112,7 +112,7 @@ class Robot:
     def listen_on_port(self, fire_sen, line_sen, ultra_sen):
         print('Listening attemt')
         while 1:
-            sleep(0.01)
+            # sleep(0.01)
             read_serial = self.ard.readline()
             read_serial = self.ard.readline()
             # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
@@ -162,11 +162,11 @@ class Robot:
             if self.state == S.normal:
                 # TODO: fix go_while
                 self.go(1000, 0,
-                              end=lambda: max(self.line_sen[:]) == 1
-                                          or self.ultra_sen[1] <= self.MIN_LEN_TO_WALL
-                                          or self.ultra_sen[2] <= self.MIN_LEN_TO_WALL
-                                          or max(self.fire_sen[:]) == 1
-                              )
+                        end=lambda: max(self.line_sen[:]) == 1
+                                    or self.ultra_sen[1] <= self.MIN_LEN_TO_WALL
+                                    or self.ultra_sen[2] <= self.MIN_LEN_TO_WALL
+                                    or max(self.fire_sen[:]) == 1
+                        )
                 self.get_state()
                 continue
 
@@ -385,13 +385,14 @@ class Robot:
     # MESSED UP ???
     def solve_line(self):
         print('\nINFO: Entered solve_line')
+
         it = 0
         angle = 0
         self.go()
         sleep(1)
         self.go(ln=60, speed=self.MOTORS_MIN_SPEED,
-                end=lambda: sum(self.line_sen[:]) >= 1)
-        sleep(3)
+                end=lambda: sum(self.line_sen[:]) >= 2)
+        sleep(10)
         if sum(self.line_sen[:]) < 2:
             self.go(ln=-40, speed=self.MOTORS_MIN_SPEED,
                     end=lambda: sum(self.line_sen[:]) >= 2)
