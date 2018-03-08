@@ -407,7 +407,7 @@ class Robot:
         print('DEBUG: Final Angle: ', angle)
 
         self.go(0, angle + (angle / abs(angle)) * randint(20, 160),
-                end=lambda: max(self.fire_sen[:]) == 1
+                end=lambda: max(self.fire_sen[:]) == 1)
 
         print('INFO: End of solve_line')
 
