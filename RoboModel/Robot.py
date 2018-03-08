@@ -27,7 +27,6 @@ class Robot:
         self.ultra_sen = Array('i', [0] * 4)
         self.but = Array('b', [0])
         self.wall = Array('f', [0] * 5)
-        self.t = 0
         self.mot = serial.Serial('/dev/ttyUSB0')
         self.ard = serial.Serial('/dev/ttyACM0')
 
@@ -38,18 +37,19 @@ class Robot:
 
         # Motors
         self.ROTATION_SPEED = 42
-        self.ROT_MOD = 0.14 # TODO: make great consts
+        self.ROT_MOD = 0.14  # TODO: make great consts
         self.LEN_MOD = 0.33
+        self.SLOW_ROT_MOD = 0.14
+        self.SLOW_LEN_MOD = 0.33
         # self.L_R_RATIO = 6.9 / 5
         self.L_R_RATIO = 1.3076923076923077
         self.ACCELERATION = 10
         self.MOTORS_MIN_SPEED = 16
         self.ACC_DELAY = 0.005
 
+
         # Other
         self.MIN_LEN_TO_WALL = 50
-
-
 
         self.state = S.normal
         self.left = 0
@@ -82,9 +82,10 @@ class Robot:
         # sleep(5)
         # self.go(0, 270, speed=self.MOTORS_MIN_SPEED)
 
-
         # self.solve_line()
-        self.start_doing()
+        # self.start_doing()
+
+        self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
 
         print('DEBUG: debug IS DONE')
         # self.go_test()
@@ -105,10 +106,9 @@ class Robot:
 
     def start_doing(self):
         doing = Process(target=self.solve_line(),
-                            args=())
+                        args=())
         doing.start()
         print('YayX')
-
 
     def listen_on_port(self, fire_sen, line_sen, ultra_sen):
         print('Listening attemt')
@@ -122,7 +122,8 @@ class Robot:
             # print('DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                print('DEBUG: ', str(read_serial, 'ascii'), ' | ', self.state.name)
+                print('DEBUG: ', str(read_serial, 'ascii'), ' | ',
+                      self.state.name)
                 ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -164,8 +165,10 @@ class Robot:
                 # TODO: fix go_while
                 self.go(1000, 0,
                         end=lambda: max(self.line_sen[:]) == 1
-                                    or self.ultra_sen[1] <= self.MIN_LEN_TO_WALL
-                                    or self.ultra_sen[2] <= self.MIN_LEN_TO_WALL
+                                    or self.ultra_sen[
+                                        1] <= self.MIN_LEN_TO_WALL
+                                    or self.ultra_sen[
+                                        2] <= self.MIN_LEN_TO_WALL
                                     or max(self.fire_sen[:]) == 1
                         )
                 self.get_state()
@@ -218,9 +221,9 @@ class Robot:
 
         # has to be on the line of the candle
         self.blow_fans()
-        self.go(0, 10,)
+        self.go(0, 10, )
         self.blow_fans()
-        self.go(0, -20,)
+        self.go(0, -20, )
         self.blow_fans()
 
         self.state = S.after_candle
@@ -232,8 +235,8 @@ class Robot:
 
         # TODO: change lambdas
         self.go(0, hlp.randSide() * self.ROTATION_SPEED,
-                      end=lambda: self.ultra_sen[1] < 60
-                                  and self.ultra_sen[2] < 60)
+                end=lambda: self.ultra_sen[1] < 60
+                            and self.ultra_sen[2] < 60)
 
         self.go(0, hlp.randSide() * randint(0, 25),
                 end=lambda: self.ultra_sen[1] < 60
@@ -320,7 +323,7 @@ class Robot:
             speedr = speed
             time = abs(ln / speed * self.LEN_MOD)
         else:
-            print('ERROR LN and ROT'*100)
+            print('ERROR LN and ROT' * 100)
             return
 
         if time == 0:
@@ -351,9 +354,7 @@ class Robot:
 
         if end():
             return
-        speedl = 0
-        speedr = 0
-        time = 0
+
         if ln == 0:
             if rot > 0:
                 print('Jsem v ROT')
@@ -362,15 +363,15 @@ class Robot:
             else:
                 speedl = speed
                 speedr = -speed
-            time = abs(rot / speed * self.ROT_MOD)
+            time = abs(rot / speed * self.SLOW_ROT_MOD)
         elif rot == 0:
             if ln < 0:
                 speed = -speed
             speedl = speed
             speedr = speed
-            time = abs(ln / speed * self.LEN_MOD)
+            time = abs(ln / speed * self.SLOW_LEN_MOD)
         else:
-            print('ERROR LN and ROT'*100)
+            print('ERROR LN and ROT' * 100)
             return
 
         if time == 0:
@@ -378,7 +379,7 @@ class Robot:
             speedl = 0
         t_left = time
 
-        self.go_basic(42, 42)
+        self.go_basic((speedl / abs(speedl)) * 42, (speedr / abs(speedr)) * 42)
         print('DEBUG: speedl, speedr: ', speedl, speedr)
         # sleep()
         self.go_basic(speedl, speedr)
@@ -429,11 +430,11 @@ class Robot:
         angle = 0
         self.go()
         sleep(1)
-        self.go_slow(ln=60, speed=self.MOTORS_MIN_SPEED,
-                end=lambda: sum(self.line_sen[:]) >= 2)
+        self.go_slow(ln=20, speed=self.MOTORS_MIN_SPEED,
+                     end=lambda: sum(self.line_sen[:]) >= 2)
         sleep(10)
         if sum(self.line_sen[:]) < 2:
-            self.go(ln=-40, speed=self.MOTORS_MIN_SPEED,
+            self.go_slow(ln=-40, speed=self.MOTORS_MIN_SPEED,
                     end=lambda: sum(self.line_sen[:]) >= 2)
         self.go()
         if sum(self.line_sen[:]) < 2:
