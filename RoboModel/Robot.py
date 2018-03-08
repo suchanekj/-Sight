@@ -288,7 +288,7 @@ class Robot:
 
         if not self.MOTORS_ENABLED:
             return
-        step = 0.0001
+        step = 0.00001
 
         if end():
             return
