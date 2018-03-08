@@ -38,6 +38,8 @@ class Robot:
         self.LEN_MOD = 1
 
         self.state = S.normal
+        self.left = 0
+        self.right = 0
 
         print('Init complete!')
 
@@ -258,15 +260,15 @@ class Robot:
             else:
                 speedl = -speed
                 speedr = speed
-            time = abs(rot / speed * ROT_MOD)
+            time = abs(rot / speed * self.ROT_MOD)
         elif rot == 0:
             speedl = speed
             speedr = speed
-            time = abs(ln / speed * LEN_MOD)
+            time = abs(ln / speed * self.LEN_MOD)
         
         t_left = time
         
-        self.go_basic(speed - rot, speed + rot)
+        self.go_basic(speedl, speedr)
         while end() and t_left > 0:
             t_left -= step
             sleep(step)
