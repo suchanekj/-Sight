@@ -148,7 +148,9 @@ class Robot:
         while 1:
             sleep(0.001)
 
-            print('DEBUG: State: ', self.state.name, ' MAX:', max(self.fire_sen[:]))
+            print('DEBUG: State: ', self.state.name)
+            print('Sensors: ', self.line_sen[:], ' | ', self.fire_sen[:],
+                  ' | ', self.ultra_sen[:])
             if self.state == S.normal:
                 # TODO: fix go_while
                 self.go(1000, 0,
