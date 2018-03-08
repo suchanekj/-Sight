@@ -64,7 +64,7 @@ class Robot:
         # print('AHOJ')
         ########################
 
-        self.go(0, 90,)
+        self.go(0, 30,)
 
 
 
