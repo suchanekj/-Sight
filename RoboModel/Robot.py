@@ -235,7 +235,7 @@ class Robot:
         self.mot.write(b'L50A')
         self.mot.write(b'R50A')
         sleep(0.1)
-        self.mot.write(b'L50A')
+        self.mot.write(b'L71A')
         self.mot.write(b'R50A')
         while max(self.line_sen[:]) == 0:
             sleep(0.0001)
