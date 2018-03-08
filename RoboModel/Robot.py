@@ -265,8 +265,8 @@ class Robot:
         #     ser.write(b'nn')
         # return
         step = 0.001
-        enable = 'yy'
-        disable = 'nn'
+        enable = 'YY'
+        disable = 'NN'
         while time_left > 0:
             print('Fenuji')
             # self.ard.write('yy')
