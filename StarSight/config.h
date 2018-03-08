@@ -28,8 +28,8 @@ const int flameLimit[5] = {900, 850, 900, 900, 900}; //0(FIRE)-1024(DARKNESSS)
 //line detection config
 #define lineMedian 9 //number of last values to make median of
 const int lineAvgLng = lineMedian; //number of last values to make average of
-const int whiteThreshold[5] = {400, 100, 900, 100, 100}; //the higher, the darker
-const int blackThreshold[5] = {500, 500, 905, 500, 400}; //the higher, the darker
+const int whiteThreshold[5] = {100, 100, 902, 100, 100}; //the higher, the darker
+const int blackThreshold[5] = {300, 300, 905, 300, 200}; //the higher, the darker
 const int blackWhiteDiff = 150; //the higher, the darker
 
 
