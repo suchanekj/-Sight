@@ -48,6 +48,7 @@ class Robot:
         #     self.blow_fans()
         #     sleep(3)
         self.blow_fans()
+        self.go_test()
         # self.go_test(0, 2)
         self.main_cycle()
 
@@ -212,12 +213,12 @@ class Robot:
             return
         print('Going')
 
-        self.mot.write(b'L200A')
-        self.mot.write(b'R200A')
+        self.mot.write(b'L50A')
+        self.mot.write(b'R50A')
         sleep(0.1)
-        self.mot.write(b'L200A')
-        self.mot.write(b'R200A')
-        sleep(0.5)
+        self.mot.write(b'L50A')
+        self.mot.write(b'R50A')
+        sleep(3)
         self.mot.write(b'L0A')
         self.mot.write(b'R0A')
         sleep(6)
