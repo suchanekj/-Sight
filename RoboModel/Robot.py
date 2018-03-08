@@ -239,8 +239,8 @@ class Robot:
             if self.right > r: self.right -= 10
             if self.left > l - 10 and self.left < l + 10: self.left = l
             if self.right > r - 10 and self.right < r + 10: self.right = r
-            self.mot.write(('L' + self.left + 'A').encode('ascii'))
-            self.mot.write(('R' + self.right + 'A').encode('ascii'))
+            self.mot.write(('L' + str(int(self.left)) + 'A').encode('ascii'))
+            self.mot.write(('R' + str(int(self.right)) + 'A').encode('ascii'))
             sleep(0.005)
 
     def go(self, ln, rot=0, speed=42, end=(lambda: 1)):
