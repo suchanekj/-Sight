@@ -111,7 +111,7 @@ class Robot:
         max_time = 4  # maximum interupts before shutdown
         while 1:
             # print('INFO: entered main_cycle', self.line_sen[:])
-            sleep(0.01)
+            sleep(0.001)
             # print('DEBUG: waiting in main loop, ultra_sen == ',
             #       self.ultra_sen[1])
             # print('DEBUG: State: ', self.state.name)
@@ -129,7 +129,9 @@ class Robot:
             # if max_time <= 0:
             #     self.go_test(0, 0)
             #     return
-            print('DEBUG: State: ', self.state.name)
+
+
+            print('DEBUG: State: ', self.state.name, ' MAX:', max(self.fire_sen[:]))
             if self.state == S.normal:
                 # self.go_while(10, 0,
                 #               # end=lambda: self.ultra_sen[1] > 20
@@ -277,13 +279,13 @@ class Robot:
             speedl = speed
             speedr = speed
             time = abs(ln / speed * self.LEN_MOD)
-        
+
         t_left = time
-        
+
         self.go_basic(-speedl, speedr)
-        print('GOIGN!!!!'*100)
+        # print('GOIGN!!!!'*100)
         while end() and t_left > 0:
-            print('DEBUG: ', self.line_sen[:], self.fire_sen[:])
+            # print('DEBUG: ', self.line_sen[:], self.fire_sen[:])
             t_left -= step
             sleep(step)
             self.get_state()
