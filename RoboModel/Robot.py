@@ -100,7 +100,7 @@ class Robot:
     def main_cycle(self):
         max_time = 4  # maximum interupts before shutdown
         while 1:
-            print('INFO: entered main_cycle')
+            print('INFO: entered main_cycle', self.line_sen[:])
             sleep(0.1)
             # print('DEBUG: waiting in main loop, ultra_sen == ',
             #       self.ultra_sen[1])
@@ -116,9 +116,9 @@ class Robot:
             # else:
             #     continue
 
-            if max_time <= 0:
-                self.go_test(0, 0)
-                return
+            # if max_time <= 0:
+            #     self.go_test(0, 0)
+            #     return
 
             if self.state == S.normal:
                 self.go(10, 0,
