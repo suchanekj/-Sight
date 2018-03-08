@@ -41,6 +41,7 @@ class Robot:
 
         self.start_listening()
         self.blow_fans()
+        sleep(3)
         self.blow_fans()
         # self.go_test(0, 2)
         self.main_cycle()
@@ -180,8 +181,11 @@ class Robot:
         self.go(0, 10,
                 end=lambda: self.fire_sen[4] == 0)
         self.blow_fans()
-        self.go(0, -10,
+
+        self.go(0, -20,
                 end=lambda: self.fire_sen[0] == 0)
+        self.blow_fans()
+
         self.state = S.after_candle
 
     def after_candle(self):
