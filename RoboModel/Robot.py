@@ -369,7 +369,7 @@ class Robot:
         print('\t' * self.tabs, 'INFO: End of | go')
         self.tabs -= 1
 
-    def go_slow(self, ln, rot=0, speed=50, end=(lambda: 0)):
+    def go_slow(self, ln=0, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
         self.tabs += 1
         print('\n', '\t' * self.tabs, 'INFO:INFO: Entering | go_slow')
