@@ -216,7 +216,7 @@ class Robot:
                              speed=self.MOTORS_MIN_SPEED,
                              end = lambda: self.fire_sen[2] is 1)
             sleep(1)
-            self.go(ln=100,
+            self.go_slow(ln=100, speed=30,
                     end=lambda: self.fire_sen[2] is 0
                                 or max(self.line_sen[:]) is 1)
 
@@ -226,7 +226,8 @@ class Robot:
                          end=lambda: max(self.fire_sen[:]) == 1)
             self.go_slow(rot=-180, speed=self.MOTORS_MIN_SPEED,
                          end=lambda: max(self.fire_sen[:]) == 1)
-
+            self.get_state()
+            return
 
         self.blow_fans()
         self.go_slow(rot=10, )
