@@ -63,6 +63,7 @@ class Robot:
         sleep(1)
         self.go()
         sleep(1)
+        print('INFO:', 'STARTING THE SEQUENCE' * 10)
 
         # while self.but[0] == 0:
         #     print(self.but[0])
