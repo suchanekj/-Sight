@@ -86,7 +86,8 @@ class Robot:
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        self.main_cycle()
+        # self.main_cycle()
+
         # self.solve_line()
         # self.go_slow(rot=90, speed=self.MOTORS_MIN_SPEED)
         # self.go_slow(rot=-270, speed=self.MOTORS_MIN_SPEED)
@@ -125,8 +126,8 @@ class Robot:
             # TODO: complete V
 
             try:
-                # print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
-                #       self.state.name)
+                print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
+                      self.state.name)
                 ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -336,6 +337,7 @@ class Robot:
 
             # wall in front
             if (min(self.ultra_sen[1:3]) <= self.EXC_LEN_TO_WALL):
+                self.go(ln=-20,speed=30)
                 self.get_state()
 
                 print('\t' * self.tabs, 'INFO: End of | solve_wall | wall in front')
