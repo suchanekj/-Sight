@@ -49,7 +49,7 @@ class Robot:
 
         # Other
         self.EXC_LEN_TO_WALL = 50
-        self.MIN_LEN_TO_WALL = 10
+        self.EXC_LEN_TO_WALL = 10
         self.TOLERANCE_US = 2
 
         self.state = S.normal
@@ -67,9 +67,8 @@ class Robot:
         sleep(1)
         print('INFO:', 'STARTING THE SEQUENCE' * 10)
 
-        # while self.but[0] == 0:
-        #     print(self.but[0])
-        #     sleep(0.1)
+        while self.but[0] == 0:
+            sleep(0.1)
 
         ########################
         #
@@ -270,7 +269,7 @@ class Robot:
         #              )
         self.go_slow(ln=max(wall_ahead-10, 10), speed=self.MOTORS_MIN_SPEED,
                      end=lambda: min(self.ultra_sen[1:3])
-                                 <= self.MIN_LEN_TO_WALL)
+                                 <= self.EXC_LEN_TO_WALL)
         self.go()
         
         if self.ultra_sen[1] <= self.ultra_sen[2]: # right is closer 
