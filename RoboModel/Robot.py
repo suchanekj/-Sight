@@ -216,13 +216,9 @@ class Robot:
                              speed=self.MOTORS_MIN_SPEED,
                              end = lambda: self.fire_sen[2] is 1)
             sleep(1)
-            # self.go(10, 0,
-            #         end=lambda: self.fire_sen[2] is 0
-            #                     or self.fire_sen[3] is 1
-            #                     or self.fire_sen[4] is 1
-            #                     or self.fire_sen[0]  is 1
-            #                     or self.fire_sen[1] is 1
-            #                     or max(self.line_sen[:]) is 1)
+            self.go(ln=100,
+                    end=lambda: self.fire_sen[2] is 0
+                                or max(self.line_sen[:]) is 1)
 
         # has to be on the line of the candle
         if max(self.fire_sen[:]) == 0:
@@ -230,6 +226,7 @@ class Robot:
                          end=lambda: max(self.fire_sen[:]) == 1)
             self.go_slow(rot=-180, speed=self.MOTORS_MIN_SPEED,
                          end=lambda: max(self.fire_sen[:]) == 1)
+
 
         self.blow_fans()
         self.go(0, 10, )
@@ -421,14 +418,13 @@ class Robot:
             # self.get_state()
         print('\t' * (self.tabs + 1), 'DEBUG: STOP: end(): ', end())
         self.go_basic(0, 0)
-        print('\t' * (self.tabs + 1), 'DEBUG: STOPPED')
 
         print('\t' * self.tabs, 'INFO: End of | go_slow')
         self.tabs -= 1
 
     def blow_fans(self):
         # TODO: write code
-        return
+
         self.tabs += 1
         print('\n', '\t' * self.tabs, 'INFO:INFO: Entering blow_fans')
         time_left = 3
@@ -455,7 +451,8 @@ class Robot:
         # self.ard.write(b'nn')
         self.ard.write(disable.encode('ascii'))
         self.ard.write(disable.encode('ascii'))
-        
+
+        print('\t' * self.tabs, 'INFO: End of | blow_fans')
         self.tabs -= 1
 
     # MESSED UP !!! Just a 1 + kk
