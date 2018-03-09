@@ -50,7 +50,7 @@ class Robot:
 
         # Other
         self.EXC_LEN_TO_WALL = 50
-        self.MIN_LEN_TO_WALL = 10
+        self.MIN_LEN_TO_WALL = 14
         self.TOLERANCE_US = 4
 
         self.state = S.normal
@@ -491,6 +491,7 @@ class Robot:
         if end():
             print('\t' * self.tabs, 'INFO: Insta end of | go_slow')
             self.tabs -= 1
+            self.go()
             return
 
         if ln == 0:
