@@ -81,7 +81,7 @@ class Robot:
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        self.main_cycle()
+        # self.main_cycle()
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
@@ -115,8 +115,8 @@ class Robot:
             # TODO: complete V
 
             try:
-                # print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
-                #       self.state.name)
+                print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
+                      self.state.name)
                 ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -146,7 +146,7 @@ class Robot:
             for i in range(len(ultra_sen)):
                 ultra_sen[i] = int(us[i])
 
-    # Messed up
+    # MESSED UP
     def main_cycle(self):
         while 1:
             sleep(0.001)
@@ -181,7 +181,7 @@ class Robot:
                 self.after_candle()
                 continue
 
-    # MESSED
+    # SOLVED
     def solve_candle(self):
         self.tabs += 1
         print('\n', '\t' * self.tabs, 'INFO: Entering | solve_candle: ',)
@@ -241,7 +241,7 @@ class Robot:
         print('\t' * self.tabs, 'INFO: End of | solve_candle')
         self.tabs -= 1
 
-    # MESSED
+    # SOLVED
     def after_candle(self):
         self.go_slow(rot=(180 + randint(-42, 42)), speed=self.MOTORS_MIN_SPEED)
         self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
@@ -275,6 +275,7 @@ class Robot:
         self.blow_fans()
         sleep(6)
 
+    # SOLVED
     def go_basic(self, l, r):
         self.tabs += 1
         print('\n', '\t' * self.tabs, 'INFO: Entering | go_basic: ', l, r)
@@ -313,6 +314,7 @@ class Robot:
         print('\t' * self.tabs, 'INFO: Leaving | go_basic')
         self.tabs -= 1
 
+    # SOLVED
     def go(self, ln=0, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
         self.tabs += 1
@@ -369,6 +371,7 @@ class Robot:
         print('\t' * self.tabs, 'INFO: End of | go')
         self.tabs -= 1
 
+    # SOLVED
     def go_slow(self, ln=0, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
         self.tabs += 1
@@ -424,31 +427,19 @@ class Robot:
         print('\t' * self.tabs, 'INFO: End of | go_slow')
         self.tabs -= 1
 
+    # SOLVED
     def blow_fans(self):
         # TODO: write code
 
         self.tabs += 1
         print('\n', '\t' * self.tabs, 'INFO:INFO: Entering blow_fans')
-        time_left = 3
-        # with serial.Serial('/dev/ttyACM0') as ser:
-        #     enbl = b'yy'
-        #     ser.write(enbl)
-        #     print(enbl)
-        #     sleep(3)
-        #
-        #     ser.write(b'nn')
-        # return
+
         print('Fenuji')
         step = 0.001
         enable = 'YY'
         disable = 'NN'
         self.ard.write(enable.encode('ascii'))
-        sleep(3)
-        # while time_left > 0:
-        #     # self.ard.write('yy')
-        #     self.ard.write(enable.encode('ascii'))
-        #     sleep(step)
-        #     time_left -= step
+        sleep(1)
 
         # self.ard.write(b'nn')
         self.ard.write(disable.encode('ascii'))
@@ -515,9 +506,9 @@ class Robot:
         if max(self.line_sen[:]) == 1:
             self.state = S.solve_line
             return
-        # if min(self.ultra_sen[:]) < self.VALID_US:
-        #     self.state = S.solve_wall
-        #     return
+        if min(self.ultra_sen[1:3]) < self.VALID_US:
+            self.state = S.solve_wall
+            return
 
         # print('Else')
         self.state = S.normal
