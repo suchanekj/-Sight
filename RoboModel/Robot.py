@@ -338,7 +338,7 @@ class Robot:
             if (min(self.ultra_sen[1:3]) <= self.EXC_LEN_TO_WALL):
                 self.get_state()
 
-                print('\t' * self.tabs, 'INFO: End of | solve_wall')
+                print('\t' * self.tabs, 'INFO: End of | solve_wall | wall in front')
                 self.tabs -= 1
                 return
 
@@ -359,7 +359,7 @@ class Robot:
                                      and min(self.ultra_sen[1:3]) >= self.EXC_LEN_TO_WALL):
                 self.get_state()
 
-                print('\t' * self.tabs, 'INFO: End of | solve_wall')
+                print('\t' * self.tabs, 'INFO: End of | solve_wall | LAST END')
                 self.tabs -= 1
                 return
 
