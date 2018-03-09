@@ -534,7 +534,7 @@ class Robot:
         print('\t' * (self.tabs + 1), 'DEBUG: Final Angle: ', angle)
         print('\t' * (self.tabs + 1), 'DEBUG: Rotation: ', 180 - angle)
 
-        self.go_slow(rot=180 - angle)
+        self.go_slow(rot=180 - angle, speed=self.MOTORS_MIN_SPEED)
         self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
         # self.go_slow(rot=angle + (angle / abs(angle)) * randint(-70, 70))
         self.go_slow(rot=randint(-70, 70), speed=self.MOTORS_MIN_SPEED,
