@@ -516,7 +516,7 @@ class Robot:
             speedl = 0
         t_left = time
 
-        self.go_basic((speedl / abs(speedl)) * 42, (speedr / abs(speedr)) * 42)
+        self.go_basic((speedl / abs(speedl)) * 65, (speedr / abs(speedr)) * 65)
         print('\t' * (self.tabs + 1), 'DEBUG: speedl, speedr: ', speedl, speedr)
         # sleep()
         self.go_basic(speedl, speedr)
