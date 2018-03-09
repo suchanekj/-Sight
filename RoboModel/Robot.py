@@ -86,7 +86,7 @@ class Robot:
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        # self.main_cycle()
+        self.main_cycle()
 
         # self.solve_line()
         # self.go_slow(rot=90, speed=self.MOTORS_MIN_SPEED)
@@ -328,15 +328,15 @@ class Robot:
 
                 # aling with wall
                 print('DEBUG: rot', rot_sign, rot_sign * self.ROT_WALL_CHANGE)
-                # if (self.MIN_LEN_TO_WALL - self.TOLERANCE_US
-                #         > self.ultra_sen[side]):
-                #     self.go_slow(rot=-rot_sign * self.ROT_WALL_CHANGE,
-                #                  speed=self.MOTORS_MIN_SPEED)
-                #
-                # elif (self.MIN_LEN_TO_WALL + self.TOLERANCE_US
-                #         < self.ultra_sen[side]):
-                #     self.go_slow(rot=rot_sign * self.ROT_WALL_CHANGE,
-                #                  speed=self.MOTORS_MIN_SPEED)
+                if (self.MIN_LEN_TO_WALL - self.TOLERANCE_US
+                        > self.ultra_sen[side]):
+                    self.go_slow(rot=rot_sign * self.ROT_WALL_CHANGE,
+                                 speed=self.MOTORS_MIN_SPEED)
+
+                elif (self.MIN_LEN_TO_WALL + self.TOLERANCE_US
+                        < self.ultra_sen[side]):
+                    self.go_slow(rot=-rot_sign * self.ROT_WALL_CHANGE,
+                                 speed=self.MOTORS_MIN_SPEED)
 
             # wall in front
             if (min(self.ultra_sen[1:3]) <= self.EXC_LEN_TO_WALL):
