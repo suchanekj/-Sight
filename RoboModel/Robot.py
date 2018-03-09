@@ -50,7 +50,7 @@ class Robot:
 
         # Other
         self.EXC_LEN_TO_WALL = 50
-        self.MIN_LEN_TO_WALL = 14
+        self.MIN_LEN_TO_WALL = 16
         self.TOLERANCE_US = 4
 
         self.state = S.normal
@@ -323,6 +323,7 @@ class Robot:
                                          <= self.MIN_LEN_TO_WALL - self.TOLERANCE_US)
 
                 # aling with wall
+                print('DEBUG: rot', rot_sign, rot_sign * self.ROT_WALL_CHANGE)
                 if (self.MIN_LEN_TO_WALL - self.TOLERANCE_US
                         > self.ultra_sen[side]):
                     self.go_slow(rot=rot_sign * self.ROT_WALL_CHANGE,
