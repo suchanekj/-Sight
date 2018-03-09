@@ -174,12 +174,12 @@ class Robot:
                   ' | ', self.ultra_sen[:])
             if self.state == S.normal:
                 # TODO: fix go_while
-                self.go(1000, 0,
+                self.go_slow(ln=1000, speed=30,
                         end=lambda: max(self.line_sen[:]) == 1
-                                    or self.ultra_sen[
-                                        1] <= self.EXC_LEN_TO_WALL
-                                    or self.ultra_sen[
-                                        2] <= self.EXC_LEN_TO_WALL
+                                    # or self.ultra_sen[
+                                    #     1] <= self.EXC_LEN_TO_WALL
+                                    # or self.ultra_sen[
+                                    #     2] <= self.EXC_LEN_TO_WALL
                                     or max(self.fire_sen[:]) == 1
                         )
                 self.get_state()
