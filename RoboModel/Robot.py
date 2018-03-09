@@ -80,7 +80,10 @@ class Robot:
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        self.solve_candle()
+        self.go_slow(rot=90, speed=self.MOTORS_MIN_SPEED)
+        sleep(2)
+        self.go_slow(rot=-270, speed=self.MOTORS_MIN_SPEED)
+        # self.solve_candle()
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
