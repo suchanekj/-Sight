@@ -48,7 +48,8 @@ class Robot:
         self.ACC_DELAY = 0.005
 
         # Other
-        self.MIN_LEN_TO_WALL = 50
+        self.EXC_LEN_TO_WALL = 50
+        self.MIN_LEN_TO_WALL = 10
         self.TOLERANCE_US = 2
 
         self.state = S.normal
@@ -84,7 +85,7 @@ class Robot:
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        # self.main_cycle()
+        self.main_cycle()
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
@@ -163,9 +164,9 @@ class Robot:
                 self.go(1000, 0,
                         end=lambda: max(self.line_sen[:]) == 1
                                     or self.ultra_sen[
-                                        1] <= self.MIN_LEN_TO_WALL
+                                        1] <= self.EXC_LEN_TO_WALL
                                     or self.ultra_sen[
-                                        2] <= self.MIN_LEN_TO_WALL
+                                        2] <= self.EXC_LEN_TO_WALL
                                     or max(self.fire_sen[:]) == 1
                         )
                 self.get_state()
@@ -263,9 +264,20 @@ class Robot:
 
     def solve_wall(self):
         self.go()
-        self.go_slow(rot=160, speed=self.MOTORS_MIN_SPEED,
-                     end=lambda: abs(self.ultra_sen[1] - self.ultra_sen[2])
-                                 <= self.TOLERANCE_US)
+        wall_ahead = min(self.ultra_sen[1:3])
+        # TODO: Try this
+        # self.go_slow(ln=max(wall_ahead-10, 10), speed=self.MOTORS_MIN_SPEED,
+        #              )
+        self.go_slow(ln=max(wall_ahead-10, 10), speed=self.MOTORS_MIN_SPEED,
+                     end=lambda: min(self.ultra_sen[1:3])
+                                 <= self.MIN_LEN_TO_WALL)
+        self.go()
+        
+        if self.ultra_sen[1] <= self.ultra_sen[2]: # right is closer 
+            self.go_slow(rot=90)
+            self.go_slow(rot=160, speed=self.MOTORS_MIN_SPEED,
+                         end=lambda: abs(wall_ahead - self.ultra_sen[2])
+                                     <= self.TOLERANCE_US)
 
     def go_test(self):
         if not self.MOTORS_ENABLED:
@@ -516,9 +528,9 @@ class Robot:
         if max(self.line_sen[:]) == 1:
             self.state = S.solve_line
             return
-        if min(self.ultra_sen[1:3]) < self.VALID_US:
-            self.state = S.solve_wall
-            return
+        # if min(self.ultra_sen[1:3]) < self.VALID_US:
+        #     self.state = S.solve_wall
+        #     return
 
         # print('Else')
         self.state = S.normal
