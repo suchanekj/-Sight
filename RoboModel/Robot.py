@@ -51,7 +51,7 @@ class Robot:
         # Other
         self.EXC_LEN_TO_WALL = 50
         self.MIN_LEN_TO_WALL = 10
-        self.TOLERANCE_US = 2
+        self.TOLERANCE_US = 4
 
         self.state = S.normal
         self.left = 0
@@ -316,6 +316,7 @@ class Robot:
                     return
 
                 # go along wall
+                # print('')
                 self.go_slow(ln=100, speed=30,
                              end=lambda: self.MIN_LEN_TO_WALL - self.TOLERANCE_US
                                          <= self.ultra_sen[side]
