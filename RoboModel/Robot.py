@@ -529,7 +529,7 @@ class Robot:
             self.state = S.normal
             return
 
-        angle = angle / it
+        angle = - angle / it
 
         print('\t' * (self.tabs + 1), 'DEBUG: Final Angle: ', angle)
         print('\t' * (self.tabs + 1), 'DEBUG: Rotation: ', 180 - angle)
