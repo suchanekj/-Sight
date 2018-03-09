@@ -289,6 +289,8 @@ class Robot:
             self.go_slow(rot=rot_sign * 120, speed=self.MOTORS_MIN_SPEED,
                          end=lambda: abs(wall_ahead - self.ultra_sen[side])
                                      <= self.TOLERANCE_US)
+
+        while (1):
             self.go_slow(rot=160, speed=self.MOTORS_MIN_SPEED,
                          end=lambda: abs(wall_ahead - self.ultra_sen[2])
                                      <= self.TOLERANCE_US)
@@ -530,9 +532,15 @@ class Robot:
         angle = angle / it
 
         print('\t' * (self.tabs + 1), 'DEBUG: Final Angle: ', angle)
+        print('\t' * (self.tabs + 1), 'DEBUG: Rotation: ', 180 - angle)
 
-        self.go(0, angle + (angle / abs(angle)) * randint(20, 160),
-                end=lambda: max(self.fire_sen[:]) == 1)
+        self.go_slow(rot=180 - angle)
+        self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
+        # self.go_slow(rot=angle + (angle / abs(angle)) * randint(-70, 70))
+        self.go_slow(rot=randint(-70, 70), speed=self.MOTORS_MIN_SPEED,
+                     end=lambda: max(self.fire_sen[:]) == 1)
+
+        self.get_state()
 
         print('\t' * self.tabs, 'INFO: End of solve_line')
         self.tabs -= 1
