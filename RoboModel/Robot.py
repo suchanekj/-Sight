@@ -326,12 +326,12 @@ class Robot:
                 print('DEBUG: rot', rot_sign, rot_sign * self.ROT_WALL_CHANGE)
                 if (self.MIN_LEN_TO_WALL - self.TOLERANCE_US
                         > self.ultra_sen[side]):
-                    self.go_slow(rot=rot_sign * self.ROT_WALL_CHANGE,
+                    self.go_slow(rot=-rot_sign * self.ROT_WALL_CHANGE,
                                  speed=self.MOTORS_MIN_SPEED)
 
                 elif (self.MIN_LEN_TO_WALL + self.TOLERANCE_US
                         < self.ultra_sen[side]):
-                    self.go_slow(rot=- rot_sign * self.ROT_WALL_CHANGE,
+                    self.go_slow(rot=rot_sign * self.ROT_WALL_CHANGE,
                                  speed=self.MOTORS_MIN_SPEED)
 
             # wall in front
