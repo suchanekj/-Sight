@@ -49,7 +49,7 @@ class Robot:
 
         # Other
         self.EXC_LEN_TO_WALL = 50
-        self.EXC_LEN_TO_WALL = 10
+        self.MIN_LEN_TO_WALL = 10
         self.TOLERANCE_US = 2
 
         self.state = S.normal
@@ -84,7 +84,10 @@ class Robot:
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        self.main_cycle()
+        # self.main_cycle()
+        self.solve_line()
+
+        ########################
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
@@ -262,21 +265,36 @@ class Robot:
         self.get_state()
 
     def solve_wall(self):
+        self.tabs += 1
+        print('\n', '\t' * self.tabs, 'INFO: Entering | solve_wall: ',
+              self.ultra_sen[:])
+
         self.go()
         wall_ahead = min(self.ultra_sen[1:3])
+        side = randint(0, 1) * 4
+
         # TODO: Try this
         # self.go_slow(ln=max(wall_ahead-10, 10), speed=self.MOTORS_MIN_SPEED,
         #              )
-        self.go_slow(ln=max(wall_ahead-10, 10), speed=self.MOTORS_MIN_SPEED,
+        self.go_slow(ln=max(wall_ahead-self.MIN_LEN_TO_WALL, self.MIN_LEN_TO_WALL),
+                     speed=self.MOTORS_MIN_SPEED,
                      end=lambda: min(self.ultra_sen[1:3])
-                                 <= self.EXC_LEN_TO_WALL)
-        self.go()
-        
+                                 <= self.MIN_LEN_TO_WALL)
+        sleep(0.1)
+        wall_ahead = min(self.ultra_sen[1:3])
+
+        rot_sign = side // 4 - 1
+
         if self.ultra_sen[1] <= self.ultra_sen[2]: # right is closer 
-            self.go_slow(rot=90)
+            self.go_slow(rot=rot_sign * 120, speed=self.MOTORS_MIN_SPEED,
+                         end=lambda: abs(wall_ahead - self.ultra_sen[side])
+                                     <= self.TOLERANCE_US)
             self.go_slow(rot=160, speed=self.MOTORS_MIN_SPEED,
                          end=lambda: abs(wall_ahead - self.ultra_sen[2])
                                      <= self.TOLERANCE_US)
+
+        print('\t' * self.tabs, 'INFO: End of | solve_wall')
+        self.tabs -= 1
 
     def go_test(self):
         if not self.MOTORS_ENABLED:
