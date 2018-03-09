@@ -80,10 +80,7 @@ class Robot:
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        self.go_slow(rot=90, speed=self.MOTORS_MIN_SPEED)
-        sleep(2)
-        self.go_slow(rot=-270, speed=self.MOTORS_MIN_SPEED)
-        # self.solve_candle()
+        self.solve_candle()
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
@@ -214,12 +211,13 @@ class Robot:
             print('\t' * (self.tabs + 1), 'DEBUG: Angle: ', angle, sm, sees)
             # self.go(0, angle)
             if angle != 0:
-                self.go_slow(rot = (angle / abs(angle)) * 100, speed=self.MOTORS_MIN_SPEED,
-                             end = lambda: self.fire_sen[2] is 0
-                                           or self.fire_sen[3] is 1
-                                           or self.fire_sen[4] is 1
-                                           or self.fire_sen[0] is 1
-                                           or self.fire_sen[1] is 1)
+                self.go_slow(rot = (angle / abs(angle)) * 100,
+                             speed=self.MOTORS_MIN_SPEED,
+                             end = lambda: self.fire_sen[2] is 1
+                                           or self.fire_sen[3] is 0
+                                           or self.fire_sen[4] is 0
+                                           or self.fire_sen[0] is 0
+                                           or self.fire_sen[1] is 0)
             sleep(1)
             # self.go(10, 0,
             #         end=lambda: self.fire_sen[2] is 0
