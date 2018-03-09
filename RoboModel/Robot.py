@@ -408,6 +408,7 @@ class Robot:
 
     def blow_fans(self):
         # TODO: write code
+        return
         self.tabs += 1
         print('\n', '\t' * self.tabs, 'INFO:INFO: Entering blow_fans')
         time_left = 3
