@@ -49,6 +49,7 @@ class Robot:
 
         # Other
         self.MIN_LEN_TO_WALL = 50
+        self.TOLERANCE_US = 2
 
         self.state = S.normal
         self.left = 0
@@ -70,6 +71,7 @@ class Robot:
         #     sleep(0.1)
 
         ########################
+        #
         # self.go_test()
         # print('DOJETO')
         # self.go(-50,10)
@@ -77,6 +79,7 @@ class Robot:
         # print('ZKUSIM')
         # self.go(0, 50)
         # print('AHOJ')
+        #
         ########################
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
@@ -115,8 +118,8 @@ class Robot:
             # TODO: complete V
 
             try:
-                print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
-                      self.state.name)
+                # print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
+                #       self.state.name)
                 ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -257,6 +260,12 @@ class Robot:
         #                     and self.ultra_sen[2] < 60)
 
         self.get_state()
+
+    def solve_wall(self):
+        self.go()
+        self.go_slow(rot=160, speed=self.MOTORS_MIN_SPEED,
+                     end=lambda: abs(self.ultra_sen[1] - self.ultra_sen[2])
+                                 <= self.TOLERANCE_US)
 
     def go_test(self):
         if not self.MOTORS_ENABLED:
