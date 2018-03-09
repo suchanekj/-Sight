@@ -80,7 +80,7 @@ class Robot:
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        self.solve_line()
+        self.solve_candle()
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
@@ -196,22 +196,26 @@ class Robot:
         while max(self.line_sen[:]) == 0 and max(self.fire_sen[:]) == 1:
             sees = 0
             sm = 0
+            # TODO: replace with go_while?
             for x in range(len(self.fire_sen[:])):
-                if self.fire_sen[x]:
+                if self.fire_sen[x] == 1:
                     sees += 1
                     sm += ang2candle[x]
             if sees == 0:
-                print('No candle in solve_candle')
+                print('ERROR: No candle in solve_candle')
+                self.tabs -= 1
                 return
+
             angle = sm / sees
             print('\t' * (self.tabs + 1), 'DEBUG: Angle: ', angle, sm, sees)
             self.go(0, angle)
-            self.go(10, 0,
-                    end=lambda: self.fire_sen[2] is 0
-                                or self.fire_sen[3] is 1
-                                or self.fire_sen[4] is 1
-                                or self.fire_sen[0] is 1
-                                or self.fire_sen[1] is 1)
+            # self.go(10, 0,
+            #         end=lambda: self.fire_sen[2] is 0
+            #                     or self.fire_sen[3] is 1
+            #                     or self.fire_sen[4] is 1
+            #                     or self.fire_sen[0]  is 1
+            #                     or self.fire_sen[1] is 1
+            #                     or max(self.line_sen[:]) is 1)
 
         # has to be on the line of the candle
         self.blow_fans()
@@ -433,7 +437,7 @@ class Robot:
         
         self.tabs -= 1
 
-    # MESSED UP ???
+    # MESSED UP !!! Just a 1 + kk
     def solve_line(self):
         self.tabs += 1
         print('\n', '\t' * self.tabs, 'INFO:INFO: Entered solve_line')
@@ -445,11 +449,9 @@ class Robot:
         self.go_slow(ln=20, speed=self.MOTORS_MIN_SPEED,
                      end=lambda: sum(self.line_sen[:]) >= 2)
         sleep(0.1)
-        print('\t'*self.tabs, 'DEBUG: first line_sen ', self.line_sen[:])
         if sum(self.line_sen[:]) < 2:
             self.go_slow(ln=-40, speed=self.MOTORS_MIN_SPEED,
                     end=lambda: sum(self.line_sen[:]) >= 2)
-        print('\t'*self.tabs, 'DEBUG: second line_sen ', self.line_sen[:])
 
         self.go()
         sleep(0.1)
