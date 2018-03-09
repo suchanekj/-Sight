@@ -46,6 +46,7 @@ class Robot:
         self.ACCELERATION = 10
         self.MOTORS_MIN_SPEED = 16
         self.ACC_DELAY = 0.005
+        self.ROT_WALL_CHANGE = 10
 
         # Other
         self.EXC_LEN_TO_WALL = 50
@@ -193,6 +194,11 @@ class Robot:
                 self.after_candle()
                 continue
 
+            if self.state == S.solve_wall:
+                self.solve_wall()
+                self.get_state()
+                continue
+
     # SOLVED
     def solve_candle(self):
         self.tabs += 1
@@ -299,10 +305,60 @@ class Robot:
                                  <= self.TOLERANCE_US)
 
         # cases: Edge out ; edge in
-        while (self.sta):
-            self.go_slow(rot=160, speed=self.MOTORS_MIN_SPEED,
-                         end=lambda: abs(wall_ahead - self.ultra_sen[2])
-                                     <= self.TOLERANCE_US)
+        while 1:
+            while (min(self.ultra_sen[1:3]) >= self.EXC_LEN_TO_WALL
+                   and self.ultra_sen[side]
+                       <= self.EXC_LEN_TO_WALL-self.MIN_LEN_TO_WALL):
+
+                # break out if candle is seen
+                if (max(self.fire_sen[:]) == 1):
+                    self.get_state()
+                    return
+
+                # go along wall
+                self.go_slow(ln=100, speed=30,
+                             end=lambda: self.MIN_LEN_TO_WALL - self.TOLERANCE_US
+                                         <= self.ultra_sen[side]
+                                         <= self.MIN_LEN_TO_WALL - self.TOLERANCE_US)
+
+                # aling with wall
+                if (self.MIN_LEN_TO_WALL - self.TOLERANCE_US
+                        > self.ultra_sen[side]):
+                    self.go_slow(rot=rot_sign * self.ROT_WALL_CHANGE,
+                                 speed=self.MOTORS_MIN_SPEED)
+
+                elif (self.MIN_LEN_TO_WALL + self.TOLERANCE_US
+                        < self.ultra_sen[side]):
+                    self.go_slow(rot=- rot_sign * self.ROT_WALL_CHANGE,
+                                 speed=self.MOTORS_MIN_SPEED)
+
+            # wall in front
+            if (min(self.ultra_sen[1:3]) <= self.EXC_LEN_TO_WALL):
+                self.get_state()
+
+                print('\t' * self.tabs, 'INFO: End of | solve_wall')
+                self.tabs -= 1
+                return
+
+            # not wall
+            elif (self.ultra_sen[side]
+                       >= self.EXC_LEN_TO_WALL-self.MIN_LEN_TO_WALL):
+        #        TODO: do GO?
+
+            self.go_slow(rot=-rot_sign * 90, speed=self.MOTORS_MIN_SPEED)
+            self.go_slow(ln=42, speed=30,
+                         end=lambda: self.ultra_sen[side] <= self.EXC_LEN_TO_WALL
+                                     or min(self.ultra_sen[1:3]) <= self.EXC_LEN_TO_WALL
+                                     or max(self.line_sen[:]) == 1
+                                     or max(self.fire_sen[:]) == 1)
+
+            if (self.ultra_sen[side] > (self.EXC_LEN_TO_WALL - self.MIN_LEN_TO_WALL)
+                                     and min(self.ultra_sen[1:3]) >= self.EXC_LEN_TO_WALL):
+                self.get_state()
+
+                print('\t' * self.tabs, 'INFO: End of | solve_wall')
+                self.tabs -= 1
+                return
 
         print('\t' * self.tabs, 'INFO: End of | solve_wall')
         self.tabs -= 1
@@ -507,7 +563,7 @@ class Robot:
         angle = 0
         self.go()
         sleep(0.1)
-        self.go_slow(ln=-40, speed=self.MOTORS_MIN_SPEED)
+        self.go_slow(ln=-40, speed=self.MOTORS_MIN_SPEED+2)
         self.go_slow(ln=20, speed=self.MOTORS_MIN_SPEED,
                      end=lambda: sum(self.line_sen[:]) >= 2)
         sleep(0.1)
@@ -570,9 +626,9 @@ class Robot:
         if max(self.line_sen[:]) == 1:
             self.state = S.solve_line
             return
-        # if min(self.ultra_sen[1:3]) < self.VALID_US:
-        #     self.state = S.solve_wall
-        #     return
+        if min(self.ultra_sen[1:3]) < self.VALID_US:
+            self.state = S.solve_wall
+            return
 
         # print('Else')
         self.state = S.normal
