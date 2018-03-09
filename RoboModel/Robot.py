@@ -156,6 +156,8 @@ class Robot:
             for i in range(len(ultra_sen)):
                 ultra_sen[i] = int(us[i])
 
+            self.MOTORS_ENABLED = self.but
+
     # MESSED UP
     def main_cycle(self):
         while 1:
@@ -288,13 +290,15 @@ class Robot:
         sleep(0.1)
         wall_ahead = min(self.ultra_sen[1:3])
 
-        rot_sign = side // 4 - 1
+        # 1 == math side, -1 = anti math side
+        rot_sign = (-side // 2) + 1
+        print('\t' * self.tabs, 'INFO: !!! chose side: ', side, rot_sign)
 
-        if self.ultra_sen[1] <= self.ultra_sen[2]: # right is closer 
-            self.go_slow(rot=rot_sign * 120, speed=self.MOTORS_MIN_SPEED,
-                         end=lambda: abs(wall_ahead - self.ultra_sen[side])
-                                     <= self.TOLERANCE_US)
+        self.go_slow(rot=rot_sign * 120, speed=self.MOTORS_MIN_SPEED,
+                     end=lambda: abs(wall_ahead - self.ultra_sen[side])
+                                 <= self.TOLERANCE_US)
 
+        # cases: Edge out ; edge in
         while (self.sta):
             self.go_slow(rot=160, speed=self.MOTORS_MIN_SPEED,
                          end=lambda: abs(wall_ahead - self.ultra_sen[2])
