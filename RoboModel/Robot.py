@@ -603,8 +603,8 @@ class Robot:
 
         if it == 0:
             print('ERROR: Sees only: ', sum(self.line_sen[:]))
-            self.go(rot=180)
-            self.go(ln=10)
+            self.go_slow(rot=180,speed=self.MIN_LEN_TO_WALL)
+            self.go(ln=10, speed=30)
             self.state = S.normal
             return
 
