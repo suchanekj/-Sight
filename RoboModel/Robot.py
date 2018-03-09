@@ -126,8 +126,8 @@ class Robot:
             # TODO: complete V
 
             try:
-                print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
-                      self.state.name)
+                # print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
+                #       self.state.name)
                 ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -138,6 +138,9 @@ class Robot:
             ls = ls.replace(' ', '').split(';')
             us = us.replace(' ', '').split(';')
             us = us[::-1]
+            temp = us[1]
+            us[1] = us[2]
+            us[2] = temp
 
             invalid = 0
             for x in fs + ls:
