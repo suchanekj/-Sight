@@ -193,6 +193,7 @@ class Robot:
             4: 90,
         }
 
+        print('\t' * self.tabs, 'DEBUG: line_sen: ', self.line_sen[:], self.fire_sen[:])
         while max(self.line_sen[:]) == 0 and max(self.fire_sen[:]) == 1:
             sees = 0
             sm = 0
