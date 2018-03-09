@@ -81,7 +81,7 @@ class Robot:
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        self.solve_candle()
+        self.main_cycle()
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
         # self.go_test()
         # self.go_test(0, 2)
@@ -234,6 +234,7 @@ class Robot:
         self.blow_fans()
         self.go_slow(rot=-20, )
         self.blow_fans()
+        self.go_slow(rot=10, )
 
         self.state = S.after_candle
 
@@ -242,17 +243,17 @@ class Robot:
 
     # MESSED
     def after_candle(self):
-        self.go(-40)
-        self.go(0, 80)
+        self.go_slow(rot=(180 + randint(-42, 42)), speed=self.MOTORS_MIN_SPEED)
+        self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
 
         # TODO: change lambdas
-        self.go(0, hlp.randSide() * self.ROTATION_SPEED,
-                end=lambda: self.ultra_sen[1] < 60
-                            and self.ultra_sen[2] < 60)
-
-        self.go(0, hlp.randSide() * randint(0, 25),
-                end=lambda: self.ultra_sen[1] < 60
-                            and self.ultra_sen[2] < 60)
+        # self.go(0, hlp.randSide() * self.ROTATION_SPEED,
+        #         end=lambda: self.ultra_sen[1] < 60
+        #                     and self.ultra_sen[2] < 60)
+        #
+        # self.go(0, hlp.randSide() * randint(0, 25),
+        #         end=lambda: self.ultra_sen[1] < 60
+        #                     and self.ultra_sen[2] < 60)
 
         self.get_state()
 
