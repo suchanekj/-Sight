@@ -58,6 +58,7 @@ class Robot:
         self.right = 0
         self.tabs = 0
         self.not_candle = 0
+        self.not_wall = 0
 
         print('Init complete!')
 
@@ -282,6 +283,7 @@ class Robot:
         self.get_state()
 
     def solve_wall(self):
+        self.not_wall += 1
         self.tabs += 1
         print('\n', '\t' * self.tabs, 'INFO: Entering | solve_wall: ',
               self.ultra_sen[:])
@@ -627,6 +629,11 @@ class Robot:
                     end=lambda: max(self.line_sen[:]) == 1
                                 or min(self.ultra_sen[1:3])
                                    <= self.EXC_LEN_TO_WALL)
+            self.not_candle = 0
+
+        if self.not_wall >= 4:
+            self.go(ln=-10, speed=30)
+            self.go_slow(rot=randint(45, 100), speed=25)
             self.not_candle = 0
 
         if max(self.fire_sen[:]) == 1:
