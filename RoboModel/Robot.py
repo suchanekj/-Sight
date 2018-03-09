@@ -85,7 +85,9 @@ class Robot:
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
         # self.main_cycle()
-        self.solve_line()
+        # self.solve_line()
+        self.go_slow(rot=90, speed=self.MOTORS_MIN_SPEED)
+        self.go_slow(rot=-270, speed=self.MOTORS_MIN_SPEED)
 
         ########################
         print('\t' * (self.tabs + 1), 'DEBUG: debug IS DONE')
@@ -290,7 +292,7 @@ class Robot:
                          end=lambda: abs(wall_ahead - self.ultra_sen[side])
                                      <= self.TOLERANCE_US)
 
-        while (1):
+        while (self.sta):
             self.go_slow(rot=160, speed=self.MOTORS_MIN_SPEED,
                          end=lambda: abs(wall_ahead - self.ultra_sen[2])
                                      <= self.TOLERANCE_US)
