@@ -213,11 +213,7 @@ class Robot:
             if angle != 0:
                 self.go_slow(rot = (angle / abs(angle)) * 100,
                              speed=self.MOTORS_MIN_SPEED,
-                             end = lambda: self.fire_sen[2] is 1
-                                           or self.fire_sen[3] is 0
-                                           or self.fire_sen[4] is 0
-                                           or self.fire_sen[0] is 0
-                                           or self.fire_sen[1] is 0)
+                             end = lambda: self.fire_sen[2] is 1)
             sleep(1)
             # self.go(10, 0,
             #         end=lambda: self.fire_sen[2] is 0
