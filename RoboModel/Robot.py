@@ -50,7 +50,7 @@ class Robot:
 
         # Other
         self.EXC_LEN_TO_WALL = 50
-        self.MIN_LEN_TO_WALL = 16
+        self.MIN_LEN_TO_WALL = 25
         self.TOLERANCE_US = 4
 
         self.state = S.normal
