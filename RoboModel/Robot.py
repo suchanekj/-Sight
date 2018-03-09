@@ -325,6 +325,8 @@ class Robot:
         step = 0.00001
 
         if end():
+            print('\t' * self.tabs, 'INFO: Insta end of | go')
+            self.tabs -= 1
             return
         speedl = 0
         speedr = 0
@@ -372,13 +374,15 @@ class Robot:
     def go_slow(self, ln=0, rot=0, speed=50, end=(lambda: 0)):
         # end 1 == END, 0 == CONTINUE
         self.tabs += 1
-        print('\n', '\t' * self.tabs, 'INFO:INFO: Entering | go_slow')
+        print('\n', '\t' * self.tabs, 'INFO: Entering | go_slow')
 
         if not self.MOTORS_ENABLED:
             return
         step = 0.00001
 
         if end():
+            print('\t' * self.tabs, 'INFO: Insta end of | go_slow')
+            self.tabs -= 1
             return
 
         if ln == 0:
