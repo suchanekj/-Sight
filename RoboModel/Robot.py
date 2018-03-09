@@ -111,13 +111,11 @@ class Robot:
             read_serial = self.ard.readline()
             read_serial = self.ard.readline()
             # read_serial = b'0, 1, 1, 1, 0| 1, 1, 1, 1, 0| 120, 20, 20, 20'
-            # TODO: complete B, V
-
-            # print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii').split('|'))
+            # TODO: complete V
 
             try:
-                print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
-                      self.state.name)
+                # print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
+                #       self.state.name)
                 ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -212,6 +210,7 @@ class Robot:
             angle = sm / sees
             print('\t' * (self.tabs + 1), 'DEBUG: Angle: ', angle, sm, sees)
             self.go(0, angle)
+            sleep(1)
             # self.go(10, 0,
             #         end=lambda: self.fire_sen[2] is 0
             #                     or self.fire_sen[3] is 1
@@ -228,6 +227,9 @@ class Robot:
         self.blow_fans()
 
         self.state = S.after_candle
+
+        print('\t' * self.tabs, 'INFO: End of | solve_candle')
+        self.tabs -= 1
 
     # MESSED
     def after_candle(self):
