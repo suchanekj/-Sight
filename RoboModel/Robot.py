@@ -625,9 +625,9 @@ class Robot:
         if max(self.fire_sen[:]) == 1:
             self.state = S.solve_candle
             return
-        if max(self.line_sen[:]) == 1:
-            self.state = S.solve_line
-            return
+        # if max(self.line_sen[:]) == 1:
+        #     self.state = S.solve_line
+        #     return
         if min(self.ultra_sen[1:3]) < self.VALID_US:
             self.state = S.solve_wall
             return
