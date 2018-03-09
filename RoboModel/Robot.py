@@ -339,7 +339,7 @@ class Robot:
                                  speed=self.MOTORS_MIN_SPEED)
 
             # wall in front
-            if (min(self.ultra_sen[1:3]) <= self.EXC_LEN_TO_WALL):
+            if (max(self.ultra_sen[1:3]) <= self.EXC_LEN_TO_WALL):
                 self.go(ln=-20,speed=30)
                 self.get_state()
 
