@@ -515,9 +515,9 @@ class Robot:
         if max(self.line_sen[:]) == 1:
             self.state = S.solve_line
             return
-        if min(self.ultra_sen[:]) < self.VALID_US:
-            self.state = S.solve_wall
-            return
+        # if min(self.ultra_sen[:]) < self.VALID_US:
+        #     self.state = S.solve_wall
+        #     return
 
         # print('Else')
         self.state = S.normal
