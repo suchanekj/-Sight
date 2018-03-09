@@ -126,6 +126,7 @@ class Robot:
             fs = fs.replace(' ', '').split(';')
             ls = ls.replace(' ', '').split(';')
             us = us.replace(' ', '').split(';')
+            us = us[::-1]
 
             invalid = 0
             for x in fs + ls:
