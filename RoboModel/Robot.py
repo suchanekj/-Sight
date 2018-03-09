@@ -39,7 +39,7 @@ class Robot:
         self.ROTATION_SPEED = 42
         self.ROT_MOD = 0.14  # TODO: make great consts
         self.LEN_MOD = 0.33
-        self.SLOW_ROT_MOD = 0.14/3
+        self.SLOW_ROT_MOD = 0.048
         self.SLOW_LEN_MOD = 0.20
         # self.L_R_RATIO = 6.9 / 5
         self.L_R_RATIO = 1.3076923076923077
