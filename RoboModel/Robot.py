@@ -84,8 +84,8 @@ class Robot:
 
         # self.go_slow(ln=30, speed=self.MOTORS_MIN_SPEED)
 
-        # self.main_cycle()
-        self.solve_line()
+        self.main_cycle()
+        # self.solve_line()
         # self.go_slow(rot=90, speed=self.MOTORS_MIN_SPEED)
         # self.go_slow(rot=-270, speed=self.MOTORS_MIN_SPEED)
 
