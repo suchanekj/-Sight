@@ -343,6 +343,7 @@ class Robot:
             # wall in front
             if (max(self.ultra_sen[1:3]) <= self.EXC_LEN_TO_WALL):
                 self.go(ln=-20,speed=30)
+                self.not_wall += 1
                 self.get_state()
 
                 print('\t' * self.tabs, 'INFO: End of | solve_wall | wall in front')
