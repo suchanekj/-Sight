@@ -445,9 +445,12 @@ class Robot:
         self.go_slow(ln=20, speed=self.MOTORS_MIN_SPEED,
                      end=lambda: sum(self.line_sen[:]) >= 2)
         sleep(0.1)
+        print('\t'*self.tabs, 'DEBUG: first line_sen ', self.line_sen[:])
         if sum(self.line_sen[:]) < 2:
             self.go_slow(ln=-40, speed=self.MOTORS_MIN_SPEED,
                     end=lambda: sum(self.line_sen[:]) >= 2)
+        print('\t'*self.tabs, 'DEBUG: second line_sen ', self.line_sen[:])
+
         self.go()
         sleep(0.1)
         if sum(self.line_sen[:]) < 2:
