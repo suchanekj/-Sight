@@ -209,7 +209,13 @@ class Robot:
 
             angle = sm / sees
             print('\t' * (self.tabs + 1), 'DEBUG: Angle: ', angle, sm, sees)
-            self.go(0, angle)
+            # self.go(0, angle)
+            self.go_slow(rot = (angle / abs(angle)) * 100, speed=self.MOTORS_MIN_SPEED,
+                         end = lambda: self.fire_sen[2] is 0
+                                       or self.fire_sen[3] is 1
+                                       or self.fire_sen[4] is 1
+                                       or self.fire_sen[0] is 1
+                                       or self.fire_sen[1] is 1)
             sleep(1)
             # self.go(10, 0,
             #         end=lambda: self.fire_sen[2] is 0
@@ -220,6 +226,12 @@ class Robot:
             #                     or max(self.line_sen[:]) is 1)
 
         # has to be on the line of the candle
+        if max(self.fire_sen[:]) == 0:
+            self.go_slow(rot=90, speed=self.MOTORS_MIN_SPEED,
+                         end=lambda: max(self.fire_sen[:]) == 1)
+            self.go_slow(rot=-180, speed=self.MOTORS_MIN_SPEED,
+                         end=lambda: max(self.fire_sen[:]) == 1)
+
         self.blow_fans()
         self.go(0, 10, )
         self.blow_fans()
