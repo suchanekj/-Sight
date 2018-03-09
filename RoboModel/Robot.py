@@ -116,8 +116,8 @@ class Robot:
             # print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii').split('|'))
 
             try:
-                # print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
-                #       self.state.name)
+                print('\t' * (self.tabs + 1), 'DEBUG: ', str(read_serial, 'ascii'), ' | ',
+                      self.state.name)
                 ls, fs, us, but, _ = str(read_serial, 'ascii').split('|')
             except ValueError:
                 print('ERROR')
@@ -184,6 +184,8 @@ class Robot:
 
     # MESSED
     def solve_candle(self):
+        self.tabs += 1
+        print('\n', '\t' * self.tabs, 'INFO: Entering | solve_candle: ',)
         # TODO: set actual angles DONE?
         ang2candle = {
             0: -90,
@@ -193,7 +195,7 @@ class Robot:
             4: 90,
         }
 
-        print('\t' * self.tabs, 'DEBUG: line_sen: ', self.line_sen[:], self.fire_sen[:])
+        print('\t' * (self.tabs + 1), 'DEBUG: line_sen: ', self.line_sen[:], self.fire_sen[:])
         while max(self.line_sen[:]) == 0 and max(self.fire_sen[:]) == 1:
             sees = 0
             sm = 0
