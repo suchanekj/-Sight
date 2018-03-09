@@ -174,7 +174,7 @@ class Robot:
                   ' | ', self.ultra_sen[:])
             if self.state == S.normal:
                 # TODO: fix go_while
-                self.go_slow(ln=1000, speed=30,
+                self.go_slow(ln=1000, speed=50,
                         end=lambda: max(self.line_sen[:]) == 1
                                     # or self.ultra_sen[
                                     #     1] <= self.EXC_LEN_TO_WALL
