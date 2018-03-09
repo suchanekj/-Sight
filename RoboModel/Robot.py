@@ -284,7 +284,7 @@ class Robot:
 
         self.go()
         wall_ahead = min(self.ultra_sen[1:3])
-        side = randint(0, 1) * 4
+        side = randint(0, 1) * 3
 
         # TODO: Try this
         # self.go_slow(ln=max(wall_ahead-10, 10), speed=self.MOTORS_MIN_SPEED,
@@ -297,7 +297,7 @@ class Robot:
         wall_ahead = min(self.ultra_sen[1:3])
 
         # 1 == math side, -1 = anti math side
-        rot_sign = (-side // 2) + 1
+        rot_sign = (-side // 3)*2 + 1
         print('\t' * self.tabs, 'INFO: !!! chose side: ', side, rot_sign)
 
         self.go_slow(rot=rot_sign * 120, speed=self.MOTORS_MIN_SPEED,
