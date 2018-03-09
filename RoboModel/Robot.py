@@ -441,14 +441,15 @@ class Robot:
         it = 0
         angle = 0
         self.go()
-        sleep(1)
+        sleep(0.1)
         self.go_slow(ln=20, speed=self.MOTORS_MIN_SPEED,
                      end=lambda: sum(self.line_sen[:]) >= 2)
-        sleep(10)
+        sleep(0.1)
         if sum(self.line_sen[:]) < 2:
             self.go_slow(ln=-40, speed=self.MOTORS_MIN_SPEED,
                     end=lambda: sum(self.line_sen[:]) >= 2)
         self.go()
+        sleep(0.1)
         if sum(self.line_sen[:]) < 2:
             print('ERROR: couldnt find normal line: ', self.line_sen[:])
             self.go()
