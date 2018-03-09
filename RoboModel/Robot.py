@@ -344,7 +344,8 @@ class Robot:
 
             # not wall
             elif (self.ultra_sen[side]
-                       >= self.EXC_LEN_TO_WALL-self.MIN_LEN_TO_WALL):
+                       >= (self.EXC_LEN_TO_WALL-self.MIN_LEN_TO_WALL)):
+                print('ERROR!')
         #        TODO: do GO?
 
                 self.go_slow(rot=-rot_sign * 90, speed=self.MOTORS_MIN_SPEED)
