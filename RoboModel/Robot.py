@@ -281,7 +281,7 @@ class Robot:
         # TODO: Try this
         # self.go_slow(ln=max(wall_ahead-10, 10), speed=self.MOTORS_MIN_SPEED,
         #              )
-        self.go_slow(ln=max(wall_ahead-self.MIN_LEN_TO_WALL, self.MIN_LEN_TO_WALL),
+        self.go_slow(ln=max(wall_ahead-self.MIN_LEN_TO_WALL, 0),
                      speed=self.MOTORS_MIN_SPEED,
                      end=lambda: min(self.ultra_sen[1:3])
                                  <= self.MIN_LEN_TO_WALL)
@@ -503,11 +503,12 @@ class Robot:
         angle = 0
         self.go()
         sleep(0.1)
-        self.go_slow(ln=-50, speed=self.MOTORS_MIN_SPEED,
+        self.go_slow(ln=-40, speed=self.MOTORS_MIN_SPEED)
+        self.go_slow(ln=20, speed=self.MOTORS_MIN_SPEED,
                      end=lambda: sum(self.line_sen[:]) >= 2)
         sleep(0.1)
         if sum(self.line_sen[:]) < 2:
-            self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED,
+            self.go_slow(ln=-40, speed=self.MOTORS_MIN_SPEED,
                     end=lambda: sum(self.line_sen[:]) >= 2)
 
         self.go()
