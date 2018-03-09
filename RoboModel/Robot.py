@@ -56,6 +56,7 @@ class Robot:
         self.left = 0
         self.right = 0
         self.tabs = 0
+        self.not_candle = 0
 
         print('Init complete!')
 
@@ -202,6 +203,7 @@ class Robot:
             3: 45,
             4: 90,
         }
+        self.not_candle += 1
 
         print('\t' * (self.tabs + 1), 'DEBUG: line_sen: ', self.line_sen[:], self.fire_sen[:])
         while max(self.line_sen[:]) == 0 and max(self.fire_sen[:]) == 1:
@@ -252,6 +254,7 @@ class Robot:
 
     # SOLVED
     def after_candle(self):
+        self.not_candle = 0
         self.go_slow(rot=(180 + randint(-42, 42)), speed=self.MOTORS_MIN_SPEED)
         self.go_slow(ln=10, speed=self.MOTORS_MIN_SPEED)
 
@@ -549,6 +552,13 @@ class Robot:
 
     # SOLVED
     def get_state(self):
+        if self.not_candle >= 3:
+            self.go(ln=30,
+                    end=lambda: max(self.line_sen[:]) == 1
+                                or min(self.ultra_sen[1:3])
+                                   <= self.EXC_LEN_TO_WALL)
+            self.not_candle = 0
+
         if max(self.fire_sen[:]) == 1:
             self.state = S.solve_candle
             return
