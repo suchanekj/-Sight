@@ -345,12 +345,12 @@ class Robot:
                        >= self.EXC_LEN_TO_WALL-self.MIN_LEN_TO_WALL):
         #        TODO: do GO?
 
-            self.go_slow(rot=-rot_sign * 90, speed=self.MOTORS_MIN_SPEED)
-            self.go_slow(ln=42, speed=30,
-                         end=lambda: self.ultra_sen[side] <= self.EXC_LEN_TO_WALL
-                                     or min(self.ultra_sen[1:3]) <= self.EXC_LEN_TO_WALL
-                                     or max(self.line_sen[:]) == 1
-                                     or max(self.fire_sen[:]) == 1)
+                self.go_slow(rot=-rot_sign * 90, speed=self.MOTORS_MIN_SPEED)
+                self.go_slow(ln=42, speed=30,
+                             end=lambda: self.ultra_sen[side] <= self.EXC_LEN_TO_WALL
+                                         or min(self.ultra_sen[1:3]) <= self.EXC_LEN_TO_WALL
+                                         or max(self.line_sen[:]) == 1
+                                         or max(self.fire_sen[:]) == 1)
 
             if (self.ultra_sen[side] > (self.EXC_LEN_TO_WALL - self.MIN_LEN_TO_WALL)
                                      and min(self.ultra_sen[1:3]) >= self.EXC_LEN_TO_WALL):
