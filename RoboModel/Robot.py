@@ -229,9 +229,9 @@ class Robot:
 
 
         self.blow_fans()
-        self.go(0, 10, )
+        self.go_slow(rot=10, )
         self.blow_fans()
-        self.go(0, -20, )
+        self.go_slow(rot=-20, )
         self.blow_fans()
 
         self.state = S.after_candle
